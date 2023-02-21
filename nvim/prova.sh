@@ -1,0 +1,2 @@
+if verbose:
+print(yes)
