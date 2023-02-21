@@ -1,0 +1,6 @@
+#!/bin/bash
+
+swaymsg input "9580:109:HUION_Huion_Tablet" map_to_output eDP-2
+echo "Muovi la penna assicurandoti che non si muove, poi solleva."
+read
+swaymsg input "9580:109:HUION_Huion_Tablet" map_to_output eDP-1

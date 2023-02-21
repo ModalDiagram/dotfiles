@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Leggo i secondi della settimana e i secondi per task
+{
+  read in_count;
+  read in_mod;
+} < $HOME/.cache/survey/count.txt
+
+# STEP 4. Aggiungo i secondi della task
+echo "$((in_count + in_mod))" > $HOME/.cache/survey/count.txt
+echo "$in_mod" >> $HOME/.cache/survey/count.txt
+
+# STEP 5. Leggo i dati della sessione corrente
+{
+  read -r count
+  read -r cache_fin
+  read -r cache_min
+} < $HOME/.cache/survey/timestamps.txt
+
+# STEP 6. Data attuale
+ts_now=$(date +"%s")
+
+# STEP 7. Se e' passata mezz'ora dall'ultima task inizio una nuova sessione"
+if [[ $((ts_now - cache_fin)) -lt 1800 ]]; then
+  count=$((count + in_mod))
+else
+  count=0
+  cache_min=$ts_now
+fi
+
+# STEP 8. Aggiorno i dati della sessione corrente
+echo $count > $HOME/.cache/survey/timestamps.txt
+echo $ts_now >> $HOME/.cache/survey/timestamps.txt
+echo $cache_min >> $HOME/.cache/survey/timestamps.txt
+
+echo $ts_now >> $HOME/.cache/survey/dati/$in_mod.txt

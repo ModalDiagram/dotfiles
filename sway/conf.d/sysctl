@@ -1,0 +1,22 @@
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Aggiusto la clipboard e aggiungo task
+bindsym $mod+x exec $ONEDRIVE/dotfiles/survey/bin/copy_coor.sh
+bindsym $mod+z exec $ONEDRIVE/dotfiles/survey/bin/add_task.sh
+
+# Start your launcher
+bindsym $mod+p exec $menu
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+f exec swaynag -t tron -m 'Aperture clear?' -b 'Exit the Grid' 'swaymsg exit'

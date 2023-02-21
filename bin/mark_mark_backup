@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# when we re-enter this script this env var will
+# be set.
+mark=$(zenity --title "Set mark to? " --entry --text "Set mark to? ")
+if ! [[ -z "$mark" ]]; then
+  swaymsg mark "$mark"
+fi
+# launch alacritty instance with the size we want
+# and re-enter this script.

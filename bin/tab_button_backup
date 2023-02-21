@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# la funzione controlla che non ci sia un'altra istanza di backup attiva.
+# Se c'e', esiste il file /tmp/backup_xournal e al suo interno ha il PID del processo; controlla poi che il processo sia effettivamente attivo (potrebbe essere rimasto il file per un'interruzione improvvisa)
+controlla_in_corso(){
+  if [[ -f "$file" ]]; then
+    # echo "file esiste"
+    pid=$(cat "$file")
+    if ps -p $pid >> /dev/null; then
+      return 1 # torna 1 se il processo esiste, 0 altrimenti
+    fi
+  fi
+  return 0
+}
+
+# la funziona copia il PID del processo nel file /tmp/backup_xournal
+salva_pid(){
+  echo $$ > $file;
+}
+
+# controllo se il processo esiste, altrimenti lo salvo
+file=/tmp/tab_button
+controlla_in_corso
+if [[ $? -gt 0 ]]; then
+  echo "processo esiste"
+  exit
+else
+  echo "salvataggio pid"
+  salva_pid
+fi
+
+# trappo i segnali di CTRL-C e kill per controllare un'ultima volta
+# trap "echo controllo e termino; controlla_modifiche; exit" SIGINT
+
+
+set -e
+# Bind da settare, non funziona con write, forse perché con X. Lista in /usr/include/linux/input-event-codes.h
+bind_1=("29 44") # ctrl z
+bind_2=("125 35") # alt tal
+bind_3=("103")
+bind_4=("108")
+# Define the shortcuts from buttons 1 to 8 (top to bottom)
+btnbind=("$bind_1" "$bind_2" "$bind_3" "$bind_4" e f g ctrl+z)
+btnstate=()
+
+for i in {0..10}; do
+  btnstate+=(false)
+done
+btnstate[0]="true"
+
+tabbind_loop()
+{
+  while IFS= read -r line; do
+    if [[ "$line" == *"DEVICE_REMOVED"* ]]; then
+      echo yes;
+      exit 0;
+    fi
+    line=${line#*s}
+    line=${line#*"  "}
+    line=${line:0:1}
+    # echo "$line"
+    if [ "${btnstate[$line]}" = "false" ]; then
+
+      echo "clicking ${btnbind[$line]}"
+      for key in ${btnbind[$line]}; do
+        ydotool key $key:1
+      done
+      btnstate[$line]=true
+    else
+      echo "raising ${btnbind[$line]}"
+      for key in ${btnbind[$line]}; do
+        ydotool key $key:0
+      done
+      btnstate[$line]=false
+    fi
+  done
+}
+
+tabdev=$(libinput list-devices | grep -i -A1 "HUION huion tablet Pad" | awk '/event[0-9]+$/{print $2}')
+stdbuf -o0 libinput debug-events --device "$tabdev" | tabbind_loop

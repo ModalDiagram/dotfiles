@@ -1,0 +1,7 @@
+#!/bin/bash
+
+comb=$($ONEDRIVE/altri_programmi/app_bindings/get_app_bindings.sh up)
+ydotool key $comb
+
+#xdotool key ctrl+Page_Down
+#echo "$( date '+%F_%H:%M:%S' ): gesture-3-down" >> $ONEDRIVE/dotfiles/libinput/bin/log/gesture-3-down.txt

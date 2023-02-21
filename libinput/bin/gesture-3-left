@@ -1,0 +1,4 @@
+#!/bin/bash
+xdotool key --delay 50 alt+Left
+echo "$( date '+%F_%H:%M:%S' ): gesture-3-left" 
+echo "$( date '+%F_%H:%M:%S' ): gesture-3-left" >> /home/sandro0198/OneDrive/dotfiles/libinput/bin/log/gesture-3-left.txt

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+comb=$($ONEDRIVE/altri_programmi/app_bindings/get_app_bindings.sh leftup)
+ydotool key $comb

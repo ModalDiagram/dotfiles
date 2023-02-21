@@ -1,0 +1,2 @@
+reflector --verbose -c DE -c IT --protocol https --sort rate --latest 10 --download-timeout 5 1> mirrorlist
+echo "sposta il file mirrorlist in /etc/pacman.d/"

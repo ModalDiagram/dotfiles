@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# when we re-enter this script this env var will
+# be set.
+first=$((1 + $RANDOM % 9))
+second=$(($RANDOM % 10))
+
+swaymsg mark "$first$second"
+# launch alacritty instance with the size we want
+# and re-enter this script.

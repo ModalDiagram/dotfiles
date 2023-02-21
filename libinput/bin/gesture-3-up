@@ -1,0 +1,12 @@
+#!/bin/bash
+id=$(xdotool getwindowfocus)
+finestra=$(xdotool getwindowname $id)
+if [[ "$finestra" == *"Firefox"* ]]; then
+  xdotool key ctrl+shift+Tab
+else
+  xdotool key ctrl+alt+Right
+fi
+#notify-send "$finestra a"
+#xdotool key ctrl+Page_Up
+echo "$( date '+%F_%H:%M:%S' ): gesture-3-up" 
+echo "$( date '+%F_%H:%M:%S' ): gesture-3-up" >> /home/sandro0198/OneDrive/dotfiles/libinput/bin/log/gesture-3-up.txt

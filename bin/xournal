@@ -1,0 +1,23 @@
+#!/bin/bash
+
+chiudi(){
+  pid=$(cat /tmp/$1)
+  if ! [[ -z $2 ]]; then
+    if ! [[ -z $(ps -a | grep $2) ]]; then
+      echo "un altro $1 aperto, lo chiude lui"
+      return
+    fi
+  fi
+  echo "sto chiudendo $pid"
+  kill $pid
+  rm /tmp/$1
+}
+
+trap "chiudi backup_xournal xournalpp; chiudi tab_button; exit" SIGINT
+
+$ONEDRIVE/dotfiles/bin/backup_xournal.sh &
+$ONEDRIVE/dotfiles/bin/tab_button &
+xournalpp &> /dev/null
+chiudi backup_xournal xournalpp
+chiudi tab_button xournalpp
+
