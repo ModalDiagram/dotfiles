@@ -15,9 +15,12 @@ return require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+  -- Colorchemes
+  use 'marko-cerovac/material.nvim'
   use { "tanvirtin/monokai.nvim" }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }
+  use { "lukas-reineke/indent-blankline.nvim", config = [[require("config.indent")]]}
 
   -- showing keybindings
   use {
@@ -79,6 +82,16 @@ return require('packer').startup(function(use)
   -- Gestori di LSP
   use { "williamboman/mason-lspconfig.nvim" }
   use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
+  use { 'RishabhRD/nvim-lsputils' }
+  use({
+      "glepnir/lspsaga.nvim",
+      config = [[require("config.lspsaga")]],
+      requires = {
+          {"nvim-tree/nvim-web-devicons"},
+          --Please make sure you install markdown and markdown_inline parser
+          {"nvim-treesitter/nvim-treesitter"}
+      }
+  })
   -- Gestori di linter e formatter
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
   -- Gestore di dap
@@ -113,7 +126,6 @@ return require('packer').startup(function(use)
   use { "akinsho/bufferline.nvim", config = [[require('config.bufferline')]] }
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
   use { 'RishabhRD/popfix' }
-  use { 'RishabhRD/nvim-lsputils' }
 
   -- fancy start screen
   use { "glepnir/dashboard-nvim",
