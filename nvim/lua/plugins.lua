@@ -78,10 +78,11 @@ return require('packer').startup(function(use)
   use { "williamboman/mason.nvim", after = "nvim-cmp", config = [[require('config.mason')]] }
   -- Gestori di LSP
   use { "williamboman/mason-lspconfig.nvim" }
-  use { "neovim/nvim-lspconfig" }
+  use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
   -- Gestori di linter e formatter
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
   -- Gestore di dap
+  use { "jay-babu/mason-nvim-dap.nvim", after = "mason.nvim", config = [[require('config.masondap')]] }
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }
   use { "folke/neodev.nvim", config = [[require('config.neodev')]] }
   use { "rcarriga/nvim-dap-ui", after = {"nvim-dap", "neodev.nvim"}, requires = {"mfussenegger/nvim-dap"}, config = [[require('config.dapui')]] }
@@ -122,4 +123,10 @@ return require('packer').startup(function(use)
   use {
     "ahmedkhalf/project.nvim", config = [[require('config.project')]]
   }
+
+  -- Plugins di git
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
+
+
+
 end)

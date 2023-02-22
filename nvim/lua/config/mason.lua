@@ -3,6 +3,11 @@ require("neodev").setup()
 require("mason-lspconfig").setup()
 
 local servers = {
+  pylint = {
+    Python = {
+      pythonPath = "",
+    },
+  },
   jdtls = {
     Java = {
       cmd = {

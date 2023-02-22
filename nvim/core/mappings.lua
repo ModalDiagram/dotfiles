@@ -165,12 +165,12 @@ vim.keymap.set("n", "<leader>td", '<cmd>lua require("telescope.builtin").find_fi
   desc = "Search for dotfiles"
 })
 
+-- Mappings di nvim_tree
+vim.keymap.set("n", "<leader>nt", '<cmd>NvimTreeToggle<cr>', {desc = "Toggle the tree"})
+vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "Toggle the findFileTree"})
+
 -- Mappins di dap
 vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr>', {desc = "Start debug"})
 vim.keymap.set("n", "<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>', {desc = "Toggle breakpoint"})
 vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").close()<cr><cmd>lua require("dapui").toggle()<cr>', {desc = "Start debug"})
-vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").clear_breakpoints()', {desc = "clear breakpoints"})
-
--- Mappings di nvim_tree
-vim.keymap.set("n", "<leader>nt", '<cmd>NvimTreeToggle<cr>', {desc = "Toggle the tree"})
-vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "Toggle the findFileTree"})
+vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").clear_breakpoints()<cr>', {desc = "clear breakpoints"})

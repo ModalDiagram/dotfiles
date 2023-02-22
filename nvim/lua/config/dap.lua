@@ -13,4 +13,15 @@ dap.configurations.java = {
     end;
   },
 }
+dap.configurations.python = {
+  {
+    name = "Launch with integratedTerminal";
+    console = "integratedTerminal";
+    request = "launch";
+    program = "${file}";
+    type = "python";
+    pythonPath = "python";
+  },
+}
+
 dap.defaults.fallback.terminal_win_cmd = 'tabnew'
