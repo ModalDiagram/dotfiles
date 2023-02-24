@@ -221,7 +221,7 @@ _G.packer_plugins = {
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-nvim-lsp", "mason.nvim", "cmp-omni", "cmp-path", "cmp-nvim-ultisnips" },
+    after = { "mason.nvim", "cmp-buffer", "cmp-nvim-lsp", "cmp-nvim-ultisnips", "cmp-path", "cmp-omni" },
     config = { "require('config.nvim-cmp')" },
     load_after = {},
     loaded = true,
@@ -244,6 +244,11 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/sandro0198/.local/share/nvim/site/pack/packer/opt/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-highlight-colors"] = {
+    loaded = true,
+    path = "/home/sandro0198/.local/share/nvim/site/pack/packer/start/nvim-highlight-colors",
+    url = "https://github.com/brenoprata10/nvim-highlight-colors"
   },
   ["nvim-hlslens"] = {
     config = { "require('config.hlslens')" },
@@ -323,6 +328,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/sandro0198/.local/share/nvim/site/pack/packer/start/project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
+  },
+  ["rose-pine"] = {
+    loaded = true,
+    path = "/home/sandro0198/.local/share/nvim/site/pack/packer/start/rose-pine",
+    url = "https://github.com/rose-pine/neovim"
   },
   ["targets.vim"] = {
     loaded = true,
@@ -405,34 +415,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-require('config.neogit')
-time([[Config for neogit]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
--- Config for: nvim-notify
-time([[Config for nvim-notify]], true)
-require('config.notify')
-time([[Config for nvim-notify]], false)
--- Config for: nvim-dap
-time([[Config for nvim-dap]], true)
-require('config.dap')
-time([[Config for nvim-dap]], false)
--- Config for: neodev.nvim
-time([[Config for neodev.nvim]], true)
-require('config.neodev')
-time([[Config for neodev.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
--- Config for: impatient.nvim
-time([[Config for impatient.nvim]], true)
-require('impatient')
-time([[Config for impatient.nvim]], false)
 -- Config for: null-ls.nvim
 time([[Config for null-ls.nvim]], true)
 require('config.null')
@@ -441,10 +423,10 @@ time([[Config for null-ls.nvim]], false)
 time([[Config for indent-blankline.nvim]], true)
 require("config.indent")
 time([[Config for indent-blankline.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
+-- Config for: neogit
+time([[Config for neogit]], true)
+require('config.neogit')
+time([[Config for neogit]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 require('config.lsp')
@@ -453,41 +435,56 @@ time([[Config for nvim-lspconfig]], false)
 time([[Config for lspsaga.nvim]], true)
 require("config.lspsaga")
 time([[Config for lspsaga.nvim]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21config.which-key\frequire-\1\0\4\0\3\0\0066\0\0\0009\0\1\0003\2\2\0)\3Ð\aB\0\3\1K\0\1\0\0\rdefer_fn\bvim\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require('config.statusline')
 time([[Config for lualine.nvim]], false)
--- Config for: project.nvim
-time([[Config for project.nvim]], true)
-require('config.project')
-time([[Config for project.nvim]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21config.which-key\frequire-\1\0\4\0\3\0\0066\0\0\0009\0\1\0003\2\2\0)\3Ð\aB\0\3\1K\0\1\0\0\rdefer_fn\bvim\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
+-- Config for: nvim-dap
+time([[Config for nvim-dap]], true)
+require('config.dap')
+time([[Config for nvim-dap]], false)
+-- Config for: neodev.nvim
+time([[Config for neodev.nvim]], true)
+require('config.neodev')
+time([[Config for neodev.nvim]], false)
 -- Config for: dashboard-nvim
 time([[Config for dashboard-nvim]], true)
 require('config.dashboard-nvim')
 time([[Config for dashboard-nvim]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
+-- Config for: project.nvim
+time([[Config for project.nvim]], true)
+require('config.project')
+time([[Config for project.nvim]], false)
+-- Config for: nvim-notify
+time([[Config for nvim-notify]], true)
+require('config.notify')
+time([[Config for nvim-notify]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
+-- Config for: impatient.nvim
+time([[Config for impatient.nvim]], true)
+require('impatient')
+time([[Config for impatient.nvim]], false)
 -- Config for: bufferline.nvim
 time([[Config for bufferline.nvim]], true)
 require('config.bufferline')
 time([[Config for bufferline.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd ultisnips ]]
-vim.cmd [[ packadd vim-snippets ]]
-vim.cmd [[ packadd nvim-jdtls ]]
-
--- Config for: nvim-jdtls
-require('config.jdtls')
-
-vim.cmd [[ packadd telescope.nvim ]]
-vim.cmd [[ packadd yanky.nvim ]]
-
--- Config for: yanky.nvim
-require('config.yanky')
-
 vim.cmd [[ packadd lspkind-nvim ]]
 vim.cmd [[ packadd nvim-cmp ]]
 
@@ -504,26 +501,39 @@ vim.cmd [[ packadd mason-nvim-dap.nvim ]]
 -- Config for: mason-nvim-dap.nvim
 require('config.masondap')
 
-vim.cmd [[ packadd cmp-nvim-ultisnips ]]
 vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd cmp-path ]]
-vim.cmd [[ packadd cmp-omni ]]
 vim.cmd [[ packadd cmp-buffer ]]
+vim.cmd [[ packadd cmp-omni ]]
+vim.cmd [[ packadd ultisnips ]]
+vim.cmd [[ packadd cmp-nvim-ultisnips ]]
+vim.cmd [[ packadd vim-snippets ]]
 vim.cmd [[ packadd nvim-dap-ui ]]
 
 -- Config for: nvim-dap-ui
 require('config.dapui')
 
+vim.cmd [[ packadd nvim-jdtls ]]
+
+-- Config for: nvim-jdtls
+require('config.jdtls')
+
+vim.cmd [[ packadd telescope.nvim ]]
+vim.cmd [[ packadd yanky.nvim ]]
+
+-- Config for: yanky.nvim
+require('config.yanky')
+
 time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'MundoToggle', function(cmdargs)
-          require('packer.load')({'vim-mundo'}, { cmd = 'MundoToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'Leaderf', function(cmdargs)
+          require('packer.load')({'LeaderF'}, { cmd = 'Leaderf', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-mundo'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('MundoToggle ', 'cmdline')
+          require('packer.load')({'LeaderF'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('Leaderf ', 'cmdline')
       end})
 pcall(vim.api.nvim_create_user_command, 'MundoShow', function(cmdargs)
           require('packer.load')({'vim-mundo'}, { cmd = 'MundoShow', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
@@ -539,12 +549,12 @@ pcall(vim.api.nvim_create_user_command, 'Vista', function(cmdargs)
           require('packer.load')({'vista.vim'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('Vista ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'Leaderf', function(cmdargs)
-          require('packer.load')({'LeaderF'}, { cmd = 'Leaderf', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'MundoToggle', function(cmdargs)
+          require('packer.load')({'vim-mundo'}, { cmd = 'MundoToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'LeaderF'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('Leaderf ', 'cmdline')
+          require('packer.load')({'vim-mundo'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('MundoToggle ', 'cmdline')
       end})
 time([[Defining lazy-load commands]], false)
 

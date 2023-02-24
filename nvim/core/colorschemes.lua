@@ -1,65 +1,49 @@
-require('material').setup({
+require('rose-pine').setup({
+	--- @usage 'auto'|'main'|'moon'|'dawn'
+	variant = 'main',
+	--- @usage 'main'|'moon'|'dawn'
+	dark_variant = 'main',
+	bold_vert_split = false,
+	dim_nc_background = false,
+	disable_background = false,
+	disable_float_background = false,
+	disable_italics = false,
 
-    contrast = {
-        terminal = false, -- Enable contrast for the built-in terminal
-        sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-        floating_windows = false, -- Enable contrast for floating windows
-        cursor_line = true, -- Enable darker background for the cursor line
-        non_current_windows = false, -- Enable darker background for non-current windows
-        filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
-    },
+	--- @usage string hex value or named color from rosepinetheme.com/palette
+	groups = {
+		background = 'base',
+		panel = 'surface',
+		border = 'highlight_med',
+		comment = 'muted',
+		link = 'iris',
+		punctuation = 'subtle',
 
-    styles = { -- Give comments style such as bold, italic, underline etc.
-        comments = { --[[ italic = true ]] },
-        strings = { --[[ bold = true ]] },
-        keywords = { --[[ underline = true ]] },
-        functions = { --[[ bold = true, undercurl = true ]] },
-        variables = {},
-        operators = {},
-        types = {},
-    },
+		error = 'love',
+		hint = 'iris',
+		info = 'foam',
+		warn = 'gold',
 
-    plugins = { -- Uncomment the plugins that you use to highlight them
-        -- Available plugins:
-         "dap",
-         "dashboard",
-        -- "gitsigns",
-        -- "hop",
-         "indent-blankline",
-         "lspsaga",
-        -- "mini",
-         "neogit",
-         "nvim-cmp",
-        -- "nvim-navic",
-         "nvim-tree",
-         "nvim-web-devicons",
-        -- "sneak",
-         "telescope",
-         "trouble",
-         "which-key",
-    },
+		headings = {
+			h1 = 'iris',
+			h2 = 'foam',
+			h3 = 'rose',
+			h4 = 'gold',
+			h5 = 'pine',
+			h6 = 'foam',
+		}
+		-- or set all headings at once
+		-- headings = 'subtle'
+	},
 
-    disable = {
-        colored_cursor = false, -- Disable the colored cursor
-        borders = false, -- Disable borders between verticaly split windows
-        background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
-        term_colors = false, -- Prevent the theme from setting terminal colors
-        eob_lines = false -- Hide the end-of-buffer lines
-    },
+	-- Change specific vim highlight groups
+	highlight_groups = {
+		ColorColumn = { bg = 'rose' },
 
-    high_visibility = {
-        lighter = false, -- Enable higher contrast text for lighter style
-        darker = false -- Enable higher contrast text for darker style
-    },
-
-    lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
-
-    async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
-
-    custom_colors = nil, -- If you want to everride the default colors, set this to a function
-
-    custom_highlights = {}, -- Overwrite highlights with your own
+		-- Blend colours against the "base" background
+		CursorLine = { bg = 'foam', blend = 10 },
+		StatusLine = { fg = 'love', bg = 'love', blend = 10 },
+	}
 })
 
-vim.g.material_style = "deep ocean"
-vim.cmd("colorscheme material")
+-- set colorscheme after options
+vim.cmd('colorscheme rose-pine')

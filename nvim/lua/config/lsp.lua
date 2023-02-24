@@ -57,6 +57,8 @@ diagnostic.config {
 -- })
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
+  -- Disable Diagnostcs globally
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
+  lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })

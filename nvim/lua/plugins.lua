@@ -18,6 +18,8 @@ return require('packer').startup(function(use)
   -- Colorchemes
   use 'marko-cerovac/material.nvim'
   use { "tanvirtin/monokai.nvim" }
+  use({ 'rose-pine/neovim', as = 'rose-pine' })
+  use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }
   use { "lukas-reineke/indent-blankline.nvim", config = [[require("config.indent")]]}

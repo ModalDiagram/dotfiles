@@ -1,3 +1,4 @@
+/* Qui solo per backup. Da inserire nelle impostazioni di sidebery in style_editor */
 #root {
     /* Increase tab height */
     --tabs-height: 32px;
@@ -11,7 +12,7 @@
     Follow the additional steps in https://github.com/dexeonify/firefox-css#vertical-tabs
     to apply colors globally, not just the Sidebar
     */
-    --bg: rgb(43, 42, 51) !important;                   /* Background color */
+    --bg: rgb(25, 23, 36) !important;                   /* Background color */
     --tabs-bg-hover: rgba(66, 65, 77, 0.8) !important;  /* Tab color on hover */
     --tabs-bg-active: rgba(66, 65, 77, 0.8) !important; /* Tab color on mouse click */
     --tabs-activated-bg: rgb(66, 65, 77) !important;    /* Active tab color */
