@@ -96,6 +96,7 @@ return require('packer').startup(function(use)
   })
   -- Gestori di linter e formatter
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
+  use { "jay-babu/mason-null-ls.nvim", after = "null-ls.nvim", config = [[require('config.masonnull')]]}
   -- Gestore di dap
   use { "jay-babu/mason-nvim-dap.nvim", after = "mason.nvim", config = [[require('config.masondap')]] }
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }

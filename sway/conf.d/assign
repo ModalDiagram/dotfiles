@@ -10,3 +10,4 @@ for_window [app_id="libreoffice"] move to workspace $ws_docs, workspace $ws_docs
 for_window [app_id="xournalpp"] move to workspace $ws_work, workspace $ws_work
 for_window [app_id="zenity"] floating enable
 for_window [title="Sharing Indicator"] floating enable, move window to scratchpad
+for_window [title="floating_terminal"] floating enable, move down 120, resize set 900 500, move to scratchpad

@@ -1,6 +1,5 @@
 #!/bin/bash
 IFS=$'\t'
-status=$(playerctl status)
 # if [[ "$status" == "Stopped" ]]; then printf ""; exit; fi
 while read -r playing artist title; do
   if [[ "$playing" == ⏹️ ]]; then printf '{"text":}\n';

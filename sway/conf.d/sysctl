@@ -1,5 +1,6 @@
 # Start a terminal
 bindsym $mod+Return exec $term
+bindsym $mod+0 exec raise_terminal.sh
 
 # Aggiusto la clipboard e aggiungo task
 bindsym $mod+x exec $ONEDRIVE/dotfiles/survey/bin/copy_coor.sh

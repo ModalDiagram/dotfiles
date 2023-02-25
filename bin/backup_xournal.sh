@@ -6,7 +6,7 @@ controlla_in_corso(){
   if [[ -f "$file" ]]; then
     # echo "file esiste"
     pid=$(cat "$file")
-    if ps -p $pid >> /dev/null; then
+    if ps -p "$pid" >> /dev/null; then
       return 1 # torna 1 se il processo esiste, 0 altrimenti
     fi
   fi
@@ -42,7 +42,7 @@ controlla_modifiche(){
     fi
     # echo "finito controllo"
     # echo "$line";
-  done < <(ls -R $ONEDRIVE/write/3_anno/)
+  done < <(ls -R "$ONEDRIVE/write/3_anno/")
 }
 
 # trappo i segnali di CTRL-C e kill per controllare un'ultima volta
@@ -50,14 +50,13 @@ trap "echo controllo e termino; controlla_modifiche; exit" SIGTERM
 trap "echo controllo e termino; controlla_modifiche; exit" SIGINT
 
 # dichiaro variabili
-anno_appunti=$ONEDRIVE/write/3_anno/
 current_time=$(date +"%s")
 i=0
 
 # controllo se il processo esiste, altrimenti lo salvo
 file=/tmp/backup_xournal
-controlla_in_corso
-if [[ $? -gt 0 ]]; then
+
+if ! controlla_in_corso; then
   echo "processo esiste"
   exit
 else
