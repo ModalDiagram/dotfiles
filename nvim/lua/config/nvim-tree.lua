@@ -59,7 +59,7 @@ nvim_tree.setup {
     args = {},
   },
   diagnostics = {
-    enable = true,
+    enable = false,
     show_on_dirs = false,
     icons = {
       hint = "",

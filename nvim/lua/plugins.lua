@@ -9,15 +9,12 @@ return require('packer').startup(function(use)
   use { "lewis6991/impatient.nvim", config = [[require('impatient')]] }
 
   use { "wbthomason/packer.nvim" }
-  use { "olimorris/onedarkpro.nvim" }
   -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
   -- Colorchemes
-  use 'marko-cerovac/material.nvim'
-  use { "tanvirtin/monokai.nvim" }
   use({ 'rose-pine/neovim', as = 'rose-pine' })
   use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
@@ -42,7 +39,8 @@ return require('packer').startup(function(use)
   use { "gbprod/yanky.nvim", after = "telescope.nvim", config = [[require('config.yanky')]] }
   -- Comment plugin
   use { "tpope/vim-commentary" }
-
+  -- Markdown preview
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
   use { "kyazdani42/nvim-web-devicons" }
   -- file explorer
   use {
@@ -84,7 +82,6 @@ return require('packer').startup(function(use)
   -- Gestori di LSP
   use { "williamboman/mason-lspconfig.nvim" }
   use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
-  use { 'RishabhRD/nvim-lsputils' }
   use({
       "glepnir/lspsaga.nvim",
       config = [[require("config.lspsaga")]],
@@ -128,7 +125,6 @@ return require('packer').startup(function(use)
 
   use { "akinsho/bufferline.nvim", config = [[require('config.bufferline')]] }
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
-  use { 'RishabhRD/popfix' }
 
   -- fancy start screen
   use { "glepnir/dashboard-nvim",
@@ -141,6 +137,9 @@ return require('packer').startup(function(use)
 
   -- Plugins di git
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
+
+  use { 'phaazon/hop.nvim', config=[[require('config.hop')]] }
 
 
 
