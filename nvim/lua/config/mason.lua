@@ -8,21 +8,6 @@ local servers = {
       pythonPath = "",
     },
   },
-  jdtls = {
-    Java = {
-      cmd = {
-        "-data",
-        "/home/sandro0198/IdeaProjects/",
-      },
-    },
-  },
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
 }-- forse devo inizializzare le capabilities con make_capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require("mason-lspconfig").setup_handlers {

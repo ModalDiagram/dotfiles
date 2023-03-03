@@ -12,6 +12,9 @@ require("lspsaga").setup({
     respect_root = true,
     color_mode = true,
   },
+  diagnostic = {
+    on_insert=false,
+  },
 })
 
 vim.keymap.set("n", "<space>lf", "<cmd>Lspsaga lsp_finder<cr>", { desc = "show references(saga)" })
@@ -27,6 +30,7 @@ vim.keymap.set("n", "<space>lF", vim.lsp.buf.references, { desc = "show referenc
 vim.keymap.set("n", "<space>la", "<cmd>Lspsaga code_action<cr>", { desc = "LSP code action" })
 vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
 vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
+vim.keymap.set("n", "<space>t", "<cmd>Lspsaga outline<cr>", { desc = "vedi classi e metodi" })
 vim.keymap.set("n", "<space>wl", function()
   inspect(vim.lsp.buf.list_workspace_folders())
 end, { desc = "list workspace folder" })

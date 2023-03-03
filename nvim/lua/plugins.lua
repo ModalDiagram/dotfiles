@@ -59,8 +59,6 @@ return require('packer').startup(function(use)
     keys = { { "n", "*" }, { "n", "#" }, { "n", "n" }, { "n", "N" } },
     config = [[require('config.hlslens')]],
   }
-  -- Vista per ctags
-  use { "liuchengxu/vista.vim", cmd = "Vista" }
   -- Show undo history visually
   use { "simnalamburt/vim-mundo", cmd = { "MundoToggle", "MundoShow" } }
 

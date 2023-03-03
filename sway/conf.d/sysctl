@@ -1,5 +1,6 @@
 # Start a terminal
 bindsym $mod+Return exec $term
+bindsym Ctrl+Return exec $term
 bindsym $mod+0 exec raise_terminal.sh
 
 # Aggiusto la clipboard e aggiungo task

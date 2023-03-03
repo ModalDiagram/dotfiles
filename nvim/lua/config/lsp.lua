@@ -12,22 +12,22 @@ local map = function(mode, l, r, opts)
 end
 
 
- api.nvim_create_autocmd("CursorHold", {
-  callback = function()
-    vim.cmd("Lspsaga show_line_diagnostics")
-    vim.lsp.buf.document_highlight()
-  end,
+api.nvim_create_autocmd("CursorHold", {
+callback = function()
+  vim.cmd("Lspsaga show_line_diagnostics")
+  vim.lsp.buf.document_highlight()
+end,
 })
 
 
 
-  api.nvim_create_autocmd("CursorMoved" , {
-    group = gid,
-    buffer = bufnr,
-    callback = function ()
-      vim.lsp.buf.clear_references()
-    end
-  })
+api.nvim_create_autocmd("CursorMoved" , {
+  group = gid,
+  buffer = bufnr,
+  callback = function ()
+    vim.lsp.buf.clear_references()
+  end
+})
 
 if vim.g.logging_level == "debug" then
   local msg = string.format("Language server %s started!", client.name)
