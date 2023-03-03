@@ -116,6 +116,11 @@ nvim_tree.setup {
   },
 }
 
-keymap.set("n", "<space>s", function()
-  return require("nvim-tree").toggle(false, true)
-end, { silent = true, desc = "toggle nvim-tree" })
+local api = require("nvim-tree.api")
+api.events.subscribe(api.events.Event.FileCreated, function(file)
+  vim.cmd("edit " .. file.fname)
+  -- if vim.bo.filetype == 'java' then
+  --   vim.cmd("call Insert_java()")
+  -- end
+  vim.cmd("call Insert()")
+end)

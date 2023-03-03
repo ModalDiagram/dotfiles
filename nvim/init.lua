@@ -16,6 +16,7 @@ local core_conf_files = {
   "colorschemes.lua", -- imposto il mio colorscheme
   "plugins.vim", -- plugin installati
   "autocommands.vim",
+  "functions.vim",
 }
 
 -- source all the core config files
