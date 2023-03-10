@@ -85,6 +85,8 @@ bindsym $mod+i mode "$change_dt"
 mode "$change_dt" {
     bindsym 1 exec swaymsg move workspace to output $dt_lap, mode "default"
     bindsym 2 exec swaymsg move workspace to output $dt_tv, mode "default"
+    bindsym 0 exec swaymsg output $dt_lap dpms off, mode "default"
+    bindsym 9 exec swaymsg output $dt_lap dpms on, mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
