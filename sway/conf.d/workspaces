@@ -11,8 +11,8 @@ bindsym $mod+9 workspace number 9
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+Backslash workspace prev
-bindsym Ctrl+Shift+Tab workspace prev
-bindsym Ctrl+Backslash workspace prev
+bindsym Ctrl+Alt+Tab workspace next
+bindsym Ctrl+Alt+Backslash workspace prev
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws_term, workspace $ws_term
 bindsym $mod+Shift+2 move container to workspace $ws_web, workspace $ws_web
