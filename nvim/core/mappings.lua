@@ -15,6 +15,7 @@ keymap.set("i", "<c-t>", "<Esc>b~lea")
 keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "paste below current line" })
 keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "paste above current line" })
 
+------------------------- BUFFERS MAPPINGS ----------------------------------------
 -- Shortcut for faster save and quit
 keymap.set("n", "<leader>w", "<cmd>update<cr>", { silent = true, desc = "save buffer" })
 
@@ -27,6 +28,13 @@ keymap.set("n", "<leader>Q", "<cmd>qa!<cr>", { silent = true, desc = "quit nvim"
 -- move between buffers
 keymap.set("n", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
 keymap.set("n", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
+
+-- Copy entire buffer.
+keymap.set("n", "<c-b>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
+keymap.set("n", "<c-b>d", "<cmd>bd<cr>", { desc = "delete current buffer" })
+
+
+
 
 -- Insert a blank line below or above current line (do not move the cursor),
 -- see https://stackoverflow.com/a/16136133/6064933
@@ -81,8 +89,6 @@ keymap.set("x", "c", '"_c')
 -- Remove trailing whitespace characters
 keymap.set("n", "<leader><space>", "<cmd>StripTrailingWhitespace<cr>", { desc = "remove trailing space" })
 
--- Copy entire buffer.
-keymap.set("n", "<leader>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
 
 -- Move current line up and down
 keymap.set("n", "<A-k>", '<cmd>call utils#SwitchLine(line("."), "up")<cr>', { desc = "move line up" })
@@ -149,13 +155,6 @@ vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
 vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
 
 
--- Go to a certain buffer
-keymap.set("n", "gb", '<cmd>call buf_utils#GoToBuffer(v:count, "forward")<cr>', {
-  desc = "go to buffer (forward)",
-})
-keymap.set("n", "gB", '<cmd>call buf_utils#GoToBuffer(v:count, "backward")<cr>', {
-  desc = "go to buffer (backward)",
-})
 
 -- Mappings di telescope
 vim.keymap.set("n", "<leader>tp", "<cmd>Telescope projects<cr>", {
@@ -165,7 +164,7 @@ vim.keymap.set("n", "<leader>td", '<cmd>lua require("telescope.builtin").find_fi
   desc = "Search for dotfiles"
 })
 vim.keymap.set("n", "<leader>tb", '<cmd>Telescope buffers<cr>', {
-  desc = "Search for dotfiles"
+  desc = "Search for buffer"
 })
 
 -- Mappings di nvim_tree
@@ -175,7 +174,7 @@ vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "To
 -- Mappings di dap
 vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr>', {desc = "Start debug"})
 vim.keymap.set("n", "<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>', {desc = "Toggle breakpoint"})
-vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").close()<cr><cmd>lua require("dapui").toggle()<cr>', {desc = "Start debug"})
+vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").terminate()<cr><cmd>lua require("dapui").toggle()<cr>', {desc = "Toggle dapui"})
 vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").clear_breakpoints()<cr>', {desc = "clear breakpoints"})
 vim.keymap.set("n", "<leader>do", '<cmd>lua require("dapui").toggle()<cr>', {desc = "toggle dapui"})
 

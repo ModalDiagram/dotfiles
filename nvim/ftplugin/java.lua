@@ -93,7 +93,7 @@ local config = {
 -- if a config was found, this adds its (settings) contents to the config
 if config_found then
   for k, v in pairs(my_settings.settings) do
-    print(k, v)
+    -- print(k, v)
     config['settings'][k] = v
   end
 end

@@ -12,7 +12,8 @@ return require('packer').startup(function(use)
   -- Telescope
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { {'nvim-lua/plenary.nvim'} },
+    config = [[require("config.telescope")]]
   }
   -- Colorchemes
   use({ 'rose-pine/neovim', as = 'rose-pine' })
@@ -89,7 +90,8 @@ return require('packer').startup(function(use)
           {"nvim-treesitter/nvim-treesitter"}
       }
   })
-  -- Gestori di linter e formatter
+  use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
+  -- Gestori di linter
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
   use { "jay-babu/mason-null-ls.nvim", after = "null-ls.nvim", config = [[require('config.masonnull')]]}
   -- Gestore di dap
@@ -122,7 +124,6 @@ return require('packer').startup(function(use)
   use { "Yggdroot/LeaderF", cmd = "Leaderf", run = ":LeaderfInstallCExtension" }
 
   use { "akinsho/bufferline.nvim", config = [[require('config.bufferline')]] }
-  use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
 
   -- fancy start screen
   use { "glepnir/dashboard-nvim",
