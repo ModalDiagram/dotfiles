@@ -29,6 +29,24 @@ dapui.setup({
     log = {
       level = "info",
     },
+    layouts = { {
+      elements = {
+        {
+          id = "scopes",
+          size = 0.2
+        }, {
+          id = "breakpoints",
+          size = 0.1
+        }, {
+          id = "watches",
+          size = 0.2
+        }, {
+          id = "console",
+          size = 0.5
+        } },
+        position = "right",
+        size = 60
+    } },
     ui = {
       auto_open = true,
       notify = {
