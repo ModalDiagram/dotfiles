@@ -1,2 +1,0 @@
-if verbose:
-print(yes)

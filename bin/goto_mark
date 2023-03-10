@@ -2,7 +2,7 @@
 add_icon() {
   while read -r line; do
     nome_app=${line%%:*}
-    if [[ "$nome_app" == $1 ]]; then
+    if [[ "$nome_app" == "$1" ]]; then
       printf ${line#*:}
     fi
   done <<EOF
@@ -10,6 +10,8 @@ firefox:/usr/share/icons/hicolor/scalable/apps/firefox.svg
 jetbrains-idea-ce:/home/sandro0198/idea-IC-223.8617.56/bin/idea.png
 discord:/var/lib/flatpak/exports/share/icons/hicolor/256x256/apps/com.discordapp.Discord.png
 chromium:/usr/share/icons/hicolor/256x256/apps/chromium.png
+Spotify:/var/lib/flatpak/exports/share/icons/hicolor/scalable/apps/com.spotify.Client.svg
+Alacritty:/usr/share/icons/hicolor/128x128/apps/nvim.png
 EOF
 }
 strip_virg(){
@@ -19,12 +21,12 @@ strip_virg(){
 str=""
 echo "$(swaymsg -t get_tree | jq 'recurse(.nodes[]) | select(.marks != []) | if .app_id == null then .window_properties.class else .app_id end , .marks[0], .name')" |
 {
-while IFS=$"\n" read -r c; do
+while IFS=$'\n' read -r c; do
   # c contiene l'app_id
 
   str+="img:"
   c=$(strip_virg c);
-  icon=$(add_icon $c);
+  icon=$(add_icon "$c");
   str+="$icon:text:"
 
   # c contiene il mark
@@ -40,7 +42,7 @@ printf "$str"
 mark=$(printf "$str" | wofi -i --allow-images --height 210 --dmenu --cache-file /dev/null)
 mark=${mark%%$'\t'*}
 mark=${mark##*:}
-echo $mark
+echo "$mark"
 if ! [[ -z "$mark" ]]; then
   swaymsg "[con_mark=$mark]" focus
 fi
