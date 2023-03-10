@@ -81,22 +81,22 @@ let g:Lf_ShortcutB = ''
 let g:Lf_WorkingDirectoryMode = 'a'
 
 " Search files in popup window
-nnoremap <silent> <leader>ff :<C-U>Leaderf file --popup<CR>
+nnoremap <silent> <leader>ff :<C-U>Leaderf file <CR>
 
 " Grep project files in popup window
-nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages --popup<CR>
+nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages <CR>
 
 " Search vim help files
-nnoremap <silent> <leader>fh :<C-U>Leaderf help --popup<CR>
+nnoremap <silent> <leader>fh :<C-U>Leaderf help <CR>
 
 " Search tags in current buffer
-nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag --popup<CR>
+nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag <CR>
 
 " Switch buffers
-nnoremap <silent> <leader>fb :<C-U>Leaderf buffer --popup<CR>
+nnoremap <silent> <leader>fb :<C-U>Leaderf buffer <CR>
 
 " Search recent files
-nnoremap <silent> <leader>fr :<C-U>Leaderf mru --popup --absolute-path<CR>
+nnoremap <silent> <leader>fr :<C-U>Leaderf mru  --absolute-path<CR>
 
 " :lua << EOF
 " vim.keymap.set('n', "<leader>ai", "")

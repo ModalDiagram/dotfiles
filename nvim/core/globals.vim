@@ -1,3 +1,5 @@
+let g:python3_host_prog = "/home/sandro0198/anaconda3/envs/nvim/bin/python3"
+
 set number relativenumber
 let mapleader = ","
 nnoremap è \"+p

@@ -164,13 +164,20 @@ vim.keymap.set("n", "<leader>tp", "<cmd>Telescope projects<cr>", {
 vim.keymap.set("n", "<leader>td", '<cmd>lua require("telescope.builtin").find_files( { cwd = "/home/sandro0198/.config/nvim/" })<cr>', {
   desc = "Search for dotfiles"
 })
+vim.keymap.set("n", "<leader>tb", '<cmd>Telescope buffers<cr>', {
+  desc = "Search for dotfiles"
+})
 
 -- Mappings di nvim_tree
 vim.keymap.set("n", "<leader>nt", '<cmd>NvimTreeToggle<cr>', {desc = "Toggle the tree"})
 vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "Toggle the findFileTree"})
 
--- Mappins di dap
+-- Mappings di dap
 vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr>', {desc = "Start debug"})
 vim.keymap.set("n", "<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>', {desc = "Toggle breakpoint"})
 vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").close()<cr><cmd>lua require("dapui").toggle()<cr>', {desc = "Start debug"})
 vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").clear_breakpoints()<cr>', {desc = "clear breakpoints"})
+vim.keymap.set("n", "<leader>do", '<cmd>lua require("dapui").toggle()<cr>', {desc = "toggle dapui"})
+
+-- Mappings di Trouble
+vim.keymap.set("n", "<leader>tt", '<cmd>TroubleToggle<cr>', {desc = "Toggle trouble"})

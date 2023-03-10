@@ -15,6 +15,13 @@ require("lspsaga").setup({
   diagnostic = {
     on_insert=false,
   },
+  outline = {
+    keys = {
+      jump = "<Enter>",
+      expand_collapse = "-",
+      quit = "q",
+    },
+  }
 })
 
 vim.keymap.set("n", "<space>lf", "<cmd>Lspsaga lsp_finder<cr>", { desc = "show references(saga)" })

@@ -240,7 +240,7 @@ _G.packer_plugins = {
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-omni", "cmp-path", "mason.nvim", "cmp-nvim-ultisnips", "cmp-nvim-lsp", "cmp-buffer" },
+    after = { "mason.nvim", "cmp-nvim-lsp", "cmp-nvim-ultisnips", "cmp-omni", "cmp-path", "cmp-buffer" },
     config = { "require('config.nvim-cmp')" },
     load_after = {},
     loaded = true,
@@ -415,34 +415,30 @@ time([[Defining packer_plugins]], false)
 time([[Setup for markdown-preview.nvim]], true)
 try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
 time([[Setup for markdown-preview.nvim]], false)
--- Config for: nvim-notify
-time([[Config for nvim-notify]], true)
-require('config.notify')
-time([[Config for nvim-notify]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
--- Config for: dashboard-nvim
-time([[Config for dashboard-nvim]], true)
-require('config.dashboard-nvim')
-time([[Config for dashboard-nvim]], false)
--- Config for: neogit
-time([[Config for neogit]], true)
-require('config.neogit')
-time([[Config for neogit]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21config.which-key\frequire-\1\0\4\0\3\0\0066\0\0\0009\0\1\0003\2\2\0)\3Ð\aB\0\3\1K\0\1\0\0\rdefer_fn\bvim\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-require('config.lsp')
-time([[Config for nvim-lspconfig]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
+-- Config for: dashboard-nvim
+time([[Config for dashboard-nvim]], true)
+require('config.dashboard-nvim')
+time([[Config for dashboard-nvim]], false)
+-- Config for: nvim-dap
+time([[Config for nvim-dap]], true)
+require('config.dap')
+time([[Config for nvim-dap]], false)
+-- Config for: neodev.nvim
+time([[Config for neodev.nvim]], true)
+require('config.neodev')
+time([[Config for neodev.nvim]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
 -- Config for: diffview.nvim
 time([[Config for diffview.nvim]], true)
 require('config.diffview')
@@ -451,10 +447,42 @@ time([[Config for diffview.nvim]], false)
 time([[Config for bufferline.nvim]], true)
 require('config.bufferline')
 time([[Config for bufferline.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
+-- Config for: hop.nvim
+time([[Config for hop.nvim]], true)
+require('config.hop')
+time([[Config for hop.nvim]], false)
+-- Config for: neogit
+time([[Config for neogit]], true)
+require('config.neogit')
+time([[Config for neogit]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+require("config.indent")
+time([[Config for indent-blankline.nvim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+require('config.lsp')
+time([[Config for nvim-lspconfig]], false)
 -- Config for: project.nvim
 time([[Config for project.nvim]], true)
 require('config.project')
 time([[Config for project.nvim]], false)
+-- Config for: lspsaga.nvim
+time([[Config for lspsaga.nvim]], true)
+require("config.lspsaga")
+time([[Config for lspsaga.nvim]], false)
+-- Config for: nvim-notify
+time([[Config for nvim-notify]], true)
+require('config.notify')
+time([[Config for nvim-notify]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+require('config.statusline')
+time([[Config for lualine.nvim]], false)
 -- Config for: null-ls.nvim
 time([[Config for null-ls.nvim]], true)
 require('config.null')
@@ -463,46 +491,38 @@ time([[Config for null-ls.nvim]], false)
 time([[Config for impatient.nvim]], true)
 require('impatient')
 time([[Config for impatient.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-require('config.statusline')
-time([[Config for lualine.nvim]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-require("config.indent")
-time([[Config for indent-blankline.nvim]], false)
--- Config for: hop.nvim
-time([[Config for hop.nvim]], true)
-require('config.hop')
-time([[Config for hop.nvim]], false)
--- Config for: nvim-dap
-time([[Config for nvim-dap]], true)
-require('config.dap')
-time([[Config for nvim-dap]], false)
--- Config for: lspsaga.nvim
-time([[Config for lspsaga.nvim]], true)
-require("config.lspsaga")
-time([[Config for lspsaga.nvim]], false)
--- Config for: neodev.nvim
-time([[Config for neodev.nvim]], true)
-require('config.neodev')
-time([[Config for neodev.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd ultisnips ]]
-vim.cmd [[ packadd vim-snippets ]]
+vim.cmd [[ packadd telescope.nvim ]]
+vim.cmd [[ packadd yanky.nvim ]]
+
+-- Config for: yanky.nvim
+require('config.yanky')
+
+vim.cmd [[ packadd mason-null-ls.nvim ]]
+
+-- Config for: mason-null-ls.nvim
+require('config.masonnull')
+
+vim.cmd [[ packadd nvim-dap-ui ]]
+
+-- Config for: nvim-dap-ui
+require('config.dapui')
+
+vim.cmd [[ packadd nvim-jdtls ]]
+
+-- Config for: nvim-jdtls
+require('config.jdtls')
+
 vim.cmd [[ packadd lspkind-nvim ]]
 vim.cmd [[ packadd nvim-cmp ]]
 
 -- Config for: nvim-cmp
 require('config.nvim-cmp')
 
-vim.cmd [[ packadd cmp-nvim-ultisnips ]]
+vim.cmd [[ packadd cmp-omni ]]
 vim.cmd [[ packadd cmp-nvim-lsp ]]
+vim.cmd [[ packadd cmp-path ]]
 vim.cmd [[ packadd mason.nvim ]]
 
 -- Config for: mason.nvim
@@ -513,41 +533,14 @@ vim.cmd [[ packadd mason-nvim-dap.nvim ]]
 -- Config for: mason-nvim-dap.nvim
 require('config.masondap')
 
-vim.cmd [[ packadd cmp-path ]]
 vim.cmd [[ packadd cmp-buffer ]]
-vim.cmd [[ packadd cmp-omni ]]
-vim.cmd [[ packadd nvim-dap-ui ]]
-
--- Config for: nvim-dap-ui
-require('config.dapui')
-
-vim.cmd [[ packadd mason-null-ls.nvim ]]
-
--- Config for: mason-null-ls.nvim
-require('config.masonnull')
-
-vim.cmd [[ packadd telescope.nvim ]]
-vim.cmd [[ packadd yanky.nvim ]]
-
--- Config for: yanky.nvim
-require('config.yanky')
-
-vim.cmd [[ packadd nvim-jdtls ]]
-
--- Config for: nvim-jdtls
-require('config.jdtls')
-
+vim.cmd [[ packadd ultisnips ]]
+vim.cmd [[ packadd vim-snippets ]]
+vim.cmd [[ packadd cmp-nvim-ultisnips ]]
 time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'MundoToggle', function(cmdargs)
-          require('packer.load')({'vim-mundo'}, { cmd = 'MundoToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-mundo'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('MundoToggle ', 'cmdline')
-      end})
 pcall(vim.api.nvim_create_user_command, 'MundoShow', function(cmdargs)
           require('packer.load')({'vim-mundo'}, { cmd = 'MundoShow', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
@@ -562,14 +555,21 @@ pcall(vim.api.nvim_create_user_command, 'Leaderf', function(cmdargs)
           require('packer.load')({'LeaderF'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('Leaderf ', 'cmdline')
       end})
+pcall(vim.api.nvim_create_user_command, 'MundoToggle', function(cmdargs)
+          require('packer.load')({'vim-mundo'}, { cmd = 'MundoToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'vim-mundo'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('MundoToggle ', 'cmdline')
+      end})
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[nnoremap <silent> N <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "N", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> # <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "#", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> n <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "n", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> * <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "*", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> N <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "N", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> n <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "n", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> # <cmd>lua require("packer.load")({'nvim-hlslens'}, { keys = "#", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]

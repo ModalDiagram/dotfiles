@@ -3,9 +3,23 @@
 
 
 -- Cerco la directory del progetto per avere un workspace per progetto
-local root_markers = { "gradlew", "mvnw", ".git", "pom.xml", "build.gradle" }
+local root_markers = { "gradlew", "mvnw", ".git", ".gitignore", "pom.xml", "build.gradle", ".idea" }
 local root_dir = require("jdtls.setup").find_root(root_markers)
 local project_name = vim.fn.fnamemodify(root_dir, ':p:h:t')
+
+-- Vedo se esiste una configurazione specifica nella root dir e in caso la carico
+local personal_config = root_dir .. "/jdtls_config.lua"
+local f = io.open(personal_config, "r")
+local my_settings = {}
+local config_found = false
+if f ~= nil then
+  my_settings = loadfile(personal_config)()
+  config_found = true
+  -- print(vim.inspect(table.settings))
+  -- local prova['a'] = table.settings
+  -- print(vim.inspect(prova))
+  -- print("trovata config del progetto")
+end
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -49,14 +63,19 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = require('jdtls.setup').find_root({'.git', 'mvnw', 'gradlew'}),
+  root_dir = require('jdtls.setup').find_root(root_markers),
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   -- for a list of options
   settings = {
-    java = {
-    }
+  --   java = {
+  --     project = {
+  --       referencedLibraries = {
+  --         '/home/sandro0198/Downloads/postgresql-42.5.4.jar'
+  --       },
+  --     },
+  --   }
   },
 
   -- Language server `initializationOptions`
@@ -70,6 +89,15 @@ local config = {
     bundles = {}
   },
 }
+
+-- if a config was found, this adds its (settings) contents to the config
+if config_found then
+  for k, v in pairs(my_settings.settings) do
+    print(k, v)
+    config['settings'][k] = v
+  end
+end
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(config)
@@ -81,6 +109,7 @@ config['init_options'] = {
     vim.fn.glob("/home/sandro0198/altre_app/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.44.0.jar", 1)
   };
 }
+-- print(vim.inspect(config))
 config['on_attach'] = function(client, bufnr)
   -- With `hotcodereplace = 'auto' the debug adapter will try to apply code changes
   -- you make during a debug session immediately.
