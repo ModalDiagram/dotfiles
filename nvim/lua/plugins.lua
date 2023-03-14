@@ -20,7 +20,8 @@ return require('packer').startup(function(use)
   use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }
-  use { "lukas-reineke/indent-blankline.nvim", config = [[require("config.indent")]]}
+  use { "lukas-reineke/indent-blankline.nvim", after={"treesitter-indent-object.nvim"}, config = [[require("config.indent")]]}
+
 
   -- showing keybindings
   use {
@@ -67,7 +68,6 @@ return require('packer').startup(function(use)
   use { "onsails/lspkind-nvim" }
   -- Snippet engine and snippet template
   use { "SirVer/ultisnips" }
-  use { "honza/vim-snippets", after = "ultisnips" }
   -- auto-completion engine
   use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
   -- nvim-cmp completion sources
@@ -75,6 +75,7 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-path", after = "nvim-cmp" }
   use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
   use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
   use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
   -- Mason gestisce LSP, DAP, linter e formatter
   use { "williamboman/mason.nvim", after = "nvim-cmp", config = [[require('config.mason')]] }
@@ -101,6 +102,8 @@ return require('packer').startup(function(use)
   use { "rcarriga/nvim-dap-ui", after = {"nvim-dap", "neodev.nvim"}, requires = {"mfussenegger/nvim-dap"}, config = [[require('config.dapui')]] }
   -- Treesitter per gli highlight
   use { "nvim-treesitter/nvim-treesitter",config = [[require('config.treesitter')]] }
+  use { 'nvim-treesitter/playground' }
+  use { "kiyoon/treesitter-indent-object.nvim"}
 
   use { "rcarriga/nvim-notify", config = [[require('config.notify')]] }
   -- Plugin to manipulate character pairs quickly
@@ -138,7 +141,7 @@ return require('packer').startup(function(use)
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
-  use { 'phaazon/hop.nvim', config=[[require('config.hop')]] }
+  use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
 
 
 

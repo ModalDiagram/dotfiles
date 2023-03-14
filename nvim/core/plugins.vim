@@ -1,17 +1,9 @@
 " Plugin specification and lua stuff
 lua require('plugins')
 
-" """""""""""""""""""" Impostazioni di Vista"""""""""""""""""""
-" let g:vista#renderer#icons = {
-"       \ 'member': '',
-"       \ }
 
-" " Do not echo message on command line
-" let g:vista_echo_cursor = 0
-" " Stay in current window when vista window is opened
-" let g:vista_stay_on_open = 0
-
-" nnoremap <silent> <Space>t :<C-U>Vista!!<CR>
+""""""""""""""""""""""""markdown-preview settings"""""""""""""""""""""""
+let g:mkdp_auto_close = 0
 
 """"""""""""""""""""""""vim-mundo settings"""""""""""""""""""""""
 let g:mundo_verbose_graph = 0
@@ -39,15 +31,16 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips', 'my_snippets']
 let g:Lf_UseCache = 0
 " Refresh each time we call leaderf
 let g:Lf_UseMemoryCache = 0
+let g:Lf_UseVersionControlTool = 1
 
 " Ignore certain files and directories when searching files
 let g:Lf_WildIgnore = {
-  \ 'dir': ['.git', '__pycache__', '.DS_Store'],
+  \ 'dir': ['.git', '__pycache__', '.DS_Store', '.settings', 'target'],
   \ 'file': ['*.exe', '*.dll', '*.so', '*.o', '*.pyc', '*.jpg', '*.png',
   \ '*.gif', '*.svg', '*.ico', '*.db', '*.tgz', '*.tar.gz', '*.gz',
   \ '*.zip', '*.bin', '*.pptx', '*.xlsx', '*.docx', '*.pdf', '*.tmp',
   \ '*.wmv', '*.mkv', '*.mp4', '*.rmvb', '*.ttf', '*.ttc', '*.otf',
-  \ '*.mp3', '*.aac']
+  \ '*.mp3', '*.aac', '*.classpath', '*.project']
   \}
 
 " Only fuzzy-search files names

@@ -11,3 +11,23 @@ augroup ft_insert
   autocmd BufNewFile *.{java} call Insert_java()
 augroup end
 
+autocmd VimEnter * call Open_at_dir()
+autocmd BufWinLeave * call Save_last_file()
+
+
+" Define or override some highlight groups
+augroup custom_highlight
+  autocmd!
+  autocmd VimEnter * call s:custom_highlight()
+augroup END
+
+function! s:custom_highlight() abort
+  " For yank highlight
+  highlight @method guifg=#c4a7e7
+  highlight conditional guifg=#ebbcba
+  highlight keyword guifg=#eb6f92
+  highlight @attribute guifg=#ffe14d
+
+endfunction
+
+

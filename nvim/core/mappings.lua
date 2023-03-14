@@ -2,6 +2,9 @@ local keymap = vim.keymap
 local api = vim.api
 local uv = vim.loop
 
+-- insert semicolon in the end
+keymap.set({"n"}, "<space>;", "<Esc>miA;<Esc>`ii")
+
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ".", ":")
 
@@ -28,10 +31,15 @@ keymap.set("n", "<leader>Q", "<cmd>qa!<cr>", { silent = true, desc = "quit nvim"
 -- move between buffers
 keymap.set("n", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
 keymap.set("n", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
+keymap.set("i", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
+keymap.set("i", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
 
 -- Copy entire buffer.
 keymap.set("n", "<c-b>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
 keymap.set("n", "<c-b>d", "<cmd>bd<cr>", { desc = "delete current buffer" })
+
+-- Navigate with telescope (<c-d> to remove buffer)
+keymap.set("n", "<c-b>t", "<cmd>Telescope buffers<cr>", { desc = "Telescope buffers" })
 
 
 
@@ -126,11 +134,11 @@ api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Go to the beginning and end of current line in insert mode quickly
-keymap.set("i", "<C-A>", "<HOME>")
-keymap.set("i", "<C-E>", "<END>")
+keymap.set("i", "<c-a>", "<HOME>")
+keymap.set("i", "<c-s>", "<END>")
 -- Go to the beginning and end of current line in normal mode quickly
-keymap.set("n", "<C-A>", "<HOME>")
-keymap.set("n", "<C-E>", "<END>")
+keymap.set("n", "<c-a>", "<HOME>")
+keymap.set("n", "<c-s>", "<END>")
 
 -- Go to beginning of command in command-line mode
 keymap.set("c", "<C-A>", "<HOME>")
@@ -172,10 +180,14 @@ vim.keymap.set("n", "<leader>nt", '<cmd>NvimTreeToggle<cr>', {desc = "Toggle the
 vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "Toggle the findFileTree"})
 
 -- Mappings di dap
-vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr>', {desc = "Start debug"})
+-- Lancio debug del main
+vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr><cmd>lua require("dapui").open(1)<cr>', {desc = "Start debug"})
+-- Continuo il programma
+vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").continue()<cr>', {desc = "Continue dap"})
+-- Chiudo tutto
+vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").terminate()<cr><cmd>lua require("dapui").close()<cr>', {desc = "Terminate dap"})
 vim.keymap.set("n", "<leader>db", '<cmd>lua require("dap").toggle_breakpoint()<cr>', {desc = "Toggle breakpoint"})
-vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").terminate()<cr><cmd>lua require("dapui").toggle()<cr>', {desc = "Toggle dapui"})
-vim.keymap.set("n", "<leader>dd", '<cmd>lua require("dap").clear_breakpoints()<cr>', {desc = "clear breakpoints"})
+vim.keymap.set("n", "<leader>dr", '<cmd>lua require("dap").clear_breakpoints()<cr>', {desc = "clear breakpoints"})
 vim.keymap.set("n", "<leader>do", '<cmd>lua require("dapui").toggle()<cr>', {desc = "toggle dapui"})
 
 -- Mappings di Trouble

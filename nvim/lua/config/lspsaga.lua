@@ -1,4 +1,5 @@
 require("lspsaga").setup({
+  server_filetype_map = { jtdls = {'java'} },
   lightbulb = {
     enable = false,
   },
@@ -14,6 +15,7 @@ require("lspsaga").setup({
   },
   diagnostic = {
     on_insert=false,
+    show_virt_line=true
   },
   outline = {
     keys = {

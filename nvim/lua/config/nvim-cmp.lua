@@ -26,7 +26,6 @@ cmp.setup {
     end,
     ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<Esc>"] = cmp.mapping.close(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
   },
@@ -59,3 +58,29 @@ cmp.setup {
     },
   },
 }
+
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline({
+    ['<C-j>'] = cmp.mapping({
+        c = function(fallback)
+            if cmp.visible() then
+                return cmp.select_next_item()
+            end
+
+            fallback()
+        end,
+    }),
+    ['<C-k>'] = cmp.mapping({
+        c = function(fallback)
+            if cmp.visible() then
+                return cmp.select_prev_item()
+            end
+
+            fallback()
+        end,
+    }),
+  }),
+  sources = {
+    { name = "cmdline"},
+  },
+})

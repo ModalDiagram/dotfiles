@@ -26,12 +26,28 @@ endfunction
 
 function Insert_java()
   let iniz = expand("%:p")
-  let path = expand(iniz)[matchend(expand(iniz), "src")+1:-6]
+  let src = matchend(expand(iniz), "src")
+  " execute "normal! isrc " . src . ";"
+  if src == -1
+    return
+  endif
+  let path = expand(iniz)[src+1:-6]
+  " execute "normal! ipath " . path . ";"
+  let main_java = matchend(expand(path), "main/java")
+  " execute "normal! imainjava " . main_java . ";"
+  if main_java != 1
+    let path = expand(path)[main_java+1:]
+  endif
+  " execute "normal! ipath " . path . ";"
   let last_slash = matchend(path, '.*\zs/')
-  let package = substitute(path[0:last_slash-2],'/','.', 'g')
-  execute "normal! ipackage " . package . ";"
-  normal! o
-  normal! o
+  if last_slash != -1
+    let package = substitute(path[0:last_slash-2],'/','.', 'g')
+    execute "normal! ipackage " . package . ";"
+    normal! o
+    normal! o
+  else
+    let last_slash=0
+  endif
   execute "normal! ipublic class " . path[last_slash:-1] . "{"
   normal! o
   normal! o
@@ -44,4 +60,16 @@ function Insert()
   elseif &filetype=='sh'
     call Insert_sh()
   endif
+endfunction
+
+function Open_at_dir()
+  if isdirectory(expand("%:p"))
+    cd %:p
+    lua require("nvim-tree.api").tree.open()
+  endif
+endfunction
+
+function Save_last_file()
+  let path=[expand("%:p")]
+  call writefile(path, "/tmp/nvim_last_file")
 endfunction

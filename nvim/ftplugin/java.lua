@@ -2,24 +2,25 @@
 -- Al suo posto uso il plugin e il suo dap. Forse c'è da mettere after nvim-dap nei plugins
 
 
+vim.keymap.set("n", "<leader>dt", '<cmd>lua require("jdtls").test_class()<cr><cmd>lua require("dapui").open(2)<cr>', {desc = "test class"})
 -- Cerco la directory del progetto per avere un workspace per progetto
 local root_markers = { "gradlew", "mvnw", ".git", ".gitignore", "pom.xml", "build.gradle", ".idea" }
 local root_dir = require("jdtls.setup").find_root(root_markers)
 local project_name = vim.fn.fnamemodify(root_dir, ':p:h:t')
 
 -- Vedo se esiste una configurazione specifica nella root dir e in caso la carico
-local personal_config = root_dir .. "/jdtls_config.lua"
-local f = io.open(personal_config, "r")
-local my_settings = {}
-local config_found = false
-if f ~= nil then
-  my_settings = loadfile(personal_config)()
-  config_found = true
-  -- print(vim.inspect(table.settings))
-  -- local prova['a'] = table.settings
-  -- print(vim.inspect(prova))
-  -- print("trovata config del progetto")
-end
+-- local personal_config = root_dir .. "/jdtls_config.lua"
+-- local f = io.open(personal_config, "r")
+-- local my_settings = {}
+-- local config_found = false
+-- if f ~= nil then
+--   my_settings = loadfile(personal_config)()
+--   config_found = true
+--   -- print(vim.inspect(table.settings))
+--   -- local prova['a'] = table.settings
+--   -- print(vim.inspect(prova))
+--   -- print("trovata config del progetto")
+-- end
 
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
@@ -63,7 +64,7 @@ local config = {
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
-  root_dir = require('jdtls.setup').find_root(root_markers),
+  root_dir = root_dir,
 
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -98,13 +99,13 @@ if config_found then
   end
 end
 
--- This starts a new client & server,
--- or attaches to an existing client & server depending on the `root_dir`.
-require('jdtls').start_or_attach(config)
 
 
+local extendedClientCapabilities = require'jdtls'.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 -- SETUP DEL DAP
 config['init_options'] = {
+  extendedClientCapabilities = extendedClientCapabilities;
   bundles = {
     vim.fn.glob("/home/sandro0198/altre_app/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-0.44.0.jar", 1)
   };
@@ -117,3 +118,6 @@ config['on_attach'] = function(client, bufnr)
   -- You can use the `JdtHotcodeReplace` command to trigger it manually
   require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 end
+-- This starts a new client & server,
+-- or attaches to an existing client & server depending on the `root_dir`.
+require('jdtls').start_or_attach(config)
