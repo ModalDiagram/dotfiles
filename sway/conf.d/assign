@@ -1,13 +1,29 @@
-for_window [app_id="firefox"] move to workspace $ws_web, workspace $ws_web
+# Terminal
+
+# Web
+for_window [app_id="firefox"] move to workspace $ws_web, workspace $ws_web, exec mark_mark
 for_window [app_id="firefox"] inhibit_idle fullscreen
-for_window [title="Spotify – Web Player — Mozilla Firefox"] move to workspace $ws_music, workspace $ws_music
-for_window [class="Spotify"] move to workspace $ws_music, workspace $ws_music
-for_window [title="Twitch — Mozilla Firefox"] move to workspace $ws_media, workspace $ws_media
-for_window [title="ranger"] move to workspace $ws_code, workspace $ws_code
+
+# Work
 for_window [app_id="org.kde.okular"] move to workspace $ws_work, workspace $ws_work
 for_window [title="Stylus Labs Write"] move to workspace $ws_work, workspace $ws_work
-for_window [app_id="libreoffice"] move to workspace $ws_docs, workspace $ws_docs
 for_window [app_id="xournalpp"] move to workspace $ws_work, workspace $ws_work
+
+# Doc
+for_window [app_id="libreoffice"] move to workspace $ws_docs, workspace $ws_docs
+
+# Media
+for_window [title="Twitch — Mozilla Firefox"] move to workspace $ws_media, workspace $ws_media
+for_window [title="Discord"] move to workspace $ws_media, workspace $ws_media, exec mark_mark
+
+# Music
+for_window [class="Spotify"] move to workspace $ws_music, workspace $ws_music, exec mark_mark
+
+# Code
+for_window [title="ranger"] move to workspace $ws_code, workspace $ws_code
+
+
+# Floating
 for_window [app_id="zenity"] floating enable
 for_window [title="Sharing Indicator"] floating enable, move window to scratchpad
 for_window [title="floating_terminal"] floating enable, move down 120, resize set 900 500, move to scratchpad
