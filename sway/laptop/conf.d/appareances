@@ -1,8 +1,6 @@
 #client.focused #8fd4ff #8fd4ff #8fd4ff #8fd4ff #8fd4ff
 default_border pixel 1
-default_dim_inactive 0.2
 corner_radius 5
-
 
 # {{{ Color defs - fallback to solarized
 set $color0x #073642
