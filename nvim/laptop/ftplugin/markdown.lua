@@ -1,0 +1,1 @@
+../../parent/ftplugin/markdown.lua

@@ -1,5 +1,5 @@
 window#waybar {
-    background: transparent;
+    background-color: #191724;
     font-family: monospace;
 }
 
@@ -25,7 +25,7 @@ window#waybar {
 }
 
 #workspaces button.focused {
-  color: #67b0e8;
+  color: #EB6F92;
 }
 
 #window {
@@ -68,7 +68,7 @@ window#waybar {
 	border-radius: 26px;
 	transition: none;
 	color: #4d4d4d;
-	background: #f1fa8c;
+	background: #EB6F92;
 }
 
 #network {
@@ -82,7 +82,7 @@ window#waybar {
 	border-radius: 26px;
 	transition: none;
 	color: #4d4d4d;
-	background: #bd93f9;
+	background: #dadada;
 }
 
 #pulseaudio {
@@ -96,14 +96,14 @@ window#waybar {
 	border-radius: 26px;
 	transition: none;
 	color: #4d4d4d;
-	background: #9aedfe;
+	background: #dadada;
 }
 #custom-ghost {
   border-radius: 50px;
   margin: 10px;
   font-size:17px;
   padding: 7px;
-  background-color: #67b0e8;
+  background-color: #EBBCBA;
   color: #141b1e;
 }
 #custom-scratchpad-indicator {
@@ -125,7 +125,7 @@ window#waybar {
 	border-radius: 26px;
 	transition: none;
 	color: #4d4d4d;
-	background: #0ba552;
+	background: #C4A7E7;
 }
 #custom-playerctl {
   font-size: 1.2em;
@@ -138,5 +138,5 @@ window#waybar {
 	border-radius: 26px;
 	transition: none;
 	color: #4d4d4d;
-	background: #0ba552;
+	background: #EBBCBA;
 }

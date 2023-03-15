@@ -1,0 +1,1 @@
+../../parent/ftplugin/css.lua
