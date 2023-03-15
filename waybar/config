@@ -3,7 +3,7 @@
   "position": "left",
   "modules-left": ["custom/ghost","custom/scratchpad-indicator","sway/workspaces"],
   "modules-center": ["sway/window"],
-  "modules-right": ["custom/survey_num", "pulseaudio", "custom/playerctl", "network", "battery", "clock#1", "clock#2", "custom/power"],
+  "modules-right": ["cpu", "custom/survey_num", "pulseaudio", "custom/playerctl", "network", "battery", "clock#1", "clock#2", "custom/power"],
   "sway/workspaces": {
   	"all-outputs": true,
 	  "format": "{index}:{icon}",
@@ -51,7 +51,8 @@
     "format-wifi": "{signalStrength}% ",
     "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
     "format-disconnected": "Disconnected ⚠",
-    "on-click": "nmtui"
+    "on-click": "nmtui",
+    "max-length": 10,
   },
   "battery": {
     "bat": "BAT1",
@@ -79,6 +80,16 @@
     "format": " {}",
     "on-click": "swaymsg 'scratchpad show'",
     "on-click-right": "swaymsg 'move scratchpad'",
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "  {usage}% ({load})", // Icon: microchip
+    "states": {
+      "warning": 70,
+      "critical": 90,
+  },
+  "on-click": "alacritty -e 'htop'",
   },
   "custom/survey_num": {
     "return-type": "json",

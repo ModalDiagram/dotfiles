@@ -85,6 +85,19 @@ window#waybar {
 	background: #dadada;
 }
 
+#cpu {
+  font-size: 1.2em;
+	margin-top: 8px;
+	margin-left: 8px;
+	margin-right: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
+	margin-bottom: 0;
+	border-radius: 26px;
+	transition: none;
+	color: #4d4d4d;
+	background: #dadada;
+}
 #pulseaudio {
   font-size: 1.2em;
 	margin-top: 8px;
