@@ -4,7 +4,7 @@
 {
   read -r num
   read -r mod
-} < $HOME/.cache/survey/count.txt
+} < $ONEDRIVE/.cache/survey/count.txt
 # echo $val_curr
 
 # Chiedo il nuovo valore di tempo
@@ -12,7 +12,7 @@ new_val=$(zenity --title "Inserisci valore: " --entry --text "Secondi attuali: $
 
 # Sovrascrivo il conto
 if [[ ! -z "$new_val" ]]; then
-  echo "$new_val" > $HOME/.cache/survey/count.txt
-  echo "${mod}" >> $HOME/.cache/survey/count.txt
+  echo "$new_val" > $ONEDRIVE/.cache/survey/count.txt
+  echo "${mod}" >> $ONEDRIVE/.cache/survey/count.txt
 fi
 pkill -RTMIN+13 waybar

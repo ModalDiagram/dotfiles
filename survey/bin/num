@@ -7,7 +7,7 @@ text=""
 {
   read -r num
   read -r mode
-} < $HOME/.cache/survey/count.txt
+} < $ONEDRIVE/.cache/survey/count.txt
 
 # Conto le ore fatte e se diverse da 0 le inserisco
 hours=$((num / 3600))
@@ -21,7 +21,7 @@ minutes=$((minutes / 60 ))
 text+=${minutes}m
 
 # Prendo il ratio e formatto
-ratio=$($ONEDRIVE/dotfiles/survey/bin/ratio)
+ratio=$($DOTFILES/survey/bin/ratio)
 tooltip="Mode: ${mode}s. Ratio: ${ratio}."
 printf '{"text":"%s","tooltip":"%s","class":"%s","percentage":%s}\n' \
 			"$text" "$tooltip" "num" "$num"

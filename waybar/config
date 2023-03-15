@@ -93,10 +93,10 @@
   },
   "custom/survey_num": {
     "return-type": "json",
-    "exec": "/data/OneDrive/dotfiles/survey/bin/num",
+    "exec": "$DOTFILES/survey/bin/num",
     "format": "{}",
-    "on-click": "/data/OneDrive/dotfiles/survey/bin/add",
-    "on-click-right": "/data/OneDrive/dotfiles/survey/menu",
+    "on-click": "$DOTFILES/survey/bin/add",
+    "on-click-right": "$DOTFILES/survey/menu",
     "signal": 13,
     "interval": "once",
   },

@@ -4,11 +4,11 @@
 {
   read in_count;
   read in_mod;
-} < $HOME/.cache/survey/count.txt
+} < $ONEDRIVE/.cache/survey/count.txt
 
 # STEP 4. Aggiungo i secondi della task
-echo "$((in_count + in_mod))" > $HOME/.cache/survey/count.txt
-echo "$in_mod" >> $HOME/.cache/survey/count.txt
+echo "$((in_count + in_mod))" > $ONEDRIVE/.cache/survey/count.txt
+echo "$in_mod" >> $ONEDRIVE/.cache/survey/count.txt
 
 # STEP 5. Leggo i dati della sessione corrente
 {
@@ -33,4 +33,3 @@ echo $count > $HOME/.cache/survey/timestamps.txt
 echo $ts_now >> $HOME/.cache/survey/timestamps.txt
 echo $cache_min >> $HOME/.cache/survey/timestamps.txt
 
-echo $ts_now >> $HOME/.cache/survey/dati/$in_mod.txt

@@ -58,7 +58,7 @@ local config = {
 
     -- 💀
     -- See `data directory configuration` section in the README
-    '-data', '/home/sandro0198/altre_app/jdtls/workspace/' .. project_name,
+    '-data', '/home/sandro0198/altre_app/jdtls/workspace/' .. project_name
   },
 
   -- 💀

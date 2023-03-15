@@ -31,7 +31,7 @@ case $selected in
 esac
 echo $new_mod
 
-read -r in_count < $HOME/.cache/survey/count.txt;
-echo $in_count > $HOME/.cache/survey/count.txt
-echo $new_mod >> $HOME/.cache/survey/count.txt
+read -r in_count < $ONEDRIVE/.cache/survey/count.txt;
+echo $in_count > $ONEDRIVE/.cache/survey/count.txt
+echo $new_mod >> $ONEDRIVE/.cache/survey/count.txt
 pkill -RTMIN+13 waybar

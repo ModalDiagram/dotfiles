@@ -96,3 +96,7 @@ mode "$change_dt" {
 # Screenshot utilities
 bindsym Shift+Print exec grimshot save area
 bindsym Ctrl+Print exec grimshot save screen
+
+# App bindings
+bindsym $mod+Prior exec $DOTFILES/libinput_wayland/bin/gesture-3-up
+bindsym $mod+Next exec $DOTFILES/libinput_wayland/bin/gesture-3-down
