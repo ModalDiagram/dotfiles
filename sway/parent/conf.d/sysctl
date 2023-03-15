@@ -4,8 +4,8 @@ bindsym Ctrl+Return exec $term
 bindsym $mod+0 exec raise_terminal.sh
 
 # Aggiusto la clipboard e aggiungo task
-bindsym $mod+x exec $ONEDRIVE/dotfiles/survey/bin/copy_coor.sh
-bindsym $mod+z exec $ONEDRIVE/dotfiles/survey/bin/add_task.sh
+bindsym $mod+x exec $DOTFILES/survey/bin/copy_coor.sh
+bindsym $mod+z exec $DOTFILES/survey/bin/add_task.sh
 
 # Start your launcher
 bindsym $mod+p exec $menu
