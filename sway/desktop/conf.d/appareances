@@ -2,7 +2,6 @@
 default_border pixel 1
 default_dim_inactive 0.2
 corner_radius 5
-shadows on
 
 # {{{ Color defs - fallback to solarized
 set $color0x #073642
