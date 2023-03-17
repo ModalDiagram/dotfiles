@@ -14,9 +14,9 @@ set autochdir " per traferirsi automaticamente sulla directory del file
 set colorcolumn=120 " linea per la lunghezza
 set updatetime=1000
 " Impostazioni sui tab
-set tabstop=2       " number of visual spaces per TAB
-set softtabstop=2   " number of spaces in tab when editing
-set shiftwidth=2    " number of spaces to use for autoindent
+set tabstop=1       " number of visual spaces per TAB
+set softtabstop=1   " number of spaces in tab when editing
+set shiftwidth=1    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 
 " Break line at predefined characters

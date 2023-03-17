@@ -3,7 +3,8 @@ local api = vim.api
 local uv = vim.loop
 
 -- insert semicolon in the end
-keymap.set({"n"}, "<space>;", "<Esc>miA;<Esc>`ii")
+keymap.set({"n"}, "<space>;", "<Esc>miA;<Esc>`ii<Esc>")
+keymap.set({"i"}, "<alt>;", "<Esc>miA;<Esc>`ii")
 
 -- Save key strokes (now we do not need to press shift to enter command mode).
 keymap.set({ "n", "x" }, ".", ":")
