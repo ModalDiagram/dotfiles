@@ -15,8 +15,8 @@ chiudi(){
 
 trap "chiudi backup_xournal xournalpp; chiudi tab_button; exit" SIGINT
 
-$ONEDRIVE/dotfiles/bin/backup_xournal.sh &
-$ONEDRIVE/dotfiles/bin/tab_button &
+$DOTFILES/bin/backup_xournal.sh &
+$DOTFILES/bin/tab_button &
 xournalpp &> /dev/null
 chiudi backup_xournal xournalpp
 chiudi tab_button xournalpp
