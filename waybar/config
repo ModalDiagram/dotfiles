@@ -22,7 +22,7 @@
   },
   "custom/power": {
     "format": "⏻",
-    "on-click": "/data/OneDrive/dotfiles/bin/power-menu"
+    "on-click": "$DOTFILES/bin/power-menu"
   },
   "sway/window": {
     "format": "{}",

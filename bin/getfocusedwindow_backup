@@ -1,0 +1,2 @@
+raw=$(swaymsg -t get_tree)
+echo "$raw" | jq 'recurse(.nodes[]) | select(.focused == true) | .name'
