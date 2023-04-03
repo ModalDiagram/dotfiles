@@ -1,0 +1,14 @@
+{
+  "target": "$HOME/.config/waybar/",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "default",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

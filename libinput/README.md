@@ -1,5 +1,5 @@
 {
-  "target": "/home/sandro0198/.config/",
+  "target": "$HOME/.config/",
   "ignore": "bin",
   "site": "https://github.com/bulletmark/libinput-gestures"
 }

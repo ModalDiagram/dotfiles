@@ -28,7 +28,7 @@ require("lspsaga").setup({
 
 vim.keymap.set("n", "<space>lf", "<cmd>Lspsaga lsp_finder<cr>", { desc = "show references(saga)" })
 vim.keymap.set("n", "<space>lg", "<cmd>Lspsaga goto_definition<cr>", { desc = "goto definition" })
-vim.keymap.set("n", "<space>ld", "<cmd>Lspsaga show_buf_diagnostics<cr>", { desc = "show diagnostics" })
+vim.keymap.set("n", "<space>ld", "<cmd>Lspsaga show_buf_diagnostics ++unfocus<cr>", { desc = "show diagnostics" })
 vim.keymap.set("n", "<space>lh", "<cmd>Lspsaga peek_definition<cr>", {desc = "peek variable"})
 vim.keymap.set("n", "<space>lH", "<cmd>Lspsaga peek_type_definition<cr>", {desc = "peek class"})
 vim.keymap.set("n", "<space>lt", "<cmd>Lspsaga hover_doc<cr>", {desc = "get type"})

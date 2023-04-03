@@ -1,6 +1,0 @@
-#!/bin/bash
-comb=$($ONEDRIVE/altri_programmi/app_bindings/get_app_bindings.sh left)
-ydotool key $comb
-
-#echo "$( date '+%F_%H:%M:%S' ): gesture-3-left" 
-#echo "$( date '+%F_%H:%M:%S' ): gesture-3-left" >> /home/sandro0198/OneDrive/dotfiles/libinput/bin/log/gesture-3-left.txt

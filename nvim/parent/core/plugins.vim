@@ -4,6 +4,7 @@ lua require('plugins')
 
 """"""""""""""""""""""""markdown-preview settings"""""""""""""""""""""""
 let g:mkdp_auto_close = 0
+let g:mkdp_browser = 'firefox'
 
 """"""""""""""""""""""""vim-mundo settings"""""""""""""""""""""""
 let g:mundo_verbose_graph = 0

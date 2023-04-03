@@ -14,7 +14,7 @@ end
 
 api.nvim_create_autocmd("CursorHold", {
 callback = function()
-  vim.cmd("Lspsaga show_line_diagnostics")
+  vim.cmd("Lspsaga show_line_diagnostics ++unfocus")
   vim.lsp.buf.document_highlight()
 end,
 })

@@ -1,0 +1,21 @@
+{
+  "target": "$HOME/.config",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "mako",
+      "target": "$HOME/.config/mako",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "alacritty",
+      "target": "$HOME/.config/alacritty",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

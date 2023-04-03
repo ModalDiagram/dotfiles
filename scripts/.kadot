@@ -1,0 +1,13 @@
+{
+  "target": "$HOME/scripts/",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "default",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

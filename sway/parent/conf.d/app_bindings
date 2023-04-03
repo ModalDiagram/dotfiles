@@ -1,0 +1,14 @@
+mode "app" {
+    bindsym s exec $HOME/scripts/ydo_key.sh key_s, mode "default"
+    bindsym k exec $HOME/scripts/ydo_key.sh key_k
+    bindsym j exec $HOME/scripts/ydo_key.sh key_j
+    bindsym h exec $HOME/scripts/ydo_key.sh key_h
+    bindsym l exec $HOME/scripts/ydo_key.sh key_l
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym q      mode "default"
+}
+
+bindsym $mod+a mode "app"
