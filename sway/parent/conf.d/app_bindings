@@ -11,4 +11,9 @@ mode "app" {
     bindsym q      mode "default"
 }
 
-bindsym $mod+a mode "app"
+bindsym $mod+a+s exec $HOME/scripts/ydo_key.sh key_s
+bindsym $mod+a+k exec $HOME/scripts/ydo_key.sh key_k
+bindsym $mod+a+j exec $HOME/scripts/ydo_key.sh key_j
+bindsym $mod+a+h exec $HOME/scripts/ydo_key.sh key_h
+bindsym $mod+a+l exec $HOME/scripts/ydo_key.sh key_l
+bindsym $mod+a+d exec $HOME/scripts/ydo_key.sh key_d
