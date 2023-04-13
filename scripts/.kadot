@@ -5,6 +5,7 @@
   "versions": [
     {
       "name": "default",
+      "target": "",
       "inherits": "",
       "divergents": [],
       "ignore": []
