@@ -39,7 +39,9 @@
     "right": "56:1 106:1 106:0 56:0"
   },{
     "name": "Spotify",
-    "key_s": "29:1 38:1 38:0 29:0"
+    "key_s": "29:1 38:1 38:0 29:0",
+    "key_l": "exec:playerctl -p spotify next",
+    "key_h": "exec:playerctl -p spotify previous"
   },{
     "name": "default",
     "up": "125:1 43:1 125:0 43:0",

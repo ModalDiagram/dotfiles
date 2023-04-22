@@ -1,0 +1,43 @@
+#client.focused #8fd4ff #8fd4ff #8fd4ff #8fd4ff #8fd4ff
+default_border pixel 1
+default_dim_inactive 0.2
+corner_radius 5
+
+seat seat0 xcursor_theme Qogir-dark
+
+# {{{ Color defs - fallback to solarized
+set $color0x #073642
+set $color00 #002b36
+set $color01 #dc322f
+set $color02 #859900
+set $color03 #b58900
+set $color04 #ff3370
+set $color05 #d33682
+set $color06 #2aa198
+set $color07 #93a1a1
+set $color08 #586e75
+set $color09 #cb4b16
+set $color10 #85c000
+set $color11 #cccc00
+set $color12 #2c98e4
+set $color13 #6c71c4
+set $color14 #30b8b0
+set $color15 #eee8d5
+set $fground #fdf6e3
+set $bground #001014
+# }}}
+
+# Colors:               border     background  text      indicator  child border
+client.focused          $color08   $color08    $color15  $color04   $color07
+client.focused_inactive $color08   $color00    $color15  $color04   $color00
+client.unfocused        $color00   $bground    $color07  $color04   $color00
+client.urgent           $color01   $bground    $color07  $color04   $color01
+# change 'indicator' from default to something more obvious
+# client.focused            #4c7899 #285577 #ffffff #ffff00 #285577
+# client.focused_inactive   #333333 #5f676a #ffffff #ffff00 #5f676a
+# client.focused_tab_title  #333333 #5f676a #ffffff
+# client.unfocused          #333333 #222222 #888888 #ffff00 #222222
+# client.urgent             #2f343a #900000 #ffffff #ffff00 #900000
+
+# Font
+font pango:monospace 11

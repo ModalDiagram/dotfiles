@@ -14,7 +14,3 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_numlock enabled
 }
 
-input "9580:109:HUION_Huion_Tablet_Pen" {
-  tool_mode * absolute
-  map_to_output eDP-1
-}

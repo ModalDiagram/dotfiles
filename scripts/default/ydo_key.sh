@@ -1,3 +1,9 @@
 #!/bin/bash
 
-ydotool key $(get_app_bindings $1)
+comb=$(get_app_bindings $1)
+if [[ "$comb" == exec:* ]]; then
+  echo "custom"
+  eval "${comb#*exec:}"
+else
+  ydotool key $comb
+fi
