@@ -16,6 +16,13 @@
       "inherits": "",
       "divergents": [],
       "ignore": []
+    },
+    {
+      "name": "tridactyl",
+      "target": "$HOME/.config/tridactyl",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
     }
   ]
 }
