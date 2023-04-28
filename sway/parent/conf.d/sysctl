@@ -2,6 +2,7 @@
 bindsym $mod+Return exec $term
 bindsym Ctrl+Return exec $term
 bindsym $mod+0 exec raise_terminal.sh
+bindsym $mod+e exec $explorer
 
 # Aggiusto la clipboard e aggiungo task
 bindsym $mod+x exec $DOTFILES/survey/bin/copy_coor.sh

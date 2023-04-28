@@ -13,6 +13,8 @@ set $term alacritty
 # Your preferred application launcher
 set $menu wofi -i --show=drun --lines=5 --prompt=""
 
+set $explorer dolphin
+
 # Workspaces
 set $ws_web  2
 set $ws_term 1
