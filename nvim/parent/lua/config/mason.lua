@@ -10,6 +10,25 @@ local servers = {
   },
 }-- forse devo inizializzare le capabilities con make_capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local function my_on_attach(client, bufnr)
+  if client.server_capabilities.documentHighlightProvider then
+    vim.api.nvim_create_autocmd("CursorHold", {
+      buffer = bufnr,
+      callback = function()
+        vim.cmd("Lspsaga show_line_diagnostics ++unfocus")
+        vim.lsp.buf.document_highlight()
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("CursorMoved" , {
+      buffer = bufnr,
+      callback = function ()
+        vim.lsp.buf.clear_references()
+      end
+    })
+  end
+end
 require("mason-lspconfig").setup_handlers {
       -- a dedicated handler.
       function (server_name) -- default handler (optional)
@@ -17,6 +36,7 @@ require("mason-lspconfig").setup_handlers {
           require("lspconfig")[server_name].setup {
             capabilities = capabilities,
             settings = servers[server_name],
+            on_attach = my_on_attach
           }
        end
       end,

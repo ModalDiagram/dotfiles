@@ -11,7 +11,7 @@ set noswapfile
 set wildignorecase " ignore cases in cmd completions
 
 set autochdir " per traferirsi automaticamente sulla directory del file
-set colorcolumn=120 " linea per la lunghezza
+set colorcolumn=80 " linea per la lunghezza
 set updatetime=1000
 " Impostazioni sui tab
 set tabstop=2       " number of visual spaces per TAB
