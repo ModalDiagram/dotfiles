@@ -30,4 +30,8 @@ function! s:custom_highlight() abort
 
 endfunction
 
+augroup change_hidden
+  autocmd!
+  autocmd BufNewFile,BufRead *.hidden set filetype=c
+augroup END
 
