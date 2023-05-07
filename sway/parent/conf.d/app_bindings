@@ -17,3 +17,6 @@ bindsym $mod+a+j exec $HOME/scripts/ydo_key.sh key_j
 bindsym $mod+a+h exec $HOME/scripts/ydo_key.sh key_h
 bindsym $mod+a+l exec $HOME/scripts/ydo_key.sh key_l
 bindsym $mod+a+d exec $HOME/scripts/ydo_key.sh key_d
+bindsym $mod+a+Shift+k exec $HOME/scripts/ydo_key.sh key_K
+bindsym $mod+a+Shift+j exec $HOME/scripts/ydo_key.sh key_J
+bindsym $mod+a+Shift+s exec $HOME/scripts/ydo_key.sh key_S

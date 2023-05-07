@@ -82,7 +82,7 @@ gaps inner 5
 
 # Move to desktop
 bindsym $mod+i mode "$change_dt"
-bindsym Ctrl+i mode "$change_dt"
+# bindsym Ctrl+i mode "$change_dt"
 mode "$change_dt" {
     bindsym 1 exec swaymsg move workspace to output $dt_lap, mode "default"
     bindsym 2 exec swaymsg move workspace to output $dt_tv, mode "default"
