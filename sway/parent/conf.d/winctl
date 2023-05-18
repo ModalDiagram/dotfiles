@@ -89,7 +89,7 @@ mode "$change_dt" {
     bindsym 0 exec swaymsg output $dt_lap dpms off, mode "default"
     bindsym 9 exec swaymsg output $dt_lap dpms on, mode "default"
 
-    bindsym Escape mode "default"
+    bindsym Escape exec swaymsg focus output right, mode "default"
     bindsym Return mode "default"
 }
 
