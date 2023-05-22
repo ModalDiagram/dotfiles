@@ -1,9 +1,9 @@
 {
   "ipc":true,
   "position": "left",
-  "modules-left": ["custom/ghost","custom/scratchpad-indicator","sway/workspaces"],
+  "modules-left": ["custom/ghost","sway/workspaces"],
   "modules-center": ["sway/window"],
-  "modules-right": ["cpu", "custom/survey_num", "pulseaudio", "custom/playerctl", "network", "battery", "clock#1", "clock#2", "custom/power"],
+  "modules-right": ["cpu", "custom/survey_num", "pulseaudio", "network", "battery", "clock#1", "clock#2", "custom/power"],
   "sway/workspaces": {
   	"all-outputs": true,
 	  "format": "{index}:{icon}",

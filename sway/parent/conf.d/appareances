@@ -1,7 +1,7 @@
-#client.focused #8fd4ff #8fd4ff #8fd4ff #8fd4ff #8fd4ff
 default_border pixel 1
 default_dim_inactive 0.2
 corner_radius 5
+titlebar_separator disable
 
 seat seat0 xcursor_theme Qogir-dark
 
@@ -24,14 +24,17 @@ set $color13 #6c71c4
 set $color14 #30b8b0
 set $color15 #eee8d5
 set $fground #fdf6e3
-set $bground #001014
+set $bground #191724
+set $text    #e0def4
+set $focused_text #21202e
+set $focused_bg #c4a7e7
 # }}}
 
-# Colors:               border     background  text      indicator  child border
-client.focused          $color08   $color08    $color15  $color04   $color07
-client.focused_inactive $color08   $color00    $color15  $color04   $color00
-client.unfocused        $color00   $bground    $color07  $color04   $color00
-client.urgent           $color01   $bground    $color07  $color04   $color01
+# Colors:               border     background    text              indicator  child border
+client.focused          $color08   $focused_bg   $focused_text     $color04   $color07
+client.focused_inactive $color08   $focused_bg   $focused_text     $color04   $color00
+client.unfocused        $color00   $bground      $text             $color04   $color00
+client.urgent           $color01   $bground      $text             $color04   $color01
 # change 'indicator' from default to something more obvious
 # client.focused            #4c7899 #285577 #ffffff #ffff00 #285577
 # client.focused_inactive   #333333 #5f676a #ffffff #ffff00 #5f676a
