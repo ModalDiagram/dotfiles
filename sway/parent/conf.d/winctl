@@ -72,6 +72,7 @@ mode "$mode_launcher" {
     bindsym c exec chrome, mode "default"
     bindsym t exec twitch, mode "default"
     bindsym s exec spotify, mode "default"
+    bindsym e exec dolphin, mode "default"
     bindsym g exec $ONEDRIVE/altri_programmi/guidelines/choose_guidelines.sh, mode "default"
 
     bindsym Escape mode "default"

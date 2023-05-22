@@ -6,16 +6,15 @@ titlebar_separator disable
 seat seat0 xcursor_theme Qogir-dark
 
 # {{{ Color defs - fallback to solarized
-set $color0x #073642
-set $color00 #002b36
-set $color01 #dc322f
+set $color0x #eb6f92
+set $color00 #eb6f92
 set $color02 #859900
 set $color03 #b58900
 set $color04 #ff3370
 set $color05 #d33682
 set $color06 #2aa198
-set $color07 #93a1a1
-set $color08 #586e75
+set $color07 #f6c177
+set $color08 #f6c177
 set $color09 #cb4b16
 set $color10 #85c000
 set $color11 #cccc00
@@ -24,17 +23,20 @@ set $color13 #6c71c4
 set $color14 #30b8b0
 set $color15 #eee8d5
 set $fground #fdf6e3
-set $bground #191724
+set $default_bg #191724
 set $text    #e0def4
-set $focused_text #21202e
-set $focused_bg #c4a7e7
+set $focused_text     #21202e
+set $focused_bg       #c4a7e7
+set $focused_border   #f6c177
+set $unfocused_border #eb6f92
+set $urgent_border    #dc322f
 # }}}
 
-# Colors:               border     background    text              indicator  child border
-client.focused          $color08   $focused_bg   $focused_text     $color04   $color07
-client.focused_inactive $color08   $focused_bg   $focused_text     $color04   $color00
-client.unfocused        $color00   $bground      $text             $color04   $color00
-client.urgent           $color01   $bground      $text             $color04   $color01
+# Colors:               border            background    text              indicator  child border
+client.focused          $focused_border   $focused_bg   $focused_text     $color04   $focused_border
+client.focused_inactive $focused_border   $focused_bg   $focused_text     $color04   $color00
+client.unfocused        $unfocused_border $default_bg   $text             $color04   $unfocused_border
+client.urgent           $urgent_border    $default_bg   $text             $color04   $urgent_border
 # change 'indicator' from default to something more obvious
 # client.focused            #4c7899 #285577 #ffffff #ffff00 #285577
 # client.focused_inactive   #333333 #5f676a #ffffff #ffff00 #5f676a
