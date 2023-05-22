@@ -1,0 +1,119 @@
+{
+  "ipc": true,
+  "modules-left": [
+    "sway/workspaces",
+    "temperature",
+    "idle_inhibitor",
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "custom/survey_num",
+    "pulseaudio",
+    "cpu",
+    "network",
+    "battery",
+    "custom/powermenu",
+    "tray"
+  ],
+  "sway/workspaces": {
+    "disable-scroll": true,
+	  "format": "{index}:{icon}",
+    "format-icons": {
+        "2": "",
+        "7": "",
+        "1": "",
+        "3": "",
+  	    "5": "",
+        "6": "",
+        "4": "",
+        "urgent": "",
+        "focused": "",
+        "default": ""
+     },
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    },
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "scroll-step": 1,
+    "format": "{icon} {volume}%", 
+    "format-muted": "婢 Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "states": {
+      "warning": 85,
+    },
+    "scroll-step": 1,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip": false,
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format-full": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "on-scroll-up": "light -A 1",
+    "on-scroll-down": "light -U 1",
+    "tooltip": false
+  },
+  "clock": {
+    "on-click": "~/.config/waybar/switch_style1.sh &",
+    "on-click-right": "~/.config/waybar/wallpaper_random.sh &",
+    "on-click-middle": "~/.config/waybar/live_wallpaper.sh &",
+    "interval": 1,
+    "format": "{:%I:%M %p  %A %b %d}",
+    "tooltip": true,
+    /* "tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>" */
+    "tooltip-format": "上午：高数\n下午：Ps\n晚上：Golang\n<tt>{calendar}</tt>",
+  },
+  "cpu": {
+    "interval": 1,
+    "format": " {usage}%"
+  },
+  "network": {
+    "interval": 1,
+    "format-wifi": "說 {essid}",
+    "format-ethernet": "  {ifname} ({ipaddr})",
+    "format-linked": "說 {essid} (No IP)",
+    "format-disconnected": "說 Disconnected",
+    "max-length": 10,
+    "tooltip": false
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon6/temp2_input",
+    //"critical-threshold": 80,
+    "tooltip": false,
+    "format": " {temperatureC}°C"
+  },
+  "custom/powermenu": {
+    "format": "",
+    "on-click": "$DOTFILES/bin/power-menu",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 5
+  },
+  "custom/survey_num": {
+    "return-type": "json",
+    "exec": "$DOTFILES/survey/bin/num",
+    "format": "{}",
+    "on-click": "$DOTFILES/survey/bin/add",
+    "on-click-right": "$DOTFILES/survey/menu",
+    "signal": 13,
+    "interval": "once",
+  },
+}
