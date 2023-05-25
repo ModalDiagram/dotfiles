@@ -22,6 +22,7 @@ window#waybar {
   background-color: transparent;
 }
 window > box {
+	border: 3px solid #eb6f92;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 5px;
@@ -55,7 +56,7 @@ tooltip {
 tooltip label {
   color: rgb(217, 224, 238);
 }
-#mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #pulseaudio, #network, #battery, #custom-powermenu, #custom-survey_num, #custom-cava-internal {
+#mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #pulseaudio, #network, #battery, #custom-powermenu, #custom-survey_num, #window{
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -71,7 +72,8 @@ tooltip label {
   color: rgb(245, 194, 231);
 }
 #clock {
-  color: rgb(217, 224, 238);
+  color: rgb(242, 143, 173);
+  padding-right: 30px;
 }
 #idle_inhibitor {
   color: rgb(221, 182, 242);
@@ -87,6 +89,9 @@ tooltip label {
 }
 #network {
   color: #ABE9B3;
+}
+#window {
+  color: #dadada;
 }
 
 #network.disconnected {

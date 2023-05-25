@@ -1,8 +1,16 @@
-default_border pixel 1
+default_border pixel 3
 default_dim_inactive 0.2
 corner_radius 5
 titlebar_separator disable
+blur off
+blur_xray off
+blur_passes 2
+blur_radius 5
 
+shadows on
+shadows_on_csd on
+shadow_blur_radius 3
+shadow_color #0000007F
 seat seat0 xcursor_theme Qogir-dark
 
 # {{{ Color defs - fallback to solarized
@@ -33,10 +41,10 @@ set $urgent_border    #dc322f
 # }}}
 
 # Colors:               border            background    text              indicator  child border
-client.focused          $focused_border   $focused_bg   $focused_text     $color04   $focused_border
-client.focused_inactive $focused_border   $focused_bg   $focused_text     $color04   $color00
-client.unfocused        $unfocused_border $default_bg   $text             $color04   $unfocused_border
-client.urgent           $urgent_border    $default_bg   $text             $color04   $urgent_border
+client.focused          $focused_border   $focused_bg   $focused_text     $focused_border   $focused_border
+client.focused_inactive $focused_border   $focused_bg   $focused_text     $focused_border   $color00
+client.unfocused        $unfocused_border $default_bg   $text             $unfocused_border $unfocused_border
+client.urgent           $urgent_border    $default_bg   $text             $urgent_border   $urgent_border
 # change 'indicator' from default to something more obvious
 # client.focused            #4c7899 #285577 #ffffff #ffff00 #285577
 # client.focused_inactive   #333333 #5f676a #ffffff #ffff00 #5f676a

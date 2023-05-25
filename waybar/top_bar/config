@@ -1,12 +1,12 @@
 {
-  "ipc": true,
   "modules-left": [
+    "clock",
     "sway/workspaces",
     "temperature",
     "idle_inhibitor",
   ],
   "modules-center": [
-    "clock"
+    "sway/window"
   ],
   "modules-right": [
     "custom/survey_num",
@@ -70,14 +70,10 @@
     "tooltip": false
   },
   "clock": {
-    "on-click": "~/.config/waybar/switch_style1.sh &",
-    "on-click-right": "~/.config/waybar/wallpaper_random.sh &",
-    "on-click-middle": "~/.config/waybar/live_wallpaper.sh &",
     "interval": 1,
-    "format": "{:%I:%M %p  %A %b %d}",
+    "format": " {:%I:%M}",
     "tooltip": true,
-    /* "tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>" */
-    "tooltip-format": "上午：高数\n下午：Ps\n晚上：Golang\n<tt>{calendar}</tt>",
+    "tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>"
   },
   "cpu": {
     "interval": 1,
@@ -89,6 +85,7 @@
     "format-ethernet": "  {ifname} ({ipaddr})",
     "format-linked": "說 {essid} (No IP)",
     "format-disconnected": "說 Disconnected",
+    "on-click": "alacritty -e nmtui",
     "max-length": 10,
     "tooltip": false
   },

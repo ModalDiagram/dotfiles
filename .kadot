@@ -23,6 +23,13 @@
       "inherits": "",
       "divergents": [],
       "ignore": []
+    },
+    {
+      "name": "powerline_shell",
+      "target": "$HOME/.config/powerline-shell/",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
     }
   ]
 }

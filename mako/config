@@ -1,7 +1,8 @@
-background-color=#555169
+background-color=#191724
 text-color=#e0def4
-border-color=#191724
+border-color=#eb6f92
 border-radius=5
+border-size=3
 
 [urgency=high]
 layer=overlay
