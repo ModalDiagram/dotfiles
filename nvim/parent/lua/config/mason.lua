@@ -11,12 +11,19 @@ local servers = {
 }-- forse devo inizializzare le capabilities con make_capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+-- Lo metto prima perche' altrimenti non si chiude quando cambio line
+vim.api.nvim_create_autocmd("CursorHold", {
+  buffer = bufnr,
+  callback = function()
+    vim.cmd("Lspsaga show_line_diagnostics ++unfocus")
+  end,
+})
+
 local function my_on_attach(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_create_autocmd("CursorHold", {
       buffer = bufnr,
       callback = function()
-        vim.cmd("Lspsaga show_line_diagnostics ++unfocus")
         vim.lsp.buf.document_highlight()
       end,
     })

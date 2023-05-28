@@ -7,5 +7,6 @@
     "hg",
     "jobs",
     "root"
-  ]
+  ],
+  "mode": "flat"
 }

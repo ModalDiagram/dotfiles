@@ -27,3 +27,4 @@ for_window [title="ranger"] move to workspace $ws_code, workspace $ws_code
 for_window [app_id="zenity"] floating enable
 for_window [title="Sharing Indicator"] floating enable, move window to scratchpad
 for_window [title="floating_terminal"] floating enable, move down 120, resize set 900 500, move to scratchpad
+for_window [title="floating_button_window"] floating enable

@@ -20,3 +20,6 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_numlock enabled
 }
 
+input "9610:1:SINO_WEALTH_USB_KEYBOARD" {
+  xkb_numlock enabled
+}

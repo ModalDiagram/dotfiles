@@ -11,7 +11,7 @@
     color: rgb(26, 24, 38);
   }
 }
-.warning, .critical, .urgent {
+.critical, .urgent {
   animation-name: blink_red;
   animation-duration: 1s;
   animation-timing-function: linear;
