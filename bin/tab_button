@@ -48,7 +48,7 @@ while IFS= read -r line; do
   # Se è stato premuto, cerco la combinazione legata in base all'app focussata e la premo
   if [[ "$line" == *pressed* ]]; then
     custom_btn=$(get_app_bindings tab$button)
-    # echo "premendo ${custom_btn[@]}"
+    echo "premendo ${custom_btn[@]}"
     # comb=${btnbind[$button]}
     for key in $custom_btn; do
       ydotool key $key:1

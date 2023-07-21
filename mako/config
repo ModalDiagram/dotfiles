@@ -7,3 +7,4 @@ border-size=3
 [urgency=high]
 layer=overlay
 background-color=#eb6f92
+border-color=#eb6f92

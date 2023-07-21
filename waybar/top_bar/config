@@ -63,8 +63,8 @@
     },
     "format": "{icon} {capacity}%",
     "format-icons": ["", "", "", "", "", "", "", "", ""],
-    "format-full": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
+    "format-full": " Full",
+    "format-charging": " {capacity}%",
     "on-scroll-up": "light -A 1",
     "on-scroll-down": "light -U 1",
     "tooltip": false

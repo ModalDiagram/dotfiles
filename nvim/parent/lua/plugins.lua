@@ -155,6 +155,7 @@ return require('packer').startup(function(use)
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+  use { 'subnut/nvim-ghost.nvim' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
