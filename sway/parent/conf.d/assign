@@ -20,7 +20,6 @@ for_window [title="Discord"] move to workspace $ws_media, workspace $ws_media, e
 for_window [class="Spotify"] move to workspace $ws_music, workspace $ws_music, exec mark_mark
 
 # Code
-for_window [title="ranger"] move to workspace $ws_code, workspace $ws_code
 
 
 # Floating
