@@ -1,5 +1,1 @@
-{
-  "target": "/lib/udev/rules.d/",
-  "ignore": "None",
-  "site": "None"
-}
+Da copiare con sudo in "/lib/udev/rules.d/"
