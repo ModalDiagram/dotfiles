@@ -30,6 +30,13 @@
       "inherits": "",
       "divergents": [],
       "ignore": []
+    },
+    {
+      "name": "xdg-open",
+      "target": "$HOME/.config",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
     }
   ]
 }

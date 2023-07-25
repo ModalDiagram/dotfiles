@@ -1,0 +1,6 @@
+
+[Default Applications]
+application/pdf=okularApplication_pdf.desktop
+inode/x-empty=nvim.desktop
+inode/directory=org.kde.dolphin.desktop
+text/plain=nvim.desktop
