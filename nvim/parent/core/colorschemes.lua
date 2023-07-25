@@ -42,7 +42,9 @@ require('rose-pine').setup({
 		-- Blend colours against the "base" background
 		CursorLine = { bg = 'foam', blend = 10 },
 		StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-
+    TabLineSel = { fg = "love", bg = "#eb6f92" },
+    TabLineFill = { bg = "foam"},
+    TabLine = { fg = 'love', bg = "f6c177"},
 	}
 })
 
