@@ -5,5 +5,5 @@ if [[ "$comb" == exec:* ]]; then
   echo "custom"
   eval "${comb#*exec:}"
 else
-  ydotool key $comb
+  YDOTOOL_SOCKET="$HOME/.ydotool_socket" ydotool key $comb
 fi
