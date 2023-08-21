@@ -37,6 +37,13 @@
       "inherits": "",
       "divergents": [],
       "ignore": []
+    },
+    {
+      "name": "qt5ct",
+      "target": "$HOME/.config/qt5ct",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
     }
   ]
 }
