@@ -11,7 +11,7 @@ bindsym $mod+9 workspace number 9
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+Backslash workspace prev
-bindsym $mod+grave workspace prev
+bindsym $mod+dead_grave workspace prev
 bindsym Ctrl+Alt+Tab workspace next
 bindsym Ctrl+Alt+Backslash workspace prev
 # Move focused container to workspace
