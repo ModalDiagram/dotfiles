@@ -7,9 +7,9 @@ ask_seconds ()
 }
 
 # Chiedo all'utente di scegliere la modalita'
-entries="⇠ Search and AC (180s)\n⏾ VDAP (135s)\n⭮ Hours POI (150s)\n⇠ Address POI (120s)\n⇠ POI (480s)\n⇠ Images POI (60s)\n⇠ Custom"
+entries="⇠ Custom\n⏾ VDAP (135s)\n⭮ Hours POI (150s)\n⇠ Address POI (120s)\n⇠ POI (480s)\n⇠ Images POI (60s)\n⇠ Search and AC (180s)"
 
-selected=$(echo -e $entries|wofi --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
+selected=$(echo -e $entries|wofi -i --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
 
 # echo "$selected"
 case $selected in
