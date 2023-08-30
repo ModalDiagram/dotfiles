@@ -4,6 +4,7 @@
     "sway/workspaces",
     "temperature",
     "idle_inhibitor",
+    "sway/mode"
   ],
   "modules-center": [
     "sway/window"
@@ -40,6 +41,10 @@
       "deactivated": ""
     },
     "tooltip": false
+  },
+  "sway/mode": {
+    "format": " {}",
+    "max-length": 50
   },
   "pulseaudio": {
     "scroll-step": 1,

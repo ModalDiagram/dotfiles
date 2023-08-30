@@ -25,20 +25,36 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-mode "mark" {
+# mode "mark" {
+#     # left will shrink the containers width
+#     # right will grow the containers width
+#     # up will shrink the containers height
+#     # down will grow the containers height
+#     bindsym s exec mark_mark, mode "default"
+#     bindsym d exec swaymsg unmark, mode "default"
+
+#     # Return to default mode
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+
+# bindsym $mod+m mode "mark"
+
+mode "music" {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym s exec mark_mark, mode "default"
-    bindsym d exec swaymsg unmark, mode "default"
+    bindsym l exec playerctl -p spotify next
+    bindsym h exec playerctl -p spotify previous
+    bindsym f exec swaymsg [class="Spotify"] focus, mode "default"
 
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+m mode "mark"
+bindsym $mod+m mode "music"
 
 bindsym $mod+n exec goto_mark
 
@@ -65,9 +81,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bindsym $mod+o mode "$mode_launcher"
+bindsym $mod+o mode "launcher"
 
-mode "$mode_launcher" {
+mode "launcher" {
     bindsym f exec firefox, mode "default"
     bindsym c exec chrome, mode "default"
     bindsym t exec twitch, mode "default"

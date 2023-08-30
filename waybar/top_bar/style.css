@@ -60,11 +60,9 @@ tooltip label {
   padding-left: 10px;
   padding-right: 10px;
 }
-/* #mode { */
-/* 	margin-left: 10px; */
-/* 	background-color: rgb(248, 189, 150); */
-/*     color: rgb(26, 24, 38); */
-/* } */
+#mode {
+  color: #dadada;
+}
 #memory {
   color: rgb(181, 232, 224);
 }
