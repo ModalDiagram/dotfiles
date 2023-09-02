@@ -51,11 +51,11 @@ mode "music" {
     bindsym Space exec playerctl -p spotify play-pause
 
     # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym Return exec music_daemon.sh kill, mode "default"
+    bindsym Escape exec music_daemon.sh kill, mode "default"
 }
 
-bindsym $mod+m mode "music"
+bindsym $mod+m exec music_daemon.sh, mode "music"
 
 bindsym $mod+n exec goto_mark
 
