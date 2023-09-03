@@ -8,3 +8,6 @@ border-size=3
 layer=overlay
 background-color=#eb6f92
 border-color=#eb6f92
+
+[app-name="spotify"]
+border-color=#1DB954
