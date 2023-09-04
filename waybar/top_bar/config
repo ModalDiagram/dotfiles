@@ -2,7 +2,6 @@
   "modules-left": [
     "clock",
     "sway/workspaces",
-    "temperature",
     "idle_inhibitor",
     "sway/mode"
   ],
@@ -94,12 +93,6 @@
     "on-click": "alacritty -e nmtui",
     "max-length": 10,
     "tooltip": false
-  },
-  "temperature": {
-    "hwmon-path": "/sys/class/hwmon/hwmon6/temp2_input",
-    //"critical-threshold": 80,
-    "tooltip": false,
-    "format": " {temperatureC}°C"
   },
   "custom/powermenu": {
     "format": "",
