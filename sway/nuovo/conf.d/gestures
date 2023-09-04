@@ -1,0 +1,4 @@
+bindgesture swipe:up    exec $HOME/scripts/ydo_key.sh up
+bindgesture swipe:down  exec $HOME/scripts/ydo_key.sh down
+bindgesture swipe:right exec $HOME/scripts/ydo_key.sh right
+bindgesture swipe:left exec $HOME/scripts/ydo_key.sh left
