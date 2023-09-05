@@ -4,6 +4,11 @@ bindsym Ctrl+Return exec $term
 bindsym $mod+0 exec raise_terminal.sh
 bindsym $mod+e exec $explorer
 
+# Pulsanti speciali
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86MonBrightnessUp exec light -A 10
+bindsym XF86MonBrightnessDown exec light -U 10
+
 # Aggiusto la clipboard e aggiungo task
 bindsym $mod+x exec $DOTFILES/survey/bin/copy_coor.sh
 bindsym $mod+z exec $DOTFILES/survey/bin/add_task.sh
