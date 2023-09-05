@@ -91,9 +91,9 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
   use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
   -- Mason gestisce LSP, DAP, linter e formatter
-  use { "williamboman/mason.nvim", after = "nvim-cmp", config = [[require('config.mason')]] }
+  use { "williamboman/mason.nvim", after = "cmp-nvim-lsp" }
   -- Gestori di LSP
-  use { "williamboman/mason-lspconfig.nvim" }
+  use { "williamboman/mason-lspconfig.nvim", after = "mason.nvim", config = [[require('config.mason')]] }
   use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
   use({
       "glepnir/lspsaga.nvim",
@@ -107,7 +107,7 @@ return require('packer').startup(function(use)
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
   -- Gestori di linter
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
-  use { "jay-babu/mason-null-ls.nvim", after = "null-ls.nvim", config = [[require('config.masonnull')]]}
+  use { "jay-babu/mason-null-ls.nvim", after = { "null-ls.nvim", "mason.nvim" }, config = [[require('config.masonnull')]]}
   -- Gestore di dap
   use { "jay-babu/mason-nvim-dap.nvim", after = "mason.nvim", config = [[require('config.masondap')]] }
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }
