@@ -1,6 +1,7 @@
-
 [Default Applications]
 application/pdf=okularApplication_pdf.desktop
-inode/x-empty=nvim.desktop
+inode/x-empty=org.gnome.gedit.desktop
 inode/directory=org.kde.dolphin.desktop
-text/plain=nvim.desktop
+text/plain=org.gnome.gedit.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
