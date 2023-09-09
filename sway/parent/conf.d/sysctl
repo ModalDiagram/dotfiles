@@ -12,6 +12,7 @@ bindsym XF86MonBrightnessDown exec light -U 10
 # Aggiusto la clipboard e aggiungo task
 bindsym $mod+x exec $DOTFILES/survey/bin/copy_coor.sh
 bindsym $mod+z exec $DOTFILES/survey/bin/add_task.sh
+bindsym $mod+less exec $DOTFILES/survey/bin/notify_ratio.sh
 
 # Start your launcher
 bindsym $mod+p exec $menu
