@@ -33,3 +33,4 @@ echo $count > $HOME/.cache/survey/timestamps.txt
 echo $ts_now >> $HOME/.cache/survey/timestamps.txt
 echo $cache_min >> $HOME/.cache/survey/timestamps.txt
 
+notify-send -t 5000 "inviata. nuovo ratio: $($DOTFILES/survey/bin/ratio)"
