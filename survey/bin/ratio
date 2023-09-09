@@ -11,4 +11,4 @@ ts_now=$(date +"%s")
 
 # Calcolo il rapporto di tempo impiegato rispetto a quello previsto (idealmente 1)
 ratio=$(echo "$count / ($ts_now - $cache_min)" | bc -l)
-printf "%.2f" "$ratio"
+LC_NUMERIC="en_US.UTF-8" printf "%.2f" "$ratio"

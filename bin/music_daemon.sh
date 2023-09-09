@@ -11,15 +11,19 @@
 # This is useful when you change song from outside Spotify but don't always
 # want notifications
 
+# trap 'echo uccido $$; kill $(jobs -p); exit' SIGTERM
+# trap 'echo uccido $$; kill $(jobs -p); exit' SIGINT
+
 file=/tmp/music_daemon.lock
 
 if [[ "$1" == "kill" ]]; then
   if [[ -f "$file" ]]; then
     # echo "file esiste"
     pid=$(cat "$file")
-    if ps -p "$pid" >> /dev/null; then
+    # if ps -p "$pid" >> /dev/null; then
+      kill -- -$(ps -o pgid= $pid | grep -o [0-9]*)
       kill "$pid"
-    fi
+    # fi
   fi
   exit
 fi
@@ -28,6 +32,9 @@ echo $$ > "$file"
 
 IFS=$'\t'
 current_id=-1
+# while true;do
+#   sleep 0.1
+# done
 # if [[ "$status" == "Stopped" ]]; then printf ""; exit; fi
 while read -r playing artist title; do
   if [[ "$playing" == ⏹️ ]]; then printf '{"text":}\n';
@@ -41,7 +48,7 @@ while read -r playing artist title; do
     if [[ current_id -eq "-1" ]]; then
       current_id=$(notify-send -p -a spotify -t 10000 "Playing $title by $artist")
     else
-      notify-send -r "$current_id" -a spotify -t 10000 "Playing $title by $artist"
+      current_id=$(notify-send -p -r "$current_id" -a spotify -t 10000 "Playing $title by $artist")
     fi
   fi
 done < <(playerctl --follow metadata --player playerctld --format                        $':{{emoji(status)}}\t:{{markup_escape(artist)}}\t:{{markup_escape(title)}}')

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ydotool mousemove -a 600 370
+ydotool mousemove -a 650 425
 sleep 0.2
 ydotool click 0xC0
 $DOTFILES/survey/bin/add

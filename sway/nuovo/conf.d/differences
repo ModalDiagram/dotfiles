@@ -1,4 +1,4 @@
-output eDP-1 mode 2880x1800 bg /data/dotfiles/wallpaper/barbh.jpg fill
+output eDP-1 mode 2880x1800@60.001Hz bg /data/dotfiles/wallpaper/barbh.jpg fill
 output HDMI-A-1 mode 1680x1050 bg /data/dotfiles/wallpaper/abs_wallpaper.jpg fill
 
 input "9580:109:HUION_Huion_Tablet_Pen" {
