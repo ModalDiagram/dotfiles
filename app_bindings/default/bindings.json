@@ -16,7 +16,9 @@
     "key_d": "29:1 111:1 111:0 29:0",
     "key_J": "56:1 42:1 108:1 108:0 42:0 56:0",
     "key_K": "56:1 42:1 103:1 103:0 42:0 56:0",
-    "key_S": "56:1 103:1 103:0 56:0"
+    "key_S": "56:1 103:1 103:0 56:0",
+    "2hold": "exec:ydotool key 42:1; ydotool click 0xC0; ydotool key 42:0",
+    "3hold": "exec:ydotool key 29:1; ydotool click 0xC0; ydotool key 29:0"
   },{
     "name": "obsidian",
     "up": "29:1 42:1 15:1 15:0 42:0 29:0",

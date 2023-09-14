@@ -107,6 +107,11 @@ tooltip label {
 #custom-survey_num {
   color: #E6FFEE;
 }
+#custom-my_lock {
+  color: rgb(221, 182, 242);
+  padding-left: 3px;
+  padding-right: 3px;
+}
 #tray {
   padding-right: 8px;
   padding-left: 10px;

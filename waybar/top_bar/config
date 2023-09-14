@@ -3,7 +3,8 @@
     "clock",
     "sway/workspaces",
     "idle_inhibitor",
-    "sway/mode"
+    "sway/mode",
+    "custom/my_lock"
   ],
   "modules-center": [
     "sway/window"
@@ -110,6 +111,13 @@
     "on-click": "$DOTFILES/survey/bin/add",
     "on-click-right": "$DOTFILES/survey/menu",
     "signal": 13,
+    "interval": "once",
+  },
+  "custom/my_lock": {
+    "exec": "$HOME/scripts/my_lock/module_lock.sh",
+    "format": "{}",
+    "on-click": "$HOME/scripts/my_lock/module_lock.sh toggle",
+    "signal": 11,
     "interval": "once",
   },
 }
