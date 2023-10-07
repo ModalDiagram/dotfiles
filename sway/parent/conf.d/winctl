@@ -47,7 +47,7 @@ mode "music" {
     # down will grow the containers height
     bindsym l exec playerctl -p spotify next
     bindsym h exec playerctl -p spotify previous
-    bindsym f exec swaymsg [class="Spotify"] focus, mode "default"
+    bindsym f exec swaymsg [class="Spotify"] focus, exec music_daemon.sh kill, mode "default"
     bindsym Space exec playerctl -p spotify play-pause
 
     # Return to default mode

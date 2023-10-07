@@ -1,5 +1,6 @@
 exec ydotoold
 exec mako
+exec kbapp start
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec /usr/local/bin/check_wishlist.sh
 exec libinput-gestures-setup restart

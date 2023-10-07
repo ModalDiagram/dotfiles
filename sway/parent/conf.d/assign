@@ -15,6 +15,7 @@ for_window [app_id="libreoffice"] move to workspace $ws_docs, workspace $ws_docs
 # Media
 for_window [title="Twitch — Mozilla Firefox"] move to workspace $ws_media, workspace $ws_media
 for_window [title="Discord"] move to workspace $ws_media, workspace $ws_media, exec mark_mark
+for_window [title="Citra Nightly 1996"] inhibit_idle fullscreen
 
 # Music
 for_window [class="Spotify"] move to workspace $ws_music, workspace $ws_music, exec mark_mark

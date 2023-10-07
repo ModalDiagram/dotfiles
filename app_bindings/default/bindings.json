@@ -12,19 +12,36 @@
     "key_j": "29:1 15:1 15:0 29:0",
     "key_l": "108:1 108:0",
     "key_h": "103:1 103:0",
-    "key_s": "29:1 37:1 37:0 29:0",
+    "key_s": "56:1 32:1 32:0 56:0",
     "key_d": "29:1 111:1 111:0 29:0",
     "key_J": "56:1 42:1 108:1 108:0 42:0 56:0",
     "key_K": "56:1 42:1 103:1 103:0 42:0 56:0",
     "key_S": "56:1 103:1 103:0 56:0",
-    "2hold": "exec:ydotool key 42:1; ydotool click 0xC0; ydotool key 42:0",
-    "3hold": "exec:ydotool key 29:1; ydotool click 0xC0; ydotool key 29:0"
+    "2hold": [
+      "ydotool key 42:1",
+      "ydotool click 0xC0",
+      "ydotool key 42:0"
+    ],
+    "3hold": [
+      "ydotool key 29:1",
+      "ydotool click 0xC0",
+      "ydotool key 29:0"
+    ]
   },{
     "name": "obsidian",
     "up": "29:1 42:1 15:1 15:0 42:0 29:0",
     "down": "29:1 15:1 15:0 29:0",
     "left": "56:1 29:1 105:1 105:0 29:0 56:0",
     "right": "56:1 29:1 106:1 106:0 29:0 56:0",
+    "tab2": "8",
+    "tab1": "11",
+    "tab3": "35"
+  },{
+    "name": "ferdium",
+    "up": "29:1 56:1 105:1 105:0 56:0 29:0",
+    "down": "29:1 56:1 106:1 106:0 56:0 29:0",
+    "left": "56:1 105:1 105:0 56:0",
+    "right": "56:1 106:1 106:0 56:0",
     "tab2": "11",
     "tab3": "11"
   },{
@@ -43,7 +60,7 @@
     "right": "56:1 106:1 106:0 56:0",
     "rightdown": "29:1 62:1 62:0 29:0"
   },{
-    "name": "dolphin",
+    "name": "org.kde.dolphin",
     "left": "56:1 105:1 105:0 56:0",
     "right": "56:1 106:1 106:0 56:0",
     "up": "29:1 42:1 15:1 15:0 42:0 29:0",
@@ -55,8 +72,12 @@
   },{
     "name": "Spotify",
     "key_s": "29:1 38:1 38:0 29:0",
-    "key_l": "exec:playerctl -p spotify next",
-    "key_h": "exec:playerctl -p spotify previous"
+    "key_l": [
+      "playerctl -p spotify next"
+    ],
+    "key_h": [
+      "playerctl -p spotify previous"
+    ]
   },{
     "name": "default",
     "up": "125:1 43:1 125:0 43:0",
@@ -64,6 +85,8 @@
     "left": "125:1 35:1 35:0 125:0",
     "right": "125:1 38:1 38:0 125:0",
     "leftup": "125:1 49:1 49:0 125:0",
+    "rightup": "125:1 15:1 125:0 15:0",
+    "leftdown": "125:1 43:1 125:0 43:0",
     "tab0": "29 44",
     "tab1": "125 35",
     "tab2": "103",
