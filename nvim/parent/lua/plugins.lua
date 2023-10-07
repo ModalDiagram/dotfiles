@@ -18,7 +18,7 @@ local packer_bootstrap = ensure_packer()
 vim.cmd("packadd packer.nvim")
 
 return require('packer').startup(function(use)
- -- -- it is recommended to put impatient.nvim before any other plugins
+  -- -- it is recommended to put impatient.nvim before any other plugins
   use { "lewis6991/impatient.nvim", config = [[require('impatient')]] }
 
   use { "wbthomason/packer.nvim" }
@@ -155,7 +155,6 @@ return require('packer').startup(function(use)
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
-  use { 'subnut/nvim-ghost.nvim' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
