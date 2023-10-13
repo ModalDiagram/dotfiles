@@ -5,9 +5,7 @@ for_window [app_id="firefox"] move to workspace $ws_web, workspace $ws_web, exec
 for_window [app_id="firefox"] inhibit_idle fullscreen
 
 # Work
-for_window [app_id="org.kde.okular"] move to workspace $ws_work, workspace $ws_work
 for_window [title="Stylus Labs Write"] move to workspace $ws_work, workspace $ws_work
-for_window [app_id="xournalpp"] move to workspace $ws_work, workspace $ws_work
 
 # Doc
 for_window [app_id="libreoffice"] move to workspace $ws_docs, workspace $ws_docs
@@ -21,7 +19,6 @@ for_window [title="Citra Nightly 1996"] inhibit_idle fullscreen
 for_window [class="Spotify"] move to workspace $ws_music, workspace $ws_music, exec mark_mark
 
 # Code
-for_window [class="org-nlogo-app-App"] floating enable
 
 
 # Floating
@@ -29,3 +26,4 @@ for_window [app_id="zenity"] floating enable
 for_window [title="Sharing Indicator"] floating enable, move window to scratchpad
 for_window [title="floating_terminal"] floating enable, move down 120, resize set 900 500, move to scratchpad
 for_window [title="floating_button_window"] floating enable
+for_window [class="org-nlogo-app-App"] floating enable
