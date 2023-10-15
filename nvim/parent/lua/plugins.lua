@@ -30,6 +30,7 @@ return require('packer').startup(function(use)
   }
   -- Colorchemes
   use({ 'rose-pine/neovim', as = 'rose-pine' })
+  use 'shaunsingh/solarized.nvim'
   use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }

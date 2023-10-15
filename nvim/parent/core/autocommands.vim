@@ -23,10 +23,10 @@ augroup END
 
 function! s:custom_highlight() abort
   " For yank highlight
-  highlight @method guifg=#c4a7e7
-  highlight conditional guifg=#ebbcba
-  highlight keyword guifg=#eb6f92
-  highlight @attribute guifg=#ffe14d
+  " highlight @method guifg=#c4a7e7
+  " highlight conditional guifg=#ebbcba
+  " highlight keyword guifg=#eb6f92
+  " highlight @attribute guifg=#ffe14d
 
 endfunction
 
