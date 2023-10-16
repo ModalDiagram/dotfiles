@@ -8,5 +8,6 @@
     "jobs",
     "root"
   ],
-  "mode": "flat"
+  "mode": "flat",
+  "theme": "~/.config/powerline-shell/solarized_light.py"
 }
