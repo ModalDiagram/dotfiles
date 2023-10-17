@@ -12,6 +12,8 @@ set wildignorecase " ignore cases in cmd completions
 
 set autochdir " per traferirsi automaticamente sulla directory del file
 set colorcolumn=80 " linea per la lunghezza
+highlight ColorColumn guibg=#eee8d5
+
 set updatetime=1000
 " Impostazioni sui tab
 set tabstop=2       " number of visual spaces per TAB
@@ -31,3 +33,5 @@ set scrolloff=3
 set undofile
 
 set noruler
+
+set cursorline

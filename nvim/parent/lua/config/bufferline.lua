@@ -51,5 +51,5 @@ require("bufferline").setup {
       }
     },
   },
-  highlights = require('rose-pine.plugins.bufferline'),
+  -- highlights = require('rose-pine.plugins.bufferline'),
 }

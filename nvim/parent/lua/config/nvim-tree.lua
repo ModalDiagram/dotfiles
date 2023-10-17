@@ -16,6 +16,7 @@ local function on_attach(bufnr)
   map.set('n', '<C-d>', api.tree.change_root_to_node,          opts('CD'))
   map.set('n', '<C-k>', api.node.navigate.parent,              opts('Parent directory'))
   map.set('n', '<C-j>', api.node.navigate.sibling.last,        opts('Last Sibling'))
+  -- map.set('n', 'f',     require('leap').leap,                 opts('Filter'))
 
   -- DEFAULT
   map.set('n', '<C-e>', api.node.open.replace_tree_buffer,     opts('Open: In Place'))

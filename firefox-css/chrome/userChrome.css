@@ -32,16 +32,16 @@ Remove "Email Image...", "Email Video...", "Send Link to Device" and
 }
 
 /* Tone down the color of the black outline found in the toolbar and findbar */
-#navigator-toolbox {
+/*#navigator-toolbox {
     border-bottom-color: rgb(48, 45, 65) !important;
-}
+}*/
 
-findbar {
+/*findbar {
     border-top-color: rgb(48, 45, 65) !important;
-}
-
-#fullscr-toggler { background-color: rgba(0, 0, 0, 0) !important; }
-:root {
+}*/
+/*
+#fullscr-toggler { background-color: rgba(0, 0, 0, 0) !important; }*/
+/*:root {
   --uc-bg-color: #1F1D29;
   --uc-show-new-tab-button: none;
   --uc-show-tab-separators: none;
@@ -79,9 +79,9 @@ findbar {
   --mff-urlbar-results-font-size: 11pt;
   --mff-urlbar-results-font-weight: 700;
   --mff-urlbar-results-url-color: #98c1d9;
-}
+}*/
 
-#urlbar-background, .titlebar-buttonbox-container, #nav-bar, .tabbrowser-tab:not([selected]) .tab-background{
+/*#urlbar-background, .titlebar-buttonbox-container, #nav-bar, .tabbrowser-tab:not([selected]) .tab-background{
     background: var(--uc-bg-color) !important;
   border: none !important;
 }
@@ -103,4 +103,4 @@ findbar {
 }
 #urlbar-background {
   box-shadow: none !important;
-}
+}*/

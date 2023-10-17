@@ -1,5 +1,5 @@
 default_border pixel 3
-default_dim_inactive 0.1
+default_dim_inactive 0.2
 corner_radius 5
 titlebar_separator disable
 titlebar_border_thickness 3
@@ -14,36 +14,47 @@ shadow_blur_radius 3
 shadow_color #0000007F
 seat seat0 xcursor_theme Qogir-dark
 
-# {{{ Color defs - fallback to solarized
-set $color0x #eb6f92
-set $color00 #eb6f92
-set $color02 #859900
-set $color03 #b58900
-set $color04 #ff3370
-set $color05 #d33682
-set $color06 #2aa198
-set $color07 #f6c177
-set $color08 #f6c177
-set $color09 #cb4b16
-set $color10 #85c000
-set $color11 #cccc00
-set $color12 #2c98e4
-set $color13 #6c71c4
-set $color14 #30b8b0
-set $color15 #eee8d5
+# {{{ Color defs - dark theme
+# set $color0x #eb6f92
+# set $color00 #eb6f92
+# set $color02 #859900
+# set $color03 #b58900
+# set $color04 #ff3370
+# set $color05 #d33682
+# set $color06 #2aa198
+# set $color07 #f6c177
+# set $color08 #f6c177
+# set $color09 #cb4b16
+# set $color10 #85c000
+# set $color11 #cccc00
+# set $color12 #2c98e4
+# set $color13 #6c71c4
+# set $color14 #30b8b0
+# set $color15 #eee8d5
+# set $fground #fdf6e3
+# set $default_bg #191724
+# set $text    #e0def4
+# set $focused_text     #21202e
+# set $focused_bg       #c4a7e7
+# set $focused_border   #f6c177
+# set $unfocused_border #eb6f92
+# set $urgent_border    #dc322f
+# }}}
+
+# {{{ Color defs - solarized
 set $fground #fdf6e3
-set $default_bg #191724
-set $text    #e0def4
-set $focused_text     #21202e
-set $focused_bg       #c4a7e7
-set $focused_border   #f6c177
-set $unfocused_border #eb6f92
+set $default_bg #fdf6e3
+set $text    #657b83
+set $focused_text     #1a1826
+set $focused_bg       #eee8d5
+set $focused_border   #cb4b16
+set $unfocused_border #eee8d5
 set $urgent_border    #dc322f
 # }}}
 
 # Colors:               border            background    text              indicator  child border
 client.focused          $focused_border   $focused_bg   $focused_text     $focused_border   $focused_border
-client.focused_inactive $focused_border   $focused_bg   $focused_text     $focused_border   $color00
+client.focused_inactive $focused_border   $focused_bg   $focused_text     $focused_border   $focused_border
 client.unfocused        $unfocused_border $default_bg   $text             $unfocused_border $unfocused_border
 client.urgent           $urgent_border    $default_bg   $text             $urgent_border   $urgent_border
 # change 'indicator' from default to something more obvious
