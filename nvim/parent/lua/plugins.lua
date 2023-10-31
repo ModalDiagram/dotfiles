@@ -1,6 +1,3 @@
-local api = vim.api
-local fn = vim.fn
-
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -30,7 +27,7 @@ return require('packer').startup(function(use)
   }
   -- Colorchemes
   use({ 'rose-pine/neovim', as = 'rose-pine' })
-  use 'shaunsingh/solarized.nvim'
+  use { 'shaunsingh/solarized.nvim', config = [[require("config.solarized")]] }
   use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }
@@ -156,6 +153,9 @@ return require('packer').startup(function(use)
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+  -- use { "kiyoon/jupynium.nvim", 
+  --   run = "/home/sandro0198/anaconda3/condabin/conda run --no-capture-output -n nvim pip install .",
+  --   config=[[require('config.jupynium')]] }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

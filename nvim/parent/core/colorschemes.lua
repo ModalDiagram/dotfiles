@@ -47,6 +47,5 @@
     -- TabLine = { fg = 'love', bg = "f6c177"},
 	-- }
 -- })
-
 -- set colorscheme after options
 vim.cmd('colorscheme solarized')

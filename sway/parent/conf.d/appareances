@@ -43,12 +43,14 @@ seat seat0 xcursor_theme Qogir-dark
 
 # {{{ Color defs - solarized
 set $fground #fdf6e3
-set $default_bg #fdf6e3
-set $text    #657b83
-set $focused_text     #1a1826
-set $focused_bg       #eee8d5
-set $focused_border   #cb4b16
-set $unfocused_border #eee8d5
+set $default_bg #002b36
+set $text    #dadada
+set $focused_text     #657b83
+set $focused_bg       #fdf6e3
+set $focused_border   #eee8d5
+# set $focused_bg       #002b36
+# set $focused_border   #eee8d5
+set $unfocused_border #fdf6e3
 set $urgent_border    #dc322f
 # }}}
 
