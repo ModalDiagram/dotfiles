@@ -153,6 +153,9 @@ return require('packer').startup(function(use)
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+
+  use { 'jamespeapen/Nvim-R' }
+  use { 'simeji/winresizer' }
   -- use { "kiyoon/jupynium.nvim", 
   --   run = "/home/sandro0198/anaconda3/condabin/conda run --no-capture-output -n nvim pip install .",
   --   config=[[require('config.jupynium')]] }

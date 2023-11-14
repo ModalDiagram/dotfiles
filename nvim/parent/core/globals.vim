@@ -35,3 +35,4 @@ set undofile
 set noruler
 
 set cursorline
+let R_min_editor_width = 20

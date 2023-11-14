@@ -3,7 +3,7 @@
   Use this file to set your preferences this will save them in one place for easier future updating
   =========================================================================
 */
-
+/*
 :root {
   --sidebar-width: 50px;
   --toolbar-height: -50px;
@@ -23,7 +23,7 @@
     If you are putting this on the left or right side uncomment the side
     preferences below and comment the other
     =========================================================================
-  */
+  *//*
     --csd-width: 100px;
     --csd-top: 6px;
 
@@ -41,7 +41,7 @@
       CSD - Right Side ===
       Defaults: --csd-right: 0px; --csd-margin-right: 95px;
     */
-
+/*
       --csd-right: 0px;
       --csd-margin-right: 95px;
 
@@ -58,13 +58,13 @@
   Issue URL: https://github.com/drannex42/FirefoxSidebar/issues/14
 */
 
-/* allow the buttons to appear */
+/* allow the buttons to appear *//*
 .browser-toolbar {
   position: unset !important;
 }
 
 
-/* move buttons next to menu button */
+/* move buttons next to menu button *//*
 .titlebar-buttonbox-container {
   visibility: hidden !important;
   position: fixed !important;
@@ -76,13 +76,13 @@
   max-width: var(--csd-width);
 }
 
-/* hide buttons in fullscreen mode (video player and F11) */
+/* hide buttons in fullscreen mode (video player and F11) *//*
 #main-window[inFullscreen="true"] .titlebar-buttonbox-container,
 #main-window[inDOMFullscreen="true"] .titlebar-buttonbox-container {
   visibility: hidden !important;
 }
 
-/* remove empty space when in fullscreen mode (F11) */
+/* remove empty space when in fullscreen mode (F11) *//*
 #main-window[inFullscreen="true"] #nav-bar {
   padding-right: 0px !important;
   margin-left: 0px !important;

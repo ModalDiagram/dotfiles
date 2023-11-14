@@ -26,4 +26,4 @@ set $ws_docs 4
 
 # Desktops
 set $dt_lap eDP-1
-set $dt_tv HDMI-A-2
+set $dt_tv HDMI-A-1

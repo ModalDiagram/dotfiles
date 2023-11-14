@@ -36,8 +36,9 @@ keymap.set("i", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous
 keymap.set("i", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
 
 -- Copy entire buffer.
-keymap.set("n", "<c-b>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
-keymap.set("n", "<c-b>d", "<cmd>bd<cr>", { desc = "delete current buffer" })
+keymap.set("n", "<leader>by", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
+keymap.set("n", "<leader>bD", "<cmd>bd!<cr>", { desc = "delete current buffer" })
+keymap.set("n", "<leader>bd", "<cmd>w<cr><cmd>bd<cr>", { desc = "delete current buffer" })
 
 -- Navigate with telescope (<c-d> to remove buffer)
 keymap.set("n", "<c-b>t", "<cmd>Telescope buffers<cr>", { desc = "Telescope buffers" })
@@ -100,19 +101,27 @@ keymap.set("n", "<leader><space>", "<cmd>StripTrailingWhitespace<cr>", { desc = 
 
 
 -- Move current line up and down
-keymap.set("n", "<A-k>", '<cmd>call utils#SwitchLine(line("."), "up")<cr>', { desc = "move line up" })
-keymap.set("n", "<A-j>", '<cmd>call utils#SwitchLine(line("."), "down")<cr>', { desc = "move line down" })
+-- keymap.set("n", "<A-k>", '<cmd>call utils#SwitchLine(line("."), "up")<cr>', { desc = "move line up" })
+-- keymap.set("n", "<A-j>", '<cmd>call utils#SwitchLine(line("."), "down")<cr>', { desc = "move line down" })
 
 -- Move current visual-line selection up and down
-keymap.set("x", "<A-k>", '<cmd>call utils#MoveSelection("up")<cr>', { desc = "move selection up" })
+-- keymap.set("x", "<A-k>", '<cmd>call utils#MoveSelection("up")<cr>', { desc = "move selection up" })
 
-keymap.set("x", "<A-j>", '<cmd>call utils#MoveSelection("down")<cr>', { desc = "move selection down" })
+-- keymap.set("x", "<A-j>", '<cmd>call utils#MoveSelection("down")<cr>', { desc = "move selection down" })
 
 -- Switch windows
 keymap.set("n", "<left>", "<c-w>h")
 keymap.set("n", "<Right>", "<C-W>l")
 keymap.set("n", "<Up>", "<C-W>k")
 keymap.set("n", "<Down>", "<C-W>j")
+keymap.set("n", "<c-h>", "<c-w>h")
+keymap.set("n", "<c-l>", "<C-W>l")
+keymap.set("n", "<c-k>", "<C-W>k")
+keymap.set("n", "<c-j>", "<C-W>j")
+keymap.set("i", "<c-h>", "<Esc><c-w>h")
+keymap.set("i", "<c-l>", "<Esc><C-W>l")
+keymap.set("i", "<c-k>", "<Esc><C-W>k")
+keymap.set("i", "<c-j>", "<Esc><C-W>j")
 
 -- Break inserted text into smaller undo units when we insert some punctuation chars.
 local undo_ch = { ",", ".", "!", "?", ";", ":" }

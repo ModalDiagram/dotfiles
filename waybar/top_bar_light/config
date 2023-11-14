@@ -3,8 +3,8 @@
     "clock",
     "sway/workspaces",
     "idle_inhibitor",
-    "sway/mode",
-    "custom/my_lock"
+    "custom/my_lock",
+    "sway/mode"
   ],
   "modules-center": [
     "sway/window"
@@ -44,6 +44,9 @@
   },
   "sway/mode": {
     "format": "󰕧 {}",
+    "max-length": 10
+  },
+  "sway/window": {
     "max-length": 50
   },
   "pulseaudio": {
