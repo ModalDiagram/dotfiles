@@ -1,4 +1,13 @@
-#!/bin/bash
+#!/bin/sh
+pgid_from_pid() {
+    local pid=$1
+    ps -o pgid= "$pid" 2>/dev/null | egrep -o "[0-9]+"
+}
+
+pid="$$"
+if [ "$pid" != "$(pgid_from_pid $pid)" ]; then
+    exec setsid "$(readlink -f "$0")" "$@"
+fi
 # ./music_daemon.sh launches the daemon
 # While it is running, it sends notification everytime the playing song changes
 # (actually it saves the id of the notification so that it can replace the
@@ -11,23 +20,39 @@
 # This is useful when you change song from outside Spotify but don't always
 # want notifications
 
-# trap 'echo uccido $$; kill $(jobs -p); exit' SIGTERM
-# trap 'echo uccido $$; kill $(jobs -p); exit' SIGINT
+# The first part makes the process run in its own process group
+pgid_from_pid() {
+    local pid=$1
+    ps -o pgid= "$pid" 2>/dev/null | egrep -o "[0-9]+"
+}
+
+pid="$$"
+if [ "$pid" != "$(pgid_from_pid $pid)" ]; then
+    exec setsid "$(readlink -f "$0")" "$@"
+fi
+
+
+trap 'exit; echo closed daemon' SIGTERM
+trap 'echo stop' SIGINT
 
 file=/tmp/music_daemon.lock
 
 if [[ "$1" == "kill" ]]; then
   if [[ -f "$file" ]]; then
     # echo "file esiste"
+    # while read -r pid; do
+    #   kill -SIGINT $pid
+    # done < <(cat $file)
+    # kill $(cat "$file")
     pid=$(cat "$file")
     # if ps -p "$pid" >> /dev/null; then
       kill -- -$(ps -o pgid= $pid | grep -o [0-9]*)
-      kill "$pid"
     # fi
   fi
   exit
 fi
 
+echo "started daemon"
 echo $$ > "$file"
 
 IFS=$'\t'
@@ -52,3 +77,4 @@ while read -r playing artist title; do
     fi
   fi
 done < <(playerctl --follow metadata --player playerctld --format                        $':{{emoji(status)}}\t:{{markup_escape(artist)}}\t:{{markup_escape(title)}}')
+

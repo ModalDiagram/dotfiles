@@ -1,0 +1,1 @@
+../../../../data/dotfiles/nvim/laptop/icons.lua
