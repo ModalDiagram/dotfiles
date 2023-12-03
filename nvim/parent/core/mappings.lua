@@ -109,7 +109,8 @@ keymap.set("n", "<leader><space>", "<cmd>StripTrailingWhitespace<cr>", { desc = 
 
 -- keymap.set("x", "<A-j>", '<cmd>call utils#MoveSelection("down")<cr>', { desc = "move selection down" })
 
--- Switch windows
+-- Windows mappings
+keymap.set("n", "<c-w>e", "<cmd>WinResizerStartResize<CR>")
 keymap.set("n", "<left>", "<c-w>h")
 keymap.set("n", "<Right>", "<C-W>l")
 keymap.set("n", "<Up>", "<C-W>k")
@@ -191,7 +192,7 @@ vim.keymap.set("n", "<leader>nf", '<cmd>NvimTreeFindFileToggle<cr>', {desc = "To
 
 -- Mappings di dap
 -- Lancio debug del main
-vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dap").continue()<cr><cmd>lua require("dapui").open(1)<cr>', {desc = "Start debug"})
+vim.keymap.set("n", "<leader>ds", '<cmd>lua require("dapui").open(1)<cr><cmd>lua require("dap").continue()<cr>', {desc = "Start debug"})
 -- Continuo il programma
 vim.keymap.set("n", "<leader>dc", '<cmd>lua require("dap").continue()<cr>', {desc = "Continue dap"})
 -- Chiudo tutto

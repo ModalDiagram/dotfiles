@@ -24,6 +24,18 @@ require("mason-nvim-dap").setup({
             type = "python";
             pythonPath = "python";
           },
+          {
+            name = "Launch with arguments";
+            console = "integratedTerminal";
+            request = "launch";
+            program = "${file}";
+            type = "python";
+            pythonPath = "python";
+            args = function()
+              local args_string = vim.fn.input("Arguments: ")
+              return vim.split(args_string, " ")
+            end;
+          }
         }
     end,
   },

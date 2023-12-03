@@ -1,11 +1,14 @@
 require("ibl").setup {
-    -- for example, context is off by default, use this to turn it on
- --   show_current_context_start = true,
+  -- for example, context is off by default, use this to turn it on
+  --   show_current_context_start = true,
+  
+  -- indent = {
+  -- },
   scope = {
-       enabled = true,
-       show_start = true,
-       show_end = true,
-       highlight = { "Function", "Label" },
+    enabled = true,
+    show_start = true,
+    show_end = true,
+    highlight = { "Function", "Label" },
 
   }
 }
