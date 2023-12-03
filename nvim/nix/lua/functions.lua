@@ -1,6 +1,31 @@
 local fn = vim.fn
 
 local M = {}
+local action_state = require('telescope.actions.state')
+local actions = require('telescope.actions')
+local finder = require('telescope.builtin').buffers
+
+M.my_buffer = function()
+  require('telescope.builtin').buffers{
+    attach_mappings = function(prompt_bufnr, map)
+      local delete_buf = function()
+        local selection = action_state.get_selected_entry()
+        -- depending if you want to close or not, include this or not
+        -- actions.close(prompt_bufnr)
+        -- print(vim.inspect(selection))
+        -- better print selection before first running this. I am not sure if it have a bufnr or if this field is named differently
+        vim.api.nvim_buf_delete(selection.bufnr, { force = true })
+        local current_picker = action_state.get_current_picker(prompt_bufnr)
+        current_picker:refresh(nil, {reset_prompt = true})
+      end
+
+      -- mode, key, func
+      -- this is just an example
+      map('n', 'd', delete_buf)
+      return true
+    end
+  }
+end
 
 function M.executable(name)
   if fn.executable(name) > 0 then
@@ -21,6 +46,7 @@ M.has = function(feat)
 
   return false
 end
+
 
 --- Create a dir if it does not exist
 function M.may_create_dir(dir)
