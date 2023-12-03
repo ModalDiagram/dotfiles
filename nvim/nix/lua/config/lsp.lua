@@ -27,3 +27,4 @@ require("lspconfig").rust_analyzer.setup{}
 require("lspconfig").bashls.setup{}
 require("lspconfig").pylsp.setup{}
 require("lspconfig").lua_ls.setup{}
+require("lspconfig").r_language_server.setup{}

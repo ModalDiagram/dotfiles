@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 flag=$(cat "/tmp/my_lock.lock")
 
