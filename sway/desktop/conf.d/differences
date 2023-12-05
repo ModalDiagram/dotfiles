@@ -1,6 +1,0 @@
-output HDMI-A-1 mode 1366x768 bg $DOTFILES/wallpaper/rose.jpg fill
-
-input "9580:109:HUION_Huion_Tablet_Pen" {
-  tool_mode * absolute
-  map_to_output HDMI-A-1
-}

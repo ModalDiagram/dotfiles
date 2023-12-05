@@ -1,0 +1,28 @@
+{
+  "target": "$HOME/.config/sway/",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "parent",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "desktop",
+      "target": "",
+      "inherits": "parent",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "laptop",
+      "target": "",
+      "inherits": "parent",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

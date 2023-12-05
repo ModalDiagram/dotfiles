@@ -1,0 +1,1 @@
+firefox:/usr/share/icons/hicolor/scalable/apps/firefox.svg

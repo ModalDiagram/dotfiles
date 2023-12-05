@@ -1,13 +1,4 @@
 #!/bin/sh
-pgid_from_pid() {
-    local pid=$1
-    ps -o pgid= "$pid" 2>/dev/null | egrep -o "[0-9]+"
-}
-
-pid="$$"
-if [ "$pid" != "$(pgid_from_pid $pid)" ]; then
-    exec setsid "$(readlink -f "$0")" "$@"
-fi
 # ./music_daemon.sh launches the daemon
 # While it is running, it sends notification everytime the playing song changes
 # (actually it saves the id of the notification so that it can replace the
@@ -20,7 +11,6 @@ fi
 # This is useful when you change song from outside Spotify but don't always
 # want notifications
 
-# The first part makes the process run in its own process group
 pgid_from_pid() {
     local pid=$1
     ps -o pgid= "$pid" 2>/dev/null | egrep -o "[0-9]+"
@@ -43,10 +33,13 @@ if [[ "$1" == "kill" ]]; then
     # while read -r pid; do
     #   kill -SIGINT $pid
     # done < <(cat $file)
-    # kill $(cat "$file")
-    pid=$(cat "$file")
+    #kill $(cat "$file")
     # if ps -p "$pid" >> /dev/null; then
-      kill -- -$(ps -o pgid= $pid | grep -o [0-9]*)
+    # kill -- -$(ps -o pgid= $pid | grep -o [0-9]*)
+    pgid=$(cat /tmp/music_daemon.lock)
+    while read -r pid; do
+      kill $pid
+    done < <(pgrep -g $pgid)
     # fi
   fi
   exit

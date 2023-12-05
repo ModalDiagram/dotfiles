@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Ripristino la sessione azzerando il tempo della sessione e il tempo dell'ultima task
-echo 0 > $HOME/.cache/survey/timestamps.txt
-echo "$(date +"%s")" >> $HOME/.cache/survey/timestamps.txt
-echo "$(date +"%s")" >> $HOME/.cache/survey/timestamps.txt
-pkill -RTMIN+13 waybar

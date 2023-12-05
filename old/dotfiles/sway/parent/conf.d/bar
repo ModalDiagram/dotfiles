@@ -1,0 +1,4 @@
+bar {
+    mode hide
+    swaybar_command waybar
+}

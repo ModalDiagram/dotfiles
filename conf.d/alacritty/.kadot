@@ -1,0 +1,21 @@
+{
+  "target": "$HOME/.config/alacritty/",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "dawn",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "pine",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

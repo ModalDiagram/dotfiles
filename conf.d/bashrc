@@ -1,0 +1,22 @@
+function _update_ps1() {
+    # PS1="$($GOPATH/bin/powerline-go -error $? -jobs $(jobs -p | wc -l))"
+    PS1="$(powerline-go -cwd-max-depth 3 -mode flat -theme solarized-dark16 -modules nix-shell,venv,user,ssh,cwd,perms,git,exit,root)"
+    # Uncomment the following line to automatically clear errors after showing
+    # them once. This not only clears the error for powerline-go, but also for
+    # everything else you run in that shell. Don't enable this if you're not
+    # sure this is what you want.
+
+    #set "?"
+}
+
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+
+# export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share/
+# export PATH=$PATH:/data/dotfiles/bin/
+if command -v fzf-share >/dev/null; then
+  source "$(fzf-share)/key-bindings.bash"
+  source "$(fzf-share)/completion.bash"
+fi
+alias nixvim="sudo vim /etc/nixos/configuration.nix"

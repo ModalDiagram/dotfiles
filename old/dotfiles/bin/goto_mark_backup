@@ -1,0 +1,26 @@
+#!/bin/bash
+
+str=""
+echo "$(swaymsg -t get_tree | jq 'recurse(.nodes[]) | select(.marks != []) | .marks[0], .name')" |
+{
+while IFS=$"\n" read -r c; do
+    # echo "start"
+    str+="img:/usr/share/icons/hicolor/scalable/apps/firefox.svg:text:"
+    str+="${c//\"/}\t"
+    # echo "${c//\"/}\t"
+    read -r line
+    str+="${line//\"/}\n"
+    # echo "$str"
+    # echo "$line"
+    # echo "end"
+done
+mark=$(printf "$str" | wofi -i --allow-images --height 210 --dmenu --cache-file /dev/null)
+mark=${mark%%$'\t'*}
+echo $mark
+if ! [[ -z "$mark" ]]; then
+  swaymsg "[con_mark=$mark]" focus
+fi
+
+}
+# echo "${a[@]}"
+# echo "${a[1]}"

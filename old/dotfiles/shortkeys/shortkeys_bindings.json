@@ -1,0 +1,67 @@
+[
+  {
+    "key": "ctrl+alt+b",
+    "label": "cancel query on Maps",
+    "action": "javascript",
+    "code": "document.querySelector(\"#searchboxinput\").select();",
+    "sites": "*google.com*",
+    "sitesArray": [
+      "*google.com*"
+    ],
+    "blacklist": false
+  },
+  {
+    "sites": "*tryrating*",
+    "sitesArray": [
+      "*tryrating*"
+    ],
+    "key": "ctrl+alt+i",
+    "label": "submit rating",
+    "action": "javascript",
+    "code": "document.querySelector(\".ml-2\").click();",
+    "activeInInputs": true,
+    "blacklist": "whitelist"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "label": "open link",
+    "action": "javascript",
+    "code": "coordinates = document.querySelector('[data-cy=\"cy-field-pin_primary_title\"]').textContent;\nnavigator.clipboard.writeText(coordinates);\n\nurl = document.querySelector('[data-cy=\"cy-field-url_primary_text\"]').querySelector('a').href;\nif (url) {\n  window.open(url);\n}\n",
+    "sites": "*tryrating*",
+    "sitesArray": [
+      "*tryrating*"
+    ],
+    "blacklist": "whitelist",
+    "activeInInputs": true
+  },
+  {
+    "key": "ctrl+alt+1",
+    "action": "javascript",
+    "code": "window.getSelection().selectAllChildren(document.querySelector('[data-cy=\"cy-field-name_primary_text_2\"]'));",
+    "sites": "*tryrating*",
+    "sitesArray": [
+      "*tryrating*"
+    ],
+    "label": "select name",
+    "activeInInputs": true,
+    "blacklist": "whitelist"
+  },
+  {
+    "key": "ctrl+alt+2",
+    "label": "select pin",
+    "action": "javascript",
+    "code": "window.getSelection().selectAllChildren(document.querySelector('[data-cy=\"cy-field-pin_primary_title\"]'));",
+    "activeInInputs": true,
+    "blacklist": "whitelist",
+    "sites": "*tryrating*",
+    "sitesArray": [
+      "*tryrating*"
+    ]
+  },
+  {
+    "sites": "",
+    "sitesArray": [
+      ""
+    ]
+  }
+]

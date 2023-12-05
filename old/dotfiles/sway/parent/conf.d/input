@@ -1,0 +1,27 @@
+input "1133:16500:Logitech_G305" {
+       accel_profile flat
+       pointer_accel 0.6
+       dwt disabled
+   }
+
+input "1739:10608:SYN1B7E:01_06CB:2970_Touchpad" {
+       dwt enabled
+       tap enabled
+       natural_scroll enabled
+       middle_emulation enabled
+       accel_profile flat
+       pointer_accel 0.6
+   }
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout "it"
+    xkb_variant ""
+    #xkb_options "ctrl:nocaps,compose:ralt"
+    xkb_numlock enabled
+}
+
+input "9610:1:SINO_WEALTH_USB_KEYBOARD" {
+  xkb_numlock enabled
+  xkb_layout "us"
+  xkb_variant "intl"
+}

@@ -1,0 +1,49 @@
+{
+  "target": "$HOME/.config",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "mako",
+      "target": "$HOME/.config/mako",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "alacritty",
+      "target": "$HOME/.config/alacritty",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "tridactyl",
+      "target": "$HOME/.config/tridactyl",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "powerline_shell",
+      "target": "$HOME/.config/powerline-shell/",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "xdg-open",
+      "target": "$HOME/.config",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "qt5ct",
+      "target": "$HOME/.config/qt5ct",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

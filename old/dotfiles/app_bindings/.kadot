@@ -1,0 +1,14 @@
+{
+  "target": "$HOME/.local/share/app_bindings",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "default",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "modules-left": [
+    "clock",
+    "sway/workspaces",
+    "idle_inhibitor",
+    "sway/mode",
+    "custom/my_lock"
+  ],
+  "modules-center": [
+    "sway/window"
+  ],
+  "modules-right": [
+    "custom/survey_num",
+    "pulseaudio",
+    "cpu",
+    "network",
+    "battery",
+    "custom/powermenu",
+    "tray"
+  ],
+  "sway/workspaces": {
+    "disable-scroll": true,
+	  "format": "{index}:{icon}",
+    "format-icons": {
+        "2": "",
+        "7": "",
+        "1": "",
+        "3": "",
+  	"5": "",
+        "6": "",
+        "4": "󰧮",
+        "urgent": "",
+        "focused": "",
+        "default": ""
+     },
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": ""
+    },
+    "tooltip": false
+  },
+  "sway/mode": {
+    "format": "󰕧 {}",
+    "max-length": 50
+  },
+  "pulseaudio": {
+    "scroll-step": 1,
+    "format": "{icon} {volume}%",
+    "format-muted": " Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "states": {
+      "warning": 85,
+    },
+    "scroll-step": 1,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "tooltip": false,
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "format": "{icon} {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"],
+    "format-full": " Full",
+    "format-charging": " {capacity}%",
+    "on-scroll-up": "light -A 1",
+    "on-scroll-down": "light -U 1",
+    "tooltip": false
+  },
+  "clock": {
+    "interval": 1,
+    "format": " {:%I:%M}",
+    "tooltip": true,
+    "tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>"
+  },
+  "cpu": {
+    "interval": 1,
+    "format": "  {usage}%"
+  },
+  "network": {
+    "interval": 1,
+    "format-wifi": "󰤨  {essid}",
+    "format-ethernet": "󰈀  {ifname} ({ipaddr})",
+    "format-linked": "󰤟  {essid} (No IP)",
+    "format-disconnected": " Disconnected",
+    "on-click": "alacritty -e nmtui",
+    "max-length": 10,
+    "tooltip": false
+  },
+  "custom/powermenu": {
+    "format": "",
+    "on-click": "$DOTFILES/bin/power-menu",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 5
+  },
+  "custom/survey_num": {
+    "return-type": "json",
+    "exec": "$DOTFILES/survey/bin/num",
+    "format": "{}",
+    "on-click": "$DOTFILES/survey/bin/add",
+    "on-click-right": "$DOTFILES/survey/menu",
+    "signal": 13,
+    "interval": "once",
+  },
+  "custom/my_lock": {
+    "exec": "$HOME/scripts/my_lock/module_lock.sh",
+    "format": "{}",
+    "on-click": "$HOME/scripts/my_lock/module_lock.sh toggle",
+    "signal": 11,
+    "interval": "once",
+  },
+}

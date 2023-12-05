@@ -1,0 +1,15 @@
+output eDP-1 mode 2880x1800@60.001Hz bg /data/dotfiles/wallpaper/christmas1.jpg fill
+output HDMI-A-1 mode 1366x768@59.964Hz bg /data/dotfiles/wallpaper/abs_wallpaper.jpg fill
+
+input "9580:109:HUION_Huion_Tablet_Pen" {
+  tool_mode * absolute
+  map_to_output eDP-1
+}
+input "1267:12928:ELAN06FA:00_04F3:3280_Touchpad" {
+       dwt enabled
+       tap enabled
+       natural_scroll enabled
+       middle_emulation enabled
+       accel_profile flat
+       pointer_accel 0.8
+}

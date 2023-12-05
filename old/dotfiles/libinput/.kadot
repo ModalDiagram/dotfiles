@@ -1,0 +1,21 @@
+{
+  "target": "$HOME/.config",
+  "info": "",
+  "ignore": [],
+  "versions": [
+    {
+      "name": "gestures_bin",
+      "target": "$HOME/scripts/libinput/",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    },
+    {
+      "name": "gestures_conf",
+      "target": "",
+      "inherits": "",
+      "divergents": [],
+      "ignore": []
+    }
+  ]
+}

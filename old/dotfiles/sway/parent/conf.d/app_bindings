@@ -1,0 +1,22 @@
+mode "app" {
+    bindsym s exec kbapp message key_s, mode "default"
+    bindsym k exec kbapp message key_k
+    bindsym j exec kbapp message key_j
+    bindsym h exec kbapp message key_h
+    bindsym l exec kbapp message key_l
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym q      mode "default"
+}
+
+bindsym $mod+a+s exec kbapp message key_s
+bindsym $mod+a+k exec kbapp message key_k
+bindsym $mod+a+j exec kbapp message key_j
+bindsym $mod+a+h exec kbapp message key_h
+bindsym $mod+a+l exec kbapp message key_l
+bindsym $mod+a+d exec kbapp message key_d
+bindsym $mod+a+Shift+k exec kbapp message key_K
+bindsym $mod+a+Shift+j exec kbapp message key_J
+bindsym $mod+a+Shift+s exec kbapp message key_S
