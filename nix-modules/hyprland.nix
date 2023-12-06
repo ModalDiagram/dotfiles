@@ -2,6 +2,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     brightnessctl
+    chromium
     eww-wayland
     gh
     glib # gsettings
@@ -11,6 +12,7 @@
     grim # screenshot functionality
     libinput-gestures
     libnotify
+    libreoffice
     mako # notification system developed by swaywm maintainer
     nwg-look
     okular
@@ -24,6 +26,7 @@
     wofi
     xdg-utils # for opening default programs when clicking links
     ydotool
+    gnome.zenity
   ];
 
   environment.sessionVariables = {
