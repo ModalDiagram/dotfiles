@@ -62,6 +62,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.sessionVariables = {
+    XCURSOR_SIZE = "48";
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

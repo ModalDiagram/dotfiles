@@ -1,3 +1,5 @@
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share
 export PATH=$PATH:/data/dotfiles/bin
 export DOTFILES=/data/dotfiles
+export QT_QPA_PLATFORMTHEME=qt5ct
+export XCURSOR_SIZE=48

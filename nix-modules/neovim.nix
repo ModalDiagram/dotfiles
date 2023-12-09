@@ -3,22 +3,23 @@
     neovim
     (python3.withPackages(ps: with ps; [
       debugpy
+      jedi-language-server
       pynvim
       python-lsp-ruff
       python-lsp-server
     ]))
     go
-    php
     jdk17
     julia
-    nodejs
-    luarocks
     lua-language-server
-    tree-sitter
+    luarocks
+    nil
+    nodejs
+    nodePackages.bash-language-server
+    php
     rust-analyzer
     shellcheck
-    nodePackages.bash-language-server
-    nil
+    tree-sitter
   ];
 
 }

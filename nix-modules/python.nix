@@ -1,8 +1,11 @@
 { pkgs, ... }:
 let my_python_packages = ps: with ps; [
   beautifulsoup4
+  debugpy
+  jupyterlab-lsp
   notebook
   numpy
+  matplotlib
   pandas
   requests
   selenium

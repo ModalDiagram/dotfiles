@@ -23,6 +23,8 @@ augroup END
 
 function! s:custom_highlight() abort
   " For yank highlight
+  highlight CmpItemAbbrMatchDefault guifg=#002b36
+  highlight CmpItemAbbrMatchFuzzyDefault guifg=#002b36
   " highlight @method guifg=#c4a7e7
   " highlight conditional guifg=#ebbcba
   " highlight keyword guifg=#eb6f92

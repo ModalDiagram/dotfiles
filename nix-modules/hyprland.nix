@@ -13,6 +13,7 @@
     libinput-gestures
     libnotify
     libreoffice
+    libsForQt5.qt5ct
     mako # notification system developed by swaywm maintainer
     nwg-look
     okular

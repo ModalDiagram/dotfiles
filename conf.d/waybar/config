@@ -32,6 +32,9 @@
     },
     "tooltip": false
   },
+  "hyprland/window": {
+    "max-length": 45,
+  },
   "pulseaudio": {
     "scroll-step": 1,
     "format": "{icon} {volume}%",
