@@ -16,17 +16,7 @@
     "key_d": "29:1 111:1 111:0 29:0",
     "key_J": "56:1 42:1 108:1 108:0 42:0 56:0",
     "key_K": "56:1 42:1 103:1 103:0 42:0 56:0",
-    "key_S": "56:1 103:1 103:0 56:0",
-    "2hold": [
-      "ydotool key 42:1",
-      "ydotool click 0xC0",
-      "ydotool key 42:0"
-    ],
-    "3hold": [
-      "ydotool key 29:1",
-      "ydotool click 0xC0",
-      "ydotool key 29:0"
-    ]
+    "key_S": "56:1 103:1 103:0 56:0"
   },{
     "name": "obsidian",
     "up": "29:1 42:1 15:1 15:0 42:0 29:0",
@@ -42,12 +32,7 @@
     "tab1_up": "11:0",
     "tab3": "35",
     "tab3_down": "35:1",
-    "tab3_up": "35:0",
-    "3hold": [
-      "ydotool key 29:1",
-      "ydotool click 0xC0",
-      "ydotool key 29:0"
-    ]
+    "tab3_up": "35:0"
   },{
     "name": "ferdium",
     "up": "29:1 56:1 105:1 105:0 56:0 29:0",
@@ -83,9 +68,11 @@
     "up": "29:1 42:1 15:1 15:0 42:0 29:0",
     "down": "29:1 15:1 15:0 29:0"
   },{
-    "name": "chromium",
+    "name": "chromium-browser",
     "left": "56:1 105:1 105:0 56:0",
-    "right": "56:1 106:1 106:0 56:0"
+    "right": "56:1 106:1 106:0 56:0",
+    "up": "29:1 42:1 15:1 15:0 42:0 29:0",
+    "down": "29:1 15:1 15:0 29:0"
   },{
     "name": "Spotify",
     "left": "56:1 105:1 105:0 56:0",
@@ -111,6 +98,16 @@
     "tab0_up": "29:0 44:0",
     "tab1": "125 35",
     "tab2": "103",
-    "tab3": "108"
+    "tab3": "108",
+    "3hold": [
+      "ydotool key 29:1",
+      "ydotool click 0xC0",
+      "ydotool key 29:0"
+    ],
+    "4hold": [
+      "ydotool key 42:1",
+      "ydotool click 0xC0",
+      "ydotool key 42:0"
+    ]
   }
 ]

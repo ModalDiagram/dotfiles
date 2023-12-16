@@ -43,6 +43,7 @@ border-color=#1DB954";
     ".local/share/my_lock/".source = config.lib.file.mkOutOfStoreSymlink ../apps/my_lock;
     ".local/share/app_bindings/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/app_bindings;
     ".config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/xdg-open/mimeapps.list;
+    ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/libinput-gestures/libinput-gestures.conf;
     ".config/alacritty/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/alacritty/solarized;
     ".config/hypr/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/hypr;
     ".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/nvim;

@@ -8,18 +8,29 @@ let r_packages = [
   factoextra
   fclust
   fitdistrplus
+  flexCWM
   foreign
+  gamlss
+  gclus
+  geoR
+  GGally
   ggplot2
   ghyp
+  gridExtra
   KernSmooth
   labstatR
   languageserver
+  markdown
   MASS
   mclust
   mnormt
+  moments
+  NbClust
   reshape2
+  rmarkdown
   sn
   TeachingDemos
+  tidyverse
   vcd
   xtable 
 ];

@@ -154,7 +154,7 @@ return require('packer').startup(function(use)
 
   use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
 
-  use { 'jamespeapen/Nvim-R' }
+  use { 'jalvesaq/Nvim-R' }
   use { 'simeji/winresizer' }
   use { 'lambdalisue/suda.vim' }
   -- use { "kiyoon/jupynium.nvim", 

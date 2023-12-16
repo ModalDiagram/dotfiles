@@ -8,12 +8,13 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../nix-modules/r.nix
       ../nix-modules/common.nix
-      ../nix-modules/neovim.nix
       ../nix-modules/hyprland.nix
+      ../nix-modules/neovim.nix
       ../nix-modules/python.nix
+      ../nix-modules/r.nix
       ../nix-modules/sql.nix
+      ../nix-modules/tex.nix
       <home-manager/nixos>
     ];
 
@@ -71,9 +72,10 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     rustup
+    blueberry
   ];
 
-
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
   # This value determines the NixOS release from which the default

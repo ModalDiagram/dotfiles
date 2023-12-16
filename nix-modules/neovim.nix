@@ -19,6 +19,7 @@
     php
     rust-analyzer
     shellcheck
+    texlab
     tree-sitter
   ];
 

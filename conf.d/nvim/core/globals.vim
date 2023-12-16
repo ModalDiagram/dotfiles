@@ -37,3 +37,4 @@ set noruler
 
 set cursorline
 let R_min_editor_width = 20
+let R_pdfviewer="okular"

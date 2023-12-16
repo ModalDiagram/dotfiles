@@ -29,3 +29,4 @@ require("lspconfig").pylsp.setup{}
 require("lspconfig").lua_ls.setup{}
 require("lspconfig").r_language_server.setup{}
 require("lspconfig").nil_ls.setup{}
+require("lspconfig").texlab.setup{}

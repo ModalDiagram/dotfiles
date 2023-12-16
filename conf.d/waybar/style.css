@@ -138,6 +138,10 @@ tooltip label {
     
 }
 
+#battery.full {
+  color: #161320;
+  background-color: #FFFF19;
+} 
 
 /* #battery.charging, #battery.full, #battery.discharging { */
 /*   color: #b58900; */

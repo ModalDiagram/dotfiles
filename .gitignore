@@ -1,4 +1,4 @@
-nvim/plugin/
+conf.d/nvim/plugin/
 bin/getfocusedwindow
 apps/survey/count.txt
 apps/survey/timestamps.txt
