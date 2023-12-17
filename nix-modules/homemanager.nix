@@ -1,6 +1,22 @@
 { pkgs, config, ... }: {
   home.packages = [ ];
 
+  home.pointerCursor = {
+      name = "Qogir";
+      package = pkgs.qogir-icon-theme;
+  };
+
+  gtk = {
+    enable = true;
+    cursorTheme = {
+      name = "Qogir";
+      package = pkgs.qogir-icon-theme;
+    };
+    #iconTheme = {
+    #  name = "Papirus-Dark";
+    #  package = pkgs.papirus-icon-theme;
+    #};
+  };
   services.mako = {
     enable = true;
     backgroundColor = "#191724";
