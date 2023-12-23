@@ -48,6 +48,7 @@
 
 #workspaces button:hover {
   color: #161320;
+  background-color: rgb(248, 189, 150);
   
 }
 
@@ -58,6 +59,7 @@
 
 #workspaces button.urgent {
   color: #161320;
+  background-color: #dc322f;
   
 }
 

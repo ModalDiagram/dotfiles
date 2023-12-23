@@ -1,4 +1,8 @@
 { pkgs, config, ... }: {
+  imports =
+    [ # Include the results of the hardware scan.
+      ../nix-modules/neovim.nix
+    ];
   home.packages = [ ];
 
   home.pointerCursor = {

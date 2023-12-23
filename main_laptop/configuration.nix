@@ -10,7 +10,6 @@
       ./hardware-configuration.nix
       ../nix-modules/common.nix
       ../nix-modules/hyprland.nix
-      ../nix-modules/neovim.nix
       ../nix-modules/python.nix
       ../nix-modules/r.nix
       ../nix-modules/sql.nix
@@ -75,7 +74,7 @@
     blueberry
   ];
 
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  # hardware.bluetooth.enable = true; # enables support for Bluetooth
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
   # This value determines the NixOS release from which the default
@@ -89,7 +88,7 @@
   home-manager.users.sandro0198 = {
     imports =
       [
-        ../nix-modules/homemanager.nix
+        ./homemanager.nix
       ];
   };
 }

@@ -2,6 +2,8 @@
 let my_python_packages = ps: with ps; [
   beautifulsoup4
   debugpy
+  google-cloud-firestore
+  google-cloud-storage
   jupyterlab-lsp
   notebook
   numpy

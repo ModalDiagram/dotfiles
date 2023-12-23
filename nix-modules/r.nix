@@ -3,6 +3,7 @@ with pkgs.rPackages;
 let r_packages = [
   cluster
   copula
+  cowplot
   datasetsICR
   e1071
   factoextra
@@ -11,6 +12,7 @@ let r_packages = [
   flexCWM
   foreign
   gamlss
+  gamlss_mx
   gclus
   geoR
   GGally

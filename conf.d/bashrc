@@ -20,3 +20,6 @@ if command -v fzf-share >/dev/null; then
   source "$(fzf-share)/completion.bash"
 fi
 alias nixvim="sudo vim /etc/nixos/configuration.nix"
+export BAT_THEME="Solarized (light)"
+alias wpasync="sudo systemctl restart wpa_supplicant.service"
+alias tailup="sudo systemctl start tailscaled.service;sudo tailscale up"

@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     neovim
     (python3.withPackages(ps: with ps; [
       debugpy
@@ -9,6 +9,7 @@
       python-lsp-server
     ]))
     go
+    gopls
     jdk17
     julia
     lua-language-server

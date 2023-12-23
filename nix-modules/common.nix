@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     bash
+    bat
     bc
     fd
     fzf
@@ -17,6 +18,7 @@
     unzip
     vim
     wget
+    zip
   ];
 
   programs.git.enable = true;
