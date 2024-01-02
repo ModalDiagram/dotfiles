@@ -157,6 +157,7 @@ return require('packer').startup(function(use)
   use { 'jalvesaq/Nvim-R' }
   use { 'simeji/winresizer' }
   use { 'lambdalisue/suda.vim' }
+  -- use { 'ibhagwan/fzf-lua' }
   -- use { "kiyoon/jupynium.nvim", 
   --   run = "/home/sandro0198/anaconda3/condabin/conda run --no-capture-output -n nvim pip install .",
   --   config=[[require('config.jupynium')]] }

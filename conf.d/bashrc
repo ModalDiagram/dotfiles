@@ -21,5 +21,6 @@ if command -v fzf-share >/dev/null; then
 fi
 alias nixvim="sudo vim /etc/nixos/configuration.nix"
 export BAT_THEME="Solarized (light)"
-alias wpasync="sudo systemctl restart wpa_supplicant.service"
+alias wpasync="nmcli dev wifi rescan"
 alias tailup="sudo systemctl start tailscaled.service;sudo tailscale up"
+alias sshpve="ssh -p 2020 sandro0198@pve"

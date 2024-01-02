@@ -10,7 +10,6 @@
       ./hardware-configuration.nix
       ../nix-modules/common.nix
       ../nix-modules/hyprland.nix
-      ../nix-modules/python.nix
       ../nix-modules/r.nix
       ../nix-modules/sql.nix
       ../nix-modules/tex.nix
@@ -19,10 +18,11 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "Europe/Rome";

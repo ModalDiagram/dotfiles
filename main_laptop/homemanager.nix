@@ -2,6 +2,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ../nix-modules/neovim.nix
+      ../nix-modules/python.nix
     ];
   home.packages = [ ];
 

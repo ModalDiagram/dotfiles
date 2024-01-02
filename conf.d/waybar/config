@@ -5,6 +5,7 @@
     "hyprland/workspaces",
     "idle_inhibitor",
     "custom/my_lock",
+    "hyprland/submap"
   ],
   "modules-center": [
     "hyprland/window"

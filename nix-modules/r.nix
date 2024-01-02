@@ -2,6 +2,7 @@
 with pkgs.rPackages;
 let r_packages = [
   cluster
+  clValid
   copula
   cowplot
   datasetsICR
@@ -10,7 +11,9 @@ let r_packages = [
   fclust
   fitdistrplus
   flexCWM
+  flexclust
   foreign
+  fpc
   gamlss
   gamlss_mx
   gclus
@@ -19,6 +22,7 @@ let r_packages = [
   ggplot2
   ghyp
   gridExtra
+  hopkins
   KernSmooth
   labstatR
   languageserver

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
     alacritty
     brightnessctl
@@ -8,6 +8,7 @@
     glib # gsettings
     # dracula-theme # gtk theme
     gnome3.adwaita-icon-theme  # default gnome cursors
+    gnome.zenity
     gojq
     grim # screenshot functionality
     libinput-gestures
@@ -16,6 +17,7 @@
     libsForQt5.qt5ct
     mako # notification system developed by swaywm maintainer
     nwg-look
+    obsidian
     okular
     playerctl
     slurp # screenshot functionality
@@ -27,7 +29,13 @@
     wofi
     xdg-utils # for opening default programs when clicking links
     ydotool
-    gnome.zenity
+  ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "obsidian"
+  ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
   ];
 
   environment.sessionVariables = {
@@ -60,7 +68,16 @@
     ];
   };
 
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      Settings = {
+        AutoConnect = true;
+      };
+    };
+  };
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   # ydotool
   services.udev.extraRules = ''
@@ -68,6 +85,7 @@
     '';
   systemd.packages = [ pkgs.ydotool ];
   systemd.user.services.ydotool.wantedBy = [ "default.target" ];
+  systemd.user.services.opentabletdriver.wantedBy = [ "default.target" ];
   # systemd.user.services.libinput-gestures.wantedBy = [ "default.target" ];
 
 }
