@@ -2,6 +2,7 @@
 let g:python3_host_prog = "python3"
 
 set termguicolors
+set background=light
 set title
 set number relativenumber
 set ignorecase
