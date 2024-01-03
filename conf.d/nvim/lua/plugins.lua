@@ -27,7 +27,7 @@ return require('packer').startup(function(use)
   }
   -- Colorchemes
   use({ 'rose-pine/neovim', as = 'rose-pine' })
-  use { 'shaunsingh/solarized.nvim', config = [[require("config.solarized")]] }
+  use { 'maxmx03/solarized.nvim' }
   use { 'brenoprata10/nvim-highlight-colors' }
   -- Highlight URLs inside vim
   use { "itchyny/vim-highlighturl" }
@@ -94,7 +94,7 @@ return require('packer').startup(function(use)
   use { "williamboman/mason-lspconfig.nvim", after = "mason.nvim", config = [[require('config.mason')]] }
   use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
   use({
-      "glepnir/lspsaga.nvim",
+      "nvimdev/lspsaga.nvim",
       config = [[require("config.lspsaga")]],
       requires = {
           {"nvim-tree/nvim-web-devicons"},
@@ -157,6 +157,7 @@ return require('packer').startup(function(use)
   use { 'jalvesaq/Nvim-R' }
   use { 'simeji/winresizer' }
   use { 'lambdalisue/suda.vim' }
+  use { "Tsuzat/NeoSolarized.nvim"}
   -- use { 'ibhagwan/fzf-lua' }
   -- use { "kiyoon/jupynium.nvim", 
   --   run = "/home/sandro0198/anaconda3/condabin/conda run --no-capture-output -n nvim pip install .",

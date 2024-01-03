@@ -32,6 +32,7 @@ let r_packages = [
   mnormt
   moments
   NbClust
+  plot3D
   reshape2
   rmarkdown
   sn

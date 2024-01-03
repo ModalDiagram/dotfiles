@@ -10,6 +10,7 @@
     gh
     glib
     gnumake
+    lm_sensors
     pkg-config
     powerline-go
     pulseaudio
