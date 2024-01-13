@@ -7,9 +7,6 @@
     "custom/my_lock",
     "hyprland/submap"
   ],
-  "modules-center": [
-    "hyprland/window"
-  ],
   "modules-right": [
     "custom/survey_num",
     "pulseaudio",
@@ -83,7 +80,7 @@
     "format-linked": "󰤟  {essid} (No IP)",
     "format-disconnected": " Disconnected",
     "on-click": "alacritty -e nmtui",
-    "max-length": 10,
+    "max-length": 3,
     "tooltip": false
   },
   "custom/powermenu": {

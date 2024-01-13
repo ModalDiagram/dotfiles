@@ -4,6 +4,7 @@
     bat
     bc
     ctags
+    dconf
     fd
     fzf
     gcc
@@ -41,11 +42,11 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "IosevkaTerm" ]; })
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "FiraCodeNerdFont" ];
+        monospace = [ "IosevkaTermNerdFont" ];
       };
     };
   };

@@ -1,6 +1,7 @@
 { pkgs, ...}: 
 {
   environment.systemPackages = with pkgs; [
+    pandoc
     (texlive.combine {
       inherit (pkgs.texlive) scheme-medium
         adjustbox

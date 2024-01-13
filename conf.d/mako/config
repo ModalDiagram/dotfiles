@@ -1,0 +1,12 @@
+background-color=#1b1a1d
+text-color=#eee8d5
+border-color=#eee8d5
+border-radius=5
+border-size=2
+
+[urgency=high]
+layer=overlay
+border-color=#dc322f
+
+[app-name="spotify"]
+border-color=#1DB954

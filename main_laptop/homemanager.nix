@@ -22,22 +22,6 @@
     #  package = pkgs.papirus-icon-theme;
     #};
   };
-  services.mako = {
-    enable = true;
-    backgroundColor = "#191724";
-    borderRadius = 5;
-    borderSize = 3;
-    textColor = "#e0def4";
-    extraConfig = "
-[urgency=high]
-layer=overlay
-background-color=#e0def4
-border-color=#eb6f92
-text-color=#21202e
-
-[app-name=\"spotify\"]
-border-color=#1DB954";
-  };
 
   programs.git = {
     enable = true;
@@ -68,8 +52,10 @@ border-color=#1DB954";
     ".config/alacritty/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/alacritty/solarized;
     ".config/hypr/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/hypr;
     ".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/nvim;
+    ".config/mako/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/mako;
     ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/waybar;
     ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/wofi;
+    "/run/current-system/sw/share/sddm/themes/sugar-candy/theme.conf".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/sddm/sugar-candy.conf;
     
   };
 

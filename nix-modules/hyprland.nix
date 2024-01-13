@@ -1,5 +1,8 @@
 { pkgs, lib, ... }: {
-  environment.systemPackages = with pkgs; [
+
+  environment.systemPackages = with pkgs; 
+  [
+    (pkgs.callPackage ../nix-modules/pkgs/sddm-themes.nix {})
     alacritty
     brightnessctl
     chromium
@@ -11,14 +14,18 @@
     gnome.zenity
     gojq
     grim # screenshot functionality
+    hyprpaper
     libinput-gestures
     libnotify
     libreoffice
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtsvg
     libsForQt5.qt5ct
     mako # notification system developed by swaywm maintainer
     nwg-look
     obsidian
     okular
+    pavucontrol
     playerctl
     slurp # screenshot functionality
     sway-contrib.grimshot
@@ -28,8 +35,16 @@
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
     wofi
     xdg-utils # for opening default programs when clicking links
+    xournalpp
     ydotool
   ];
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    theme = "sugar-candy";
+  };
+  services.xserver.displayManager.sddm.wayland.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "obsidian"

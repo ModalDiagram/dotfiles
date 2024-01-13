@@ -20,9 +20,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
+  networking.firewall.enable = true;
+  networking.firewall.extraCommands = ''
+    iptables -A INPUT -p tcp -i wlan0 --dport 5000:5002 -j ACCEPT
+    iptables -A INPUT -p tcp -i tailscale0 --dport 5000:5002 -j ACCEPT
+  '';
 
   # Set your time zone.
   time.timeZone = "Europe/Rome";
@@ -51,6 +57,15 @@
   # Configure console keymap
   console.keyMap = "it";
 
+  hardware.opengl = {
+    ## radv: an open-source Vulkan driver from freedesktop
+    driSupport = true;
+    driSupport32Bit = true;
+
+    ## amdvlk: an open-source Vulkan driver from AMD
+    extraPackages = [ pkgs.amdvlk ];
+    extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+  };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sandro0198 = {
     isNormalUser = true;

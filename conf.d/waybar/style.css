@@ -1,4 +1,5 @@
 * {
+  font-family: 'IosevkaTerm Nerd Font';
 	min-height: 25px;
 	font-size: 12pt;
   font-weight: bold;
@@ -19,6 +20,27 @@
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
+
+.modules-right {
+  font-size: 10px;
+  background-color: #1b1a1d;
+  border-radius: 10px;
+  padding: 0;
+  margin-top: 9px;
+  margin-left: 5px;
+  margin-right: 9px;
+}
+
+
+.modules-left {
+  margin-left: 9px;
+  margin-right: 5px;
+  margin-top: 9px;
+  background-color: #1b1a1d;
+  padding: 1px 0px;
+  border-radius: 10px;
+}
+
 #waybar {
   margin-left: 0;
   margin-right: 0;
@@ -43,24 +65,24 @@
 
 #workspaces button.active {
   color: #161320;
-  background-color: #a8b370;
+  background-color: #d8caac;
 }
 
 #workspaces button:hover {
   color: #161320;
   background-color: rgb(248, 189, 150);
-  
+
 }
 
 #workspaces button.focused {
   color: #161320;
-  
+
 }
 
 #workspaces button.urgent {
   color: #161320;
   background-color: #dc322f;
-  
+
 }
 
 
@@ -70,7 +92,7 @@ tooltip {
 tooltip label {
   color: rgb(217, 224, 238);
 }
-#mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #pulseaudio, #network, #battery, #custom-powermenu, #custom-survey_num, #window{
+#mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #pulseaudio, #network, #battery, #custom-powermenu, #custom-survey_num, #window, #custom-my_lock{
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -94,7 +116,9 @@ tooltip label {
   color: #d33682;
 }
 #submap {
-  color: #d33682;
+  color: #d8caac;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 #temperature {
   color: rgb(150, 205, 251);
@@ -123,30 +147,30 @@ tooltip label {
 #battery:hover {
   color: #d8caac;
   background-color: #A8B468;
-	
+
 }
 
 #battery.discharging {
   color: #d8caac;
   /* background-color: #A8B468; */
-	  
+
 }
 #battery.charging, #battery.plugged:hover {
   color: #161320;
-  background-color: #A8B468;
-	  
+  background-color: #d8caac;
+
 }
 
 #battery.critical:not(.charging):hover {
   color: #161320;
   background-color: #e76c69;
-    
+
 }
 
 #battery.full {
   color: #161320;
   background-color: #FFFF19;
-} 
+}
 
 /* #battery.charging, #battery.full, #battery.discharging { */
 /*   color: #b58900; */
@@ -163,7 +187,7 @@ tooltip label {
 #custom-my_lock {
   color: #d33682;
   padding-left: 3px;
-  padding-right: 3px;
+  padding-right: 10px;
 }
 #tray {
   padding-right: 8px;

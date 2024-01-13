@@ -1,15 +1,15 @@
 window {
-  font-family: "DejaVu Sans", "Font Awesome 5 Free";
+  font-family: "IosevkaTerm Nerd Font", "DejaVu Sans", "Font Awesome 5 Free";
   margin: 0px;
   border: 1px solid rgba(0, 0, 0, 0.9);
-  background-color: #26233a;
+  background-color: #1b1a1d;
   border-radius: 10px;
 }
 
 #input {
   margin: 5px;
   border: none;
-  color: #ebbcba;
+  color: #eee8d5;
   background-color: #555169;
 }
 
@@ -33,7 +33,13 @@ window {
 #text {
   margin: 5px;
   border: none;
-  color: #e0def4;
+  color: #d8caac;
+}
+
+#text:selected {
+  margin: 5px;
+  border: none;
+  color: #161320;
 }
 
 #entry {
@@ -45,7 +51,8 @@ window {
 }
 
 #entry:selected {
-  background-color: #555169;
+  background-color: #d8caac;
+  color: #161320
   border-radius: 5px;
   border: none;
 }

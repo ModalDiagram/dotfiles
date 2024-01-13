@@ -6,6 +6,7 @@ let r_packages = [
   copula
   cowplot
   datasetsICR
+  dbscan
   e1071
   factoextra
   fclust
@@ -36,6 +37,8 @@ let r_packages = [
   reshape2
   rmarkdown
   sn
+  stringdist
+  stringi
   TeachingDemos
   tidyverse
   vcd
