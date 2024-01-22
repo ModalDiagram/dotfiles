@@ -8,6 +8,7 @@ if [[ $1 == "toggle" ]]; then
   else
     echo 1 > "/tmp/my_lock.lock";
   fi
+  sleep 0.1
   pkill -RTMIN+13 waybar
   exit
 fi

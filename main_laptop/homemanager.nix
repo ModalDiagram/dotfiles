@@ -54,6 +54,7 @@
     ".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/nvim;
     ".config/mako/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/mako;
     ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/waybar;
+    ".config/wireplumber/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/wireplumber;
     ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/wofi;
     "/run/current-system/sw/share/sddm/themes/sugar-candy/theme.conf".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/sddm/sugar-candy.conf;
     

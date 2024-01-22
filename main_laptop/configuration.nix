@@ -21,6 +21,7 @@
   boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = ["amdgpu.gpu_recovery=1"];
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
@@ -86,10 +87,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     rustup
-    blueberry
+    # blueberry
   ];
 
-  # hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  services.blueman.enable = true;
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
   # This value determines the NixOS release from which the default

@@ -1,2 +1,5 @@
 import:
   - /home/sandro0198/.config/alacritty/solarized_light.yml
+
+key_bindings:
+  - { key: Return, mods: Control|Shift, action: SpawnNewInstance }

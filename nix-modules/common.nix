@@ -14,7 +14,6 @@
     lm_sensors
     pkg-config
     powerline-go
-    pulseaudio
     ripgrep
     stow
     udev

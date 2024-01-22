@@ -29,7 +29,7 @@
     playerctl
     slurp # screenshot functionality
     sway-contrib.grimshot
-    swaylock
+    swaylock-effects
     swayidle
     wayland
     wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout

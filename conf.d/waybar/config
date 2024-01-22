@@ -9,7 +9,7 @@
   ],
   "modules-right": [
     "custom/survey_num",
-    "pulseaudio",
+    "wireplumber",
     "cpu",
     "network",
     "battery",
@@ -34,7 +34,7 @@
   "hyprland/window": {
     "max-length": 45,
   },
-  "pulseaudio": {
+  "wireplumber": {
     "scroll-step": 1,
     "format": "{icon} {volume}%",
     "format-muted": " Muted",
@@ -44,8 +44,7 @@
     "states": {
       "warning": 85
     },
-    "scroll-step": 1,
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-click-right": "pavucontrol",
     "tooltip": false
   },
@@ -80,7 +79,7 @@
     "format-linked": "󰤟  {essid} (No IP)",
     "format-disconnected": " Disconnected",
     "on-click": "alacritty -e nmtui",
-    "max-length": 3,
+    "max-length": 6,
     "tooltip": false
   },
   "custom/powermenu": {
