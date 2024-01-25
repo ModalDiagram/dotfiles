@@ -115,23 +115,17 @@
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.displayManager.sddm = {
     enable = true;
     theme = "sugar-candy";
     wayland.enable = true;
   };
-  services.xserver.displayManager.session = [
-    {
-      manage = "desktop";
-      name = "Hyprland";
-      type = "wayland";
-      start = ''
-        Hyprland
-        waitPID=$!
-      '';
-    }
-  ];
 
   services.flatpak.enable = true;
 

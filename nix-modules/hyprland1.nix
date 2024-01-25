@@ -6,6 +6,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     extraConfig = "source = /data/dotfiles/conf.d/hypr/hyprland.conf";
     plugins = [ hy3.packages.x86_64-linux.hy3 ];
   };
