@@ -4,6 +4,7 @@
   [
     (pkgs.callPackage ../nix-modules/pkgs/sddm-themes.nix {})
     alacritty
+    blueberry
     brightnessctl
     chromium
     eww-wayland
@@ -36,7 +37,6 @@
     wofi
     xdg-utils # for opening default programs when clicking links
     xournalpp
-    ydotool
   ];
 
   services.xserver.enable = true;
@@ -57,10 +57,6 @@
     WLR_NO_HARDWARE_CURSORS = "1";
   };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };  
   programs.waybar.enable = true;
   services.flatpak.enable = true;
 

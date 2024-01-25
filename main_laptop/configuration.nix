@@ -9,13 +9,16 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../nix-modules/common.nix
-      ../nix-modules/hyprland.nix
+      #../nix-modules/hyprland.nix
       ../nix-modules/r.nix
       ../nix-modules/sql.nix
       ../nix-modules/tex.nix
-      <home-manager/nixos>
     ];
 
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 30;
@@ -23,6 +26,19 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = ["amdgpu.gpu_recovery=1"];
 
+  security.pam.services.swaylock = {};
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      Settings = {
+        AutoConnect = true;
+      };
+    };
+  };
+  networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
   networking.hostName = "nixos"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
   networking.firewall.enable = true;
@@ -88,12 +104,63 @@
   environment.systemPackages = with pkgs; [
     rustup
     # blueberry
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtsvg
+    libsForQt5.qt5ct
+    (pkgs.callPackage ../nix-modules/pkgs/sddm-themes.nix {})
+    ydotool
   ];
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
-  services.blueman.enable = true;
   services.tailscale.enable = true;
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    theme = "sugar-candy";
+    wayland.enable = true;
+  };
+  services.xserver.displayManager.session = [
+    {
+      manage = "desktop";
+      name = "Hyprland";
+      type = "wayland";
+      start = ''
+        Hyprland
+        waitPID=$!
+      '';
+    }
+  ];
+
+  services.flatpak.enable = true;
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    alsa.support32Bit = true;
+  };
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+    wlr.enable = false;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+  };
+
+  services.udev.extraRules = ''
+      KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+    '';
+  systemd.packages = [ pkgs.ydotool ];
+  systemd.user.services.ydotool.wantedBy = [ "default.target" ];
+  systemd.user.services.opentabletdriver.wantedBy = [ "default.target" ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -101,11 +168,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
-  home-manager.users.sandro0198 = {
-    imports =
-      [
-        ./homemanager.nix
-      ];
-  };
 }

@@ -21,6 +21,9 @@
     vim
     wget
     zip
+
+    sway
+    kitty
   ];
 
   # networking.wireless.networks."Vodafone-C0051203"

@@ -1,8 +1,9 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, hyprland, hy3, ... }: {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ../nix-modules/neovim.nix
       ../nix-modules/python.nix
+      ../nix-modules/hyprland1.nix
     ];
   home.packages = [ ];
 
@@ -10,6 +11,11 @@
       name = "Qogir";
       package = pkgs.qogir-icon-theme;
   };
+
+  #wayland.windowManager.hyprland = {
+  #  enable = true;
+  #};
+
 
   gtk = {
     enable = true;
@@ -41,23 +47,21 @@
     };
   };
 
-  home.file = {
-    ".bashrc".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/bashrc;
-    ".profile".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/profile;
-    ".local/share/survey/".source = config.lib.file.mkOutOfStoreSymlink ../apps/survey;
-    ".local/share/my_lock/".source = config.lib.file.mkOutOfStoreSymlink ../apps/my_lock;
-    ".local/share/app_bindings/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/app_bindings;
-    ".config/mimeapps.list".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/xdg-open/mimeapps.list;
-    ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/libinput-gestures/libinput-gestures.conf;
-    ".config/alacritty/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/alacritty/solarized;
-    ".config/hypr/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/hypr;
-    ".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/nvim;
-    ".config/mako/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/mako;
-    ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/waybar;
-    ".config/wireplumber/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/wireplumber;
-    ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/wofi;
-    "/run/current-system/sw/share/sddm/themes/sugar-candy/theme.conf".source = config.lib.file.mkOutOfStoreSymlink ../conf.d/sddm/sugar-candy.conf;
-    
+  home.file = let config_path = "/data/dotfiles"; in {
+    ".bashrc".source                        = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/bashrc";
+    ".profile".source                       = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/profile";
+    ".local/share/survey/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/survey";
+    ".local/share/my_lock/".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/my_lock";
+    ".local/share/app_bindings/".source     = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/app_bindings";
+    ".config/mimeapps.list".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/xdg-open/mimeapps.list";
+    ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/libinput-gestures/libinput-gestures.conf";
+    ".config/alacritty/".source             = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/alacritty/solarized";
+    ".config/hypr/hyprpaper.conf".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/hypr/hyprpaper.conf";
+    ".config/nvim/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/nvim";
+    ".config/mako/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/mako";
+    ".config/waybar/".source                = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/waybar";
+    ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";
+    ".config/wofi/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wofi";
   };
 
   # The state version is required and should stay at the version you
