@@ -1,9 +1,7 @@
 { pkgs, config, lib, hyprland, hy3, ... }: {
   imports =
     [
-      ../nix-modules/neovim.nix
       ../nix-modules/python.nix
-      ../nix-modules/hyprland1.nix
     ];
   home.packages = [ ];
 

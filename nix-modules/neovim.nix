@@ -4,7 +4,6 @@
     go
     gopls
     jdk17
-    julia
     lua-language-server
     luarocks
     nil

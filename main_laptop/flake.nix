@@ -1,18 +1,30 @@
 {
   description = "My NixOS Flake";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    stable.url = "nixpkgs/nixos-23.11";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
-    # or "github:hyprwm/Hyprland" to follow the development branch
+    hyprland ={
+      url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    hy3 = {
+    hyprland-hy3 = {
       url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
       # or "github:outfoxxed/hy3" to follow the development branch.
       # (you may encounter issues if you dont do the same for hyprland)
@@ -20,23 +32,32 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hy3, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-hy3, ... }@inputs:{
     nixosConfigurations = {
-      "sandro0198" = nixpkgs.lib.nixosSystem {
+      "sandro0198" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
-        modules = [
-          # Import the configuration.nix here, so that the
-          # old configuration file can still take effect.
-          # Note: configuration.nix itself is also a Nixpkgs Module,
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
 
-            home-manager.extraSpecialArgs = { inherit hyprland hy3; };
+        specialArgs = { inherit self system inputs; };
+        modules = [
+          {options.main-user = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.str;
+            default = "sandro0198";
+          }; }
+          home-manager.nixosModules.home-manager {
+            # home-manager.users.sandro0198.home.stateVersion = "23.11";
             home-manager.users.sandro0198 = import ./homemanager.nix;
           }
+          ./configuration.nix
+          ../nix-modules/hyprland
+          ../nix-modules/neovim
+          #home-manager.nixosModules.home-manager
+          #{
+          #  home-manager.useGlobalPkgs = true;
+          #  home-manager.useUserPackages = true;
+
+          #  home-manager.extraSpecialArgs = { inherit hyprland hy3; };
+            # home-manager.users.sandro0198 = import ./homemanager.nix;
+          #}
         ];
       };
     };
