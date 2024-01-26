@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../nix-modules/common.nix
       #../nix-modules/hyprland.nix
       ../nix-modules/r.nix
       ../nix-modules/sql.nix

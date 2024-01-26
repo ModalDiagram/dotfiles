@@ -1,5 +1,4 @@
-{ system, inputs, config, pkgs, ... }: let
-in {
+{ config, pkgs, ... }: {
   config = {
     home-manager.users.${config.main-user} = {
       home.packages = with pkgs; [

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     bash
     bat
@@ -26,8 +26,6 @@
     kitty
   ];
 
-  # networking.wireless.networks."Vodafone-C0051203"
-
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=suspend
@@ -52,4 +50,38 @@
       };
     };
   };
+
+  home-manager.users.${config.main-user} = {
+    home.pointerCursor = {
+        name = "Qogir";
+        package = pkgs.qogir-icon-theme;
+    };
+
+    gtk = {
+      enable = true;
+      cursorTheme = {
+        name = "Qogir";
+        package = pkgs.qogir-icon-theme;
+      };
+    };
+
+    programs.git = {
+      enable = true;
+      userName  = "ModalDiagram";
+      userEmail = "git@sanfio.eu";
+    };
+
+    programs.vim = {
+      enable = true;
+      # extraConfig = builtins.readFile vim/vimrc;
+      settings = {
+         relativenumber = true;
+         number = true;
+         expandtab = true;
+         shiftwidth = 2;
+         tabstop = 2;
+      };
+    };
+
+    };
 }

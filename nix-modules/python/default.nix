@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-let my_python_packages = ps: with ps; [
+{ pkgs, ... }: let
+my_python_packages = ps: with ps; [
   beautifulsoup4
   debugpy
   google-cloud-firestore
@@ -18,7 +18,7 @@ let my_python_packages = ps: with ps; [
   selenium
 ];
 in {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     (python311.withPackages my_python_packages)
   ];
 }

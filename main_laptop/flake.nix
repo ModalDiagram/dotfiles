@@ -37,27 +37,21 @@
       "sandro0198" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
 
-        specialArgs = { inherit self system inputs; };
+        specialArgs = { inherit self system inputs nixpkgs; };
         modules = [
           {options.main-user = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.str;
             default = "sandro0198";
           }; }
           home-manager.nixosModules.home-manager {
-            # home-manager.users.sandro0198.home.stateVersion = "23.11";
-            home-manager.users.sandro0198 = import ./homemanager.nix;
+            # home-manager.users."sandro0198".home.stateVersion = "23.11";
+            home-manager.users."sandro0198" = import ./homemanager.nix;
           }
           ./configuration.nix
+          ../nix-modules/misc
           ../nix-modules/hyprland
           ../nix-modules/neovim
-          #home-manager.nixosModules.home-manager
-          #{
-          #  home-manager.useGlobalPkgs = true;
-          #  home-manager.useUserPackages = true;
-
-          #  home-manager.extraSpecialArgs = { inherit hyprland hy3; };
-            # home-manager.users.sandro0198 = import ./homemanager.nix;
-          #}
+          ../nix-modules/python
         ];
       };
     };
