@@ -5,6 +5,7 @@
     bc
     ctags
     dconf
+    dolphin
     fd
     fzf
     gcc
