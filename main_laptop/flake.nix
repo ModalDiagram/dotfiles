@@ -48,6 +48,7 @@
             home-manager.users."sandro0198" = import ./homemanager.nix;
           }
           ./configuration.nix
+          ../nix-modules/system/networking.nix
           ../nix-modules/misc
           ../nix-modules/hyprland
           ../nix-modules/neovim

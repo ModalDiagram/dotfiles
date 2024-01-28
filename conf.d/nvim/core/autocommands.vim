@@ -14,6 +14,7 @@ augroup end
 autocmd VimEnter * call Open_at_dir()
 autocmd BufWinLeave * call Save_last_file()
 
+autocmd FileType nix setlocal commentstring=#\ %s
 
 " Define or override some highlight groups
 augroup custom_highlight

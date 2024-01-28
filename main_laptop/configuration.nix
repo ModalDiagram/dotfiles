@@ -27,24 +27,6 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.wireless.iwd = {
-    enable = true;
-    settings = {
-      Settings = {
-        AutoConnect = true;
-      };
-    };
-  };
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
-  networking.hostName = "nixos"; # Define your hostname.
-  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
-  networking.firewall.enable = true;
-  networking.firewall.extraCommands = ''
-    iptables -A INPUT -p tcp -i wlan0 --dport 5000:5002 -j ACCEPT
-    iptables -A INPUT -p tcp -i tailscale0 --dport 5000:5002 -j ACCEPT
-  '';
-
   # Set your time zone.
   time.timeZone = "Europe/Rome";
 
