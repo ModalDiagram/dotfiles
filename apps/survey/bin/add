@@ -11,7 +11,8 @@ in_mod=0
 } < $survey_path/count.txt
 
 # STEP 4. Aggiungo i secondi della task
-echo "$((in_count + in_mod))" > $survey_path/count.txt
+new_total_count=$((in_count + in_mod))
+echo "$new_total_count" > $survey_path/count.txt
 echo "$in_mod" >> $survey_path/count.txt
 
 # STEP 5. Leggo i dati della sessione corrente
@@ -39,5 +40,7 @@ fi
 echo $count > $survey_path/timestamps.txt
 echo $ts_now >> $survey_path/timestamps.txt
 echo $cache_min >> $survey_path/timestamps.txt
+
+echo $ts_now,$in_mod,$new_total_count >> $survey_path/data.txt
 
 notify-send -t 5000 "inviata. nuovo ratio: $($survey_path/bin/ratio)"
