@@ -1,4 +1,5 @@
 conf.d/nvim/plugin/
 bin/getfocusedwindow
 apps/survey/count.txt
+apps/survey/data.txt
 apps/survey/timestamps.txt

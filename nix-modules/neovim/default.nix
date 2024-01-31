@@ -6,6 +6,7 @@
         go
         gopls
         jdk17
+        clang-tools_17
         lua-language-server
         luarocks
         nil
