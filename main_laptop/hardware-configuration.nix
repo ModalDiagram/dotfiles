@@ -10,8 +10,12 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "i2c-dev" ];
   boot.extraModulePackages = [ ];
+
+  services.udev.extraRules = ''
+        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/52d0cfae-30c2-4530-a31c-e5563dc518e3";

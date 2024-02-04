@@ -5,6 +5,7 @@
     bc
     ctags
     dconf
+    ddcutil
     dolphin
     fd
     fzf
@@ -12,6 +13,7 @@
     gh
     glib
     gnumake
+    jq
     lm_sensors
     pkg-config
     powerline-go

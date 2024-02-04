@@ -55,10 +55,11 @@
   console.keyMap = "it";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.groups.i2c = {};
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "input" "uinput" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "uinput" "i2c" ];
     packages = with pkgs; [];
   };
 

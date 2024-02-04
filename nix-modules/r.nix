@@ -34,12 +34,14 @@ let r_packages = [
   moments
   NbClust
   plot3D
+  RecordLinkage
   reshape2
   rmarkdown
   sn
   stringdist
   stringi
   TeachingDemos
+  textreuse
   tidyverse
   vcd
   xtable 

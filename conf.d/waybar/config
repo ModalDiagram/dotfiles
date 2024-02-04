@@ -58,8 +58,8 @@
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"],
     "format-full": " Full",
     "format-charging": " {capacity}%",
-    "on-scroll-up": "brightnessctl set 1%+",
-    "on-scroll-down": "brightnessctl set 1%-",
+    "on-scroll-up": "setlight.sh + 1",
+    "on-scroll-down": "setlight.sh - 1",
     "tooltip": false
   },
   "clock": {
