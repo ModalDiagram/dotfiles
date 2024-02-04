@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
     bash
     bat
@@ -24,10 +24,10 @@
     vim
     wget
     zip
-
-    sway
-    kitty
   ];
+
+  services.tailscale.enable = true;
+  systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
