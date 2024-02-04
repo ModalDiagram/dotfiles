@@ -1,9 +1,10 @@
-{ pkgs, ...}: 
+{ fixed, pkgs, ...}: 
+let fixed_pkgs = fixed.legacyPackages.${pkgs.system}; in
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with fixed_pkgs; [
     pandoc
     (texlive.combine {
-      inherit (pkgs.texlive) scheme-medium
+      inherit (fixed_pkgs.texlive) scheme-medium
         adjustbox
         enumitem
         framed

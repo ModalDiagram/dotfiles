@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "fixed": {
+      "locked": {
+        "lastModified": 1706550542,
+        "narHash": "sha256-UcsnCG6wx++23yeER4Hg18CXWbgNpqNXcHIo5/1Y+hc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "97b17f32362e475016f942bbdfda4a4a72a8a652",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "97b17f32362e475016f942bbdfda4a4a72a8a652",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -128,6 +144,7 @@
     },
     "root": {
       "inputs": {
+        "fixed": "fixed",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "hyprland-hy3": "hyprland-hy3",

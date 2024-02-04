@@ -1,5 +1,6 @@
-{ pkgs, ...}: 
-with pkgs.rPackages;
+{ fixed, pkgs, ...}:
+let fixed_pkgs = fixed.legacyPackages.${pkgs.system}; in
+with fixed_pkgs.rPackages;
 let r_packages = [
   cluster
   clValid
@@ -44,11 +45,11 @@ let r_packages = [
   textreuse
   tidyverse
   vcd
-  xtable 
+  xtable
 ];
 in
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with fixed_pkgs; [
     (rWrapper.override{ packages = r_packages;})
     (rstudioWrapper.override{ packages = r_packages;})
   ];

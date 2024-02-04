@@ -13,6 +13,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     stable.url = "nixpkgs/nixos-23.11";
+    fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -32,12 +33,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-hy3, ... }@inputs:{
+  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-hy3, fixed, ... }@inputs:{
     nixosConfigurations = {
       "sandro0198" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
 
-        specialArgs = { inherit self system inputs nixpkgs; };
+        specialArgs = { inherit self system inputs nixpkgs fixed; };
         modules = [
           {options.main-user = nixpkgs.lib.mkOption {
             type = nixpkgs.lib.types.str;
