@@ -18,12 +18,16 @@
     pkg-config
     powerline-go
     ripgrep
+    rustup
     stow
     udev
     unzip
     vim
     wget
     zip
+
+    google-cloud-sdk
+    firebase-tools
   ];
 
   services.tailscale.enable = true;

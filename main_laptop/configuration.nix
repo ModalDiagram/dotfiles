@@ -2,9 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
-
-{
+{ pkgs, inputs, ... }: {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -14,6 +12,7 @@
       ../nix-modules/tex.nix
     ];
 
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
