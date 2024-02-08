@@ -67,8 +67,8 @@ in {
       driSupport32Bit = true;
 
       ## amdvlk: an open-source Vulkan driver from AMD
-      # extraPackages = [ pkgs.amdvlk ];
-      # extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+      extraPackages = [ pkgs.amdvlk pkgs.rocmPackages.clr.icd ];
+      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
 
     home-manager.users.${config.main-user} = {
@@ -111,7 +111,6 @@ in {
 
       programs.waybar = {
         enable = true;
-        systemd.enable = true;
       };
 
       wayland.windowManager.hyprland = {
