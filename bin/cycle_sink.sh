@@ -1,21 +1,26 @@
 #!/usr/bin/env bash
 
-possible_sinks=(60 71)
+set_synk () {
+  sink_id=$(wpctl status | grep -Po "(?<= {6})(.*)(?=\. $1)")
+  wpctl set-default "$sink_id"
+}
+
+possible_sinks=("Family 17h/19h HD Audio Controller Speaker" "Rembrandt Radeon High Definition Audio Controller HDMI / DisplayPort 2")
 
 if [[ -f /tmp/my_sink ]]; then
   current_sink=$(cat /tmp/my_sink)
-  setsync=false
+  flag=false
   for sink in "${possible_sinks[@]}"; do
-    if $setsync; then
-      wpctl set-default "$sink"
+    if $flag; then
+      set_synk "$sink"
       echo "$sink" > /tmp/my_sink
       exit
     fi
     if [[ "$sink" == "$current_sink" ]]; then
-      setsync=true
+      flag=true
     fi
   done
 fi
 
-wpctl set-default "${possible_sinks[0]}"
+set_synk "${possible_sinks[0]}"
 echo "${possible_sinks[0]}" > /tmp/my_sink
