@@ -87,10 +87,10 @@
 
 
 tooltip {
-  background: rgb(48, 45, 65);
+  background: #1b1a1d;
 }
 tooltip label {
-  color: rgb(217, 224, 238);
+  color: #d8caac;
 }
 #mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #wireplumber, #network, #battery, #custom-powermenu, #custom-survey_num, #window, #custom-my_lock{
   padding-left: 10px;
