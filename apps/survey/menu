@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 bin_path=~/.local/share/survey/bin/
 
-entries="⇠ Reset session\n⏾ Scegli attività\n⭮ Modifica manualmente"
+entries="⇠ Reset session\n⏾ Scegli attività\n⭮ Modifica manualmente\nImposta Submit Rating"
 
 selected=$(echo -e $entries|wofi --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
 
@@ -14,4 +14,6 @@ case $selected in
     $bin_path/choose_mod;;
   modifica)
     $bin_path/manual_mod;;
+  submit)
+    $bin_path/set_button.sh;;
 esac

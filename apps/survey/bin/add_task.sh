@@ -1,6 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-ydotool mousemove -a 620 400
+if [[ -f /tmp/survey_cursor ]]; then
+  ydotool mousemove -a $(cat /tmp/survey_cursor)
+else
+  notify-send -t 3000 "Set button position in menu"
+fi
 sleep 0.2
 ydotool click 0xC0
 ~/.local/share/survey/bin/add

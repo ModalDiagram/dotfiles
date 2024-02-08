@@ -111,6 +111,7 @@ in {
 
       programs.waybar = {
         enable = true;
+        systemd.enable = true;
       };
 
       wayland.windowManager.hyprland = {
