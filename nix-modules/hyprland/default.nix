@@ -1,8 +1,4 @@
-{ system, inputs, config, pkgs, ... }: let
-  inherit (inputs) hyprland hyprland-hy3;
-in {
-  imports = [ hyprland.nixosModules.default ];
-
+{ config, pkgs, ... }: {
   config = {
     programs.hyprland.enable = true;
 
@@ -72,8 +68,6 @@ in {
     };
 
     home-manager.users.${config.main-user} = {
-      imports = [ hyprland.homeManagerModules.default ];
-
       home.packages = with pkgs; [
         alacritty
         blueberry
@@ -117,8 +111,6 @@ in {
       wayland.windowManager.hyprland = {
         enable = true;
         xwayland.enable = true;
-
-        plugins = [ hyprland-hy3.packages.${system}.default  ];
 
         extraConfig = "source = /data/dotfiles/conf.d/hypr/hyprland.conf";
       };

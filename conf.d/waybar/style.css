@@ -167,7 +167,7 @@ tooltip label {
 
 }
 
-#battery.full {
+#battery.almost_full {
   color: #161320;
   background-color: #FFFF19;
 }

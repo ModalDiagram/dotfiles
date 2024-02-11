@@ -11,29 +11,18 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
     stable.url = "nixpkgs/nixos-23.11";
     fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland ={
-      url = "github:hyprwm/Hyprland"; # where {version} is the hyprland release version
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland-hy3 = {
-      url = "github:outfoxxed/hy3"; # where {version} is the hyprland release version
-      # or "github:outfoxxed/hy3" to follow the development branch.
-      # (you may encounter issues if you dont do the same for hyprland)
-      inputs.hyprland.follows = "hyprland";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, hyprland-hy3, fixed, ... }@inputs:{
+  outputs = { self, nixpkgs, home-manager, fixed, ... }@inputs:{
     nixosConfigurations = {
       "sandro0198" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";

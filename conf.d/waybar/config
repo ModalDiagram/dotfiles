@@ -52,12 +52,14 @@
   "battery": {
     "interval": 10,
     "states": {
+      "almost_full": 100,
+      "normal": 95,
       "warning": 20,
       "critical": 10
     },
     "format": "{icon} {capacity}%",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"],
-    "format-full": " Full",
+    "format-almost_full": " Full",
     "format-charging": " {capacity}%",
     "on-scroll-up": "setlight.sh + 1",
     "on-scroll-down": "setlight.sh - 1",
