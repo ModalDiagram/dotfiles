@@ -13,6 +13,7 @@
     gh
     glib
     gnumake
+    imv
     jq
     lm_sensors
     pkg-config
