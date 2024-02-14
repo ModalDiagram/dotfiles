@@ -4,7 +4,7 @@ bin_path=~/.local/share/survey/bin/
 
 entries="⇠ Reset session\n⏾ Scegli attività\n⭮ Modifica manualmente\nImposta Submit Rating\nOpen Guidelines\nMonthly Statement"
 
-selected=$(echo -e $entries|wofi --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
+selected=$(echo -e $entries|wofi --insensitive --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
 
 # echo "$selected"
 case $selected in
@@ -19,5 +19,5 @@ case $selected in
   guidelines)
     $bin_path/choose_guidelines.sh;;
   statement)
-    $bin_path/month_hours.sh;;
+    python ~/.local/share/survey/python/plot_month_hour.py;;
 esac

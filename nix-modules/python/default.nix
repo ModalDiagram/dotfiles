@@ -11,6 +11,7 @@ my_python_packages = ps: with ps; [
   numpy
   matplotlib
   pandas
+  plotly
   pynvim
   python-lsp-ruff
   python-lsp-server
