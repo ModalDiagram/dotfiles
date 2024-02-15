@@ -92,7 +92,7 @@ tooltip {
 tooltip label {
   color: #d8caac;
 }
-#mode, #clock, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #temperature, #backlight, #wireplumber, #network, #battery, #custom-powermenu, #custom-survey_num, #window, #custom-my_lock{
+#mode, #clock, #memory, #temperature,#cpu,#mpd, #temperature, #backlight, #wireplumber, #network, #battery, #custom-powermenu, #custom-survey_num, #window{
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -114,6 +114,8 @@ tooltip label {
 #idle_inhibitor {
 	/* color: #d8caac; */
   color: #d33682;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 #submap {
   color: #d8caac;
@@ -186,7 +188,12 @@ tooltip label {
 }
 #custom-my_lock {
   color: #d33682;
-  padding-left: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#custom-wl_fix {
+  color: #d33682;
+  padding-left: 5px;
   padding-right: 10px;
 }
 #tray {

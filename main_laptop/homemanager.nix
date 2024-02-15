@@ -4,6 +4,7 @@
     ".profile".source                       = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/profile";
     ".local/share/survey/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/survey";
     ".local/share/my_lock/".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/my_lock";
+    ".local/share/wl_fix/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/wl_fix";
     ".local/share/app_bindings/".source     = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/app_bindings";
     ".config/mimeapps.list".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/xdg-open/mimeapps.list";
     ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/libinput-gestures/libinput-gestures.conf";

@@ -8,4 +8,5 @@ fi
 sleep 0.2
 ydotool click 0xC0
 ~/.local/share/survey/bin/add
+~/.local/share/wl_fix/module_wl.sh dismiss
 pkill -RTMIN+13 waybar

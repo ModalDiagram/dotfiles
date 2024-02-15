@@ -10,3 +10,8 @@ border-color=#dc322f
 
 [app-name="spotify"]
 border-color=#1DB954
+
+[app-name="wlfix"]
+on-button-left=exec makoctl invoke -n $id wl-copy
+anchor=bottom-left
+border-color=#FF8066

@@ -23,7 +23,7 @@
   boot.loader.systemd-boot.configurationLimit = 30;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_6;
-  boot.kernelParams = ["amdgpu.gpu_recovery=1"];
+  boot.kernelParams = ["amdgpu.gpu_recovery=1" "amdgpu.sg_display=0"];
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
