@@ -1,4 +1,4 @@
-{ fixed, pkgs, ...}:
+{ config, fixed, pkgs, lib, ...}:
 let fixed_pkgs = fixed.legacyPackages.${pkgs.system}; in
 with fixed_pkgs.rPackages;
 let r_packages = [
@@ -49,8 +49,17 @@ let r_packages = [
 ];
 in
 {
-  environment.systemPackages = with fixed_pkgs; [
-    (rWrapper.override{ packages = r_packages;})
-    (rstudioWrapper.override{ packages = r_packages;})
-  ];
+  options.mypkgs.rlang = {
+    enable = lib.mkOption {
+      description = "Enable r, rstudio and its packages";
+      type = lib.types.bool;
+      default = false;
+    };
+  };
+  config = lib.mkIf (config.mypkgs.rlang.enable) {
+    environment.systemPackages = with fixed_pkgs; [
+      (rWrapper.override{ packages = r_packages;})
+      (rstudioWrapper.override{ packages = r_packages;})
+    ];
+  };
 }

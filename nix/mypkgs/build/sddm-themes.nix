@@ -18,7 +18,7 @@ sugar-candy = stdenv.mkDerivation {
 my_files = stdenv.mkDerivation {
   pname = "my_files";
   version = "";
-  src = [ ../../conf.d/sddm ../../conf.d/wallpaper ];
+  src = [ ../../../conf.d/sddm ../../../conf.d/wallpaper ];
   phases = [ "installPhase" ];
   installPhase = ''
     mkdir -p $out

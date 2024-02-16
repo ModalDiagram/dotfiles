@@ -33,17 +33,18 @@
             type = nixpkgs.lib.types.str;
             default = "sandro0198";
           }; }
-          home-manager.nixosModules.home-manager {
-            # home-manager.users."sandro0198".home.stateVersion = "23.11";
-            home-manager.users."sandro0198" = import ./homemanager.nix;
+          home-manager.nixosModules.home-manager
+          ./specific/lenovo.nix
+          ./mypkgs {
+            mypkgs.hyprland.enable = true;
+            mypkgs.neovim.enable = true;
+            mypkgs.python.enable = true;
+            mypkgs.networking.interface = "wpa_supplicant";
+            mypkgs.rlang.enable = true;
+            mypkgs.sql.enable = true;
+            mypkgs.tex.enable = true;
+            mypkgs.misc.enable = true;
           }
-          ./configuration.nix
-          ../nix-modules/system/user.nix
-          ../nix-modules/system/networking.nix
-          ../nix-modules/misc
-          ../nix-modules/hyprland
-          ../nix-modules/neovim
-          ../nix-modules/python
         ];
       };
     };

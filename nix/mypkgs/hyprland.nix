@@ -1,18 +1,25 @@
-{ config, pkgs, ... }: {
-  config = {
+{ config, pkgs, lib, ... }: {
+  options.mypkgs.hyprland = {
+    enable = lib.mkOption {
+      description = "Enable hyprland";
+      type = lib.types.bool;
+      default = false;
+    };
+  };
+  config = lib.mkIf (config.mypkgs.hyprland.enable) {
     programs.hyprland.enable = true;
 
     environment.systemPackages = with pkgs; [
       libsForQt5.qt5.qtgraphicaleffects
       libsForQt5.qt5.qtsvg
       libsForQt5.qt5ct
-      (pkgs.callPackage ../pkgs/sddm-themes.nix {})
+      (pkgs.callPackage ./build/sddm-themes.nix {})
     ];
 
-    nix.settings = {
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-    };
+    # nix.settings = {
+    #   substituters = [ "https://hyprland.cachix.org" ];
+    #   trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    # };
 
     services.flatpak.enable = true;
 
