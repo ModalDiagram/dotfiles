@@ -5,7 +5,6 @@
     "hyprland/workspaces",
     "idle_inhibitor",
     "custom/my_lock",
-    "custom/wl_fix",
     "hyprland/submap"
   ],
   "modules-right": [
@@ -88,7 +87,7 @@
   },
   "custom/powermenu": {
     "format": "",
-    "on-click": "power-menu",
+    "on-click": "sleep 0.1 && power-menu",
     "tooltip": false
   },
   "tray": {
@@ -100,7 +99,7 @@
     "exec": "~/.local/share/survey/bin/num",
     "format": "{}",
     "on-click": "~/.local/share/survey/bin/add",
-    "on-click-right": "~/.local/share/survey/menu",
+    "on-click-right": "sleep 0.1 && ~/.local/share/survey/menu",
     "signal": 13,
     "interval": "once",
   },
@@ -108,14 +107,6 @@
     "exec": "~/.local/share/my_lock/module_lock.sh",
     "format": "{}",
     "on-click": "~/.local/share/my_lock/module_lock.sh toggle",
-    "signal": 11,
-    "interval": "once",
-  },
-  "custom/wl_fix": {
-    "exec": "~/.local/share/wl_fix/module_wl.sh",
-    "format": "{}",
-    "on-click": "~/.local/share/wl_fix/module_wl.sh toggle",
-    "on-click-right": "~/.local/share/wl_fix/module_wl.sh dismiss",
     "signal": 11,
     "interval": "once",
   },
