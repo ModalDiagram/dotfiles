@@ -24,15 +24,17 @@
 
   outputs = { self, nixpkgs, home-manager, fixed, ... }@inputs:{
     nixosConfigurations = {
-      "sandro0198" = nixpkgs.lib.nixosSystem rec {
+      "lenovo" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
 
         specialArgs = { inherit self system inputs nixpkgs fixed; };
         modules = [
-          {options.main-user = nixpkgs.lib.mkOption {
-            type = nixpkgs.lib.types.str;
-            default = "sandro0198";
-          }; }
+          {
+            options.main-user = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.str;
+              default = "sandro0198";
+            };
+          }
           home-manager.nixosModules.home-manager
           ./specific/lenovo.nix
           ./mypkgs {

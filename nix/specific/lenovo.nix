@@ -1,5 +1,6 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
   system.stateVersion = "23.11";
+  networking.hostName = "lenovo";
 
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
