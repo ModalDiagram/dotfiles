@@ -35,6 +35,7 @@
       wget
       zip
 
+      awscli2
       google-cloud-sdk
       firebase-tools
     ];
