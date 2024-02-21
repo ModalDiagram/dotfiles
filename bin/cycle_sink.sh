@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 set_synk () {
-  sink_id=$(wpctl status | grep -Po "(?<= {6})(.*)(?=\. $1)")
-  wpctl set-default "$sink_id"
+  sink_id=$(wpctl status | grep -Po "( {3})(.*)(?=\. $1)")
+  wpctl set-default "${sink_id%* }"
 }
 
 possible_sinks=("Family 17h/19h HD Audio Controller Speaker" "Rembrandt Radeon High Definition Audio Controller HDMI / DisplayPort 2")
