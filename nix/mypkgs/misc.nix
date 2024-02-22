@@ -18,6 +18,7 @@
       fd
       fzf
       gcc
+      gedit
       gh
       glib
       gnumake
@@ -29,6 +30,7 @@
       ripgrep
       rustup
       stow
+      tldr
       udev
       unzip
       vim

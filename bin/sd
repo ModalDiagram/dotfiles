@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+# this script must be used with the alias in bashrc
+# alias sd='. sd'
+# to make use of the directory movements
+
+# this function lets us have two versions of find, one for all the files
+# and one for directories only
+function myfind {
+  if [[ $1 == dir ]]; then
+    find -L . -type d -not -path '*/.*' -printf '%P\n'
+  else
+    find -L . -not -path '*/.*' -printf '%P\n'
+  fi
+}
+
+# arg is set to "dir" if the argument -d is provided, in which case
+# fzf functions in directory mode
+arg=""
+
+# cd_to_dir is set to "true" if the user chooses to navigate to the folder
+# where the chosen file is located
+cd_to_dir=false
+
+# only_navigate is set to "true" if the user chooses to navigate to the folder without opening the file
+only_navigate=false
+
+# initial_query is used to keep the query when moving from fzf with only
+# directories to normal fzf
+initial_query=""
+
+# optionally, if -d is provided, we set the variable arg to use with myfind
+# then, we cd to the specified directory, if any
+if [[ $1 == -d ]]; then
+  arg=dir
+  if [[ -n $2 ]]; then
+    dir=$2
+    cd $dir
+  fi
+elif [[ -n $1 ]]; then
+  dir=$1
+  cd $dir
+fi
+
+
+# in this loop, until a file is chosen, the user is presented with two types of searchers:
+# 1) fzf mode, that searches in the file name in a fuzzy way
+# 2) rg mode,  that searches inside the text files in a non fuzzy way
+# through some keybindings, the user can change the $mode variable and at each
+# loop, depending on its value, some if are evaluated
+mode=__fzf
+while true; do
+  # fzf mode
+  if [[ $mode == __fzf ]]; then
+    mode=$(myfind "$arg" | fzf --ansi \
+      --prompt '1. fzf> ' \
+      --query "$initial_query" \
+      --header '╱ CTRL-F fzf / CTRL-R rg ╱ CTRL-N also navigate ╱ CTRL-D only dir ╱ CTRL-B navigate only ╱' \
+      --header-lines 1 \
+      --color "hl:-1:underline,hl+:-1:underline:reverse" \
+      --preview 'bat --color=always {1}' \
+      --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+      --bind "esc:become(echo exit)" \
+      --bind "ctrl-d:become(echo __dir_toggle:{q})" \
+      --bind "ctrl-n:become(echo __navigate:{1})" \
+      --bind "ctrl-b:become(echo __only_navigate:{1})" \
+      --bind "ctrl-r:become(echo __ripgrep)")
+
+  # rg mode
+  elif [[ $mode == __ripgrep ]]; then
+    RG_PREFIX="rg --column --follow --line-number --no-heading --color=always --smart-case "
+    mode=$(rg --column --follow --line-number --no-heading --color=always --smart-case "" 2>/dev/null | fzf --ansi \
+      --prompt '2. ripgrep> ' \
+      --header '╱ CTRL-R rg ╱ CTRL-F fzf ╱ CTRL-N also navigate ╱ CTRL-B navigate only ╱' \
+      --disabled --bind "change:reload:sleep 0.1; $RG_PREFIX {q} "" || true" \
+      --delimiter : \
+      --preview 'bat --color=always {1} --highlight-line {2}' \
+      --color "hl:-1:underline,hl+:-1:underline:reverse" \
+      --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+      --bind "esc:become(echo exit)" \
+      --bind "enter:become(echo {1})" \
+      --bind "ctrl-n:become(echo __navigate:{1})" \
+      --bind "ctrl-b:become(echo __only_navigate:{1})" \
+      --bind "ctrl-f:become(echo __fzf)")
+
+  # if the user presses the keybinding for directories-only fzf
+  elif [[ $mode == __dir_toggle* ]]; then
+    if [[ $arg == dir ]]; then
+      arg=""
+    else
+      arg=dir
+    fi
+    initial_query=${mode#__dir_toggle:*}
+    mode=__fzf
+
+  # if the user quits we cd up so as to not modify the original directory
+  elif [[ $mode == exit ]]; then
+    if [[ -n $dir ]]; then
+      cd -
+    fi
+    # echo "Exiting"
+    return
+
+  # if the user chooses a file (with optional navigation to the directory and optional opening of the file)
+  else
+    if [[ $mode == __navigate:* ]]; then
+      file="${mode#__navigate:*}"
+      cd_to_dir=true
+    elif [[ $mode == __only_navigate:* ]]; then
+      file="${mode#__only_navigate:*}"
+      only_navigate=true
+      cd_to_dir=true
+    else
+      file=$mode
+    fi
+    break
+  fi
+done
+
+# if the file is a directory we just cd to it
+if [[ -d $file ]]; then
+  cd $file
+  return
+fi
+
+# if the file is not a directory we cd to the original directory,
+# cd to the directory of the file (if specified) and then open the file
+if [[ -n $dir ]]; then
+  cd -
+  file="$dir/$file"
+fi
+if $cd_to_dir; then
+  cd "${file%/*}"
+  file="${file##*/}"
+  if $only_navigate; then
+    return
+  fi
+fi
+sleep 0.3
+# echo "Selected $file"
+if [[ -f $file ]]; then
+  if [[ $(xdg-mime query default $(xdg-mime query filetype $file)) == *gedit* ]]; then
+    nvim $file
+  else
+    xdg-open $file
+  fi
+fi
