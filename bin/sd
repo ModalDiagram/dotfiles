@@ -10,7 +10,7 @@ function myfind {
   if [[ $1 == dir ]]; then
     find -L . -type d -not -path '*/.*' -printf '%P\n'
   else
-    find -L . -not -path '*/.*' -printf '%P\n'
+    find -L . -type f -not -path '*/.*' -printf '%P\n'
   fi
 }
 
