@@ -96,6 +96,34 @@
     extraGroups = [ "networkmanager" "wheel" "input" "i2c" ];
   };
 
+  systemd.timers."low-battery" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1m";
+        OnUnitActiveSec = "1m";
+        Unit = "low-battery.service";
+      };
+  };
+
+  systemd.services."low-battery" = let
+    battery-threshold = "15";
+  in {
+    path = [ pkgs.libnotify ];
+    script = ''
+      ${pkgs.bash}/bin/bash -c '
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID/bus"
+        capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+        if [[ $capacity -lt ${battery-threshold} ]]; then
+          notify-send -t 60000 -u critical "Low battery: $capacity%"
+        fi
+      '
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "${config.main-user}";
+    };
+  };
+
   home-manager.users.${config.main-user} = { config, ... }: {
     home.file = let config_path = "/data/dotfiles"; in {
       ".bashrc".source                        = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/bashrc";
