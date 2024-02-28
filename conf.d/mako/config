@@ -12,6 +12,10 @@ border-color=#dc322f
 [app-name="spotify"]
 border-color=#1DB954
 
+[app-name="Ferdium"]
+default-timeout=10000
+border-color=#9600AF
+
 [app-name="wlfix"]
 on-button-left=exec makoctl invoke -n $id wl-copy
 anchor=bottom-left
