@@ -113,7 +113,8 @@
       ${pkgs.bash}/bin/bash -c '
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID/bus"
         capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-        if [[ $capacity -lt ${battery-threshold} ]]; then
+        status=$(cat /sys/class/power_supply/BAT0/status)
+        if [[ $capacity -lt ${battery-threshold} && $status != *Charging* ]]; then
           notify-send -t 60000 -u critical "Low battery: $capacity%"
         fi
       '
