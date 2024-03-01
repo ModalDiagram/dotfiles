@@ -19,68 +19,19 @@ return require('packer').startup(function(use)
   use { "lewis6991/impatient.nvim", config = [[require('impatient')]] }
 
   use { "wbthomason/packer.nvim" }
-  -- Telescope
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} },
-    config = [[require("config.telescope")]]
-  }
-  -- Colorchemes
-  use({ 'rose-pine/neovim', as = 'rose-pine' })
-  use { 'maxmx03/solarized.nvim' }
-  use { 'brenoprata10/nvim-highlight-colors' }
-  -- Highlight URLs inside vim
-  use { "itchyny/vim-highlighturl" }
-  use { "lukas-reineke/indent-blankline.nvim", after={"treesitter-indent-object.nvim"}, config = [[require("config.indent")]]}
 
-
-  -- showing keybindings
-  use {
-   "folke/which-key.nvim",
-   config = function()
-    vim.defer_fn(function()
-      require("config.which-key")
-    end, 2000)
-  end,
-  }
-  -- Automatic insertion and deletion of a pair of characters
-  use { "Raimondi/delimitMate" }
-
-  -- show and trim trailing whitespaces
-  use { "jdhao/whitespace.nvim" }
-  -- Yank and put plugin
-  use { "gbprod/yanky.nvim", after = "telescope.nvim", config = [[require('config.yanky')]] }
-  -- Comment plugin
-  use { "tpope/vim-commentary" }
-  -- Markdown preview
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  ------------------------------ DEPENDENCIES --------------------------------
+  -- search for them in the requires fields to see if they are still required
   use { "kyazdani42/nvim-web-devicons" }
-  -- file explorer
-  use {
-    "kyazdani42/nvim-tree.lua",
-    requires = { "kyazdani42/nvim-web-devicons" },
-    config = [[require('config.nvim-tree')]],
-  }
-  use {
-    "nvim-lualine/lualine.nvim",
-    config = [[require('config.statusline')]],
-  }
-  -- Show match number and index for searching
-  use {
-    "kevinhwang91/nvim-hlslens",
-    branch = "main",
-    keys = { { "n", "*" }, { "n", "#" }, { "n", "n" }, { "n", "N" } },
-    config = [[require('config.hlslens')]],
-  }
-  -- Show undo history visually
-  use { "simnalamburt/vim-mundo", cmd = { "MundoToggle", "MundoShow" } }
 
-  ----------------------------------------Snippet e completion--------------------------
-  use { "onsails/lspkind-nvim" }
+
+  ---------------------------- COMPLETION --------------------------
   -- Snippet engine and snippet template
   use { "SirVer/ultisnips" }
   -- auto-completion engine
+  use { "onsails/lspkind-nvim" }
   use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
+
   -- nvim-cmp completion sources
   use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
   use { "hrsh7th/cmp-path", after = "nvim-cmp" }
@@ -88,80 +39,136 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
   use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
   use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
-  -- Mason gestisce LSP, DAP, linter e formatter
-  use { "williamboman/mason.nvim", after = "cmp-nvim-lsp" }
-  -- Gestori di LSP
-  use { "williamboman/mason-lspconfig.nvim", after = "mason.nvim", config = [[require('config.mason')]] }
+
+  ------------------------------------ LSP -----------------------------------
   use { "neovim/nvim-lspconfig", config = [[require('config.lsp')]] }
-  use({
-      "nvimdev/lspsaga.nvim",
-      config = [[require("config.lspsaga")]],
-      requires = {
-          {"nvim-tree/nvim-web-devicons"},
-          --Please make sure you install markdown and markdown_inline parser
-          {"nvim-treesitter/nvim-treesitter"}
-      }
-  })
+  use {
+    "nvimdev/lspsaga.nvim",
+    config = [[require("config.lspsaga")]],
+    requires = {
+      {"nvim-tree/nvim-web-devicons"},
+      {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
+  use { "folke/trouble.nvim", requires = "nvim-tree/nvim-web-devicons" }
+
+  -- Extra LSP servers
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
-  -- Gestori di linter
+  use { 'jalvesaq/Nvim-R' }
+
+  -- Linter manager
   use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
-  use { "jay-babu/mason-null-ls.nvim", after = { "null-ls.nvim", "mason.nvim" }, config = [[require('config.masonnull')]]}
-  -- Gestore di dap
-  use { "jay-babu/mason-nvim-dap.nvim", after = "mason.nvim", config = [[require('config.masondap')]] }
+
+  -- DAP manager
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }
   use { "folke/neodev.nvim", config = [[require('config.neodev')]] }
-  use { "rcarriga/nvim-dap-ui", after = {"nvim-dap", "neodev.nvim"}, requires = {"mfussenegger/nvim-dap"}, config = [[require('config.dapui')]] }
-  -- Treesitter per gli highlight
-  use { "nvim-treesitter/nvim-treesitter",config = [[require('config.treesitter')]] }
+  use {
+    "rcarriga/nvim-dap-ui",
+    after = {"nvim-dap", "neodev.nvim"},
+    requires = {"mfussenegger/nvim-dap"},
+    config = [[require('config.dapui')]]
+  }
+
+  -- Treesitter for formatting
+  use { "nvim-treesitter/nvim-treesitter", config = [[require('config.treesitter')]] }
   use { 'nvim-treesitter/playground' }
   use { "kiyoon/treesitter-indent-object.nvim"}
 
   use { "rcarriga/nvim-notify", config = [[require('config.notify')]] }
   -- Plugin to manipulate character pairs quickly
   use { "machakann/vim-sandwich" }
-  -- Additional powerful text object for vim, this plugin should be studied
-  -- carefully to use its full power
-  use { "wellle/targets.vim" }
-  -- Lista degli errori
+
+  ------------------------------ FILE AND TEXT MOVEMENT ---------------------
+  -- Telescope
   use {
-    "folke/trouble.nvim",
-    requires = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require("trouble").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} },
+    config = [[require("config.telescope")]]
   }
-  -- Per cercare con telescope varie cose
+
+  -- Searching with fzf
   use { "Yggdroot/LeaderF", cmd = "Leaderf", run = ":LeaderfInstallCExtension" }
 
-  use { "akinsho/bufferline.nvim", config = [[require('config.bufferline')]] }
-
-  -- fancy start screen
-  use { "glepnir/dashboard-nvim",
-    config = [[require('config.dashboard-nvim')]]
+  -- File explorer
+  use {
+    "kyazdani42/nvim-tree.lua",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = [[require('config.nvim-tree')]],
   }
-  -- Gestore dei progetti
+
+  -- Projects manager
   use {
     "ahmedkhalf/project.nvim", config = [[require('config.project')]]
   }
 
-  -- Plugins di git
+  -- Moving by typing the first 2 letters
+  use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+  -- Moving by context (di( to delete inside the parantheses)
+  use { "wellle/targets.vim" }
+
+  ---------------------------- UTILITIES --------------------------------------
+  -- Git plugins
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
-  use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+  -- show and trim trailing whitespaces
+  use { "jdhao/whitespace.nvim" }
 
-  use { 'jalvesaq/Nvim-R' }
+  -- Yank and put plugin
+  use { "gbprod/yanky.nvim", after = "telescope.nvim", config = [[require('config.yanky')]] }
+
+  -- Comment plugin
+  use { "tpope/vim-commentary" }
+
+  -- Markdown preview
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  use { "simnalamburt/vim-mundo", cmd = { "MundoToggle", "MundoShow" } }
+
+  -- Showing keybindings
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.defer_fn(function()
+        require("config.which-key")
+      end, 2000)
+    end,
+  }
+  -- Automatic insertion and deletion of a pair of characters
+  use {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+        require("nvim-autopairs").setup {}
+    end
+  }
+
+  -- Highlight URLs inside vim
+  use { "itchyny/vim-highlighturl" }
+
+  -- Show line with indent level
+  use { "lukas-reineke/indent-blankline.nvim", after={"treesitter-indent-object.nvim"}, config = [[require("config.indent")]]}
+
+  ----------------------------- APPEARANCES -----------------------------------
+  use { "akinsho/bufferline.nvim", config = [[require('config.bufferline')]] }
+
+  use {
+    "nvim-lualine/lualine.nvim",
+    config = [[require('config.statusline')]],
+  }
+  -- fancy start screen
+  use { "glepnir/dashboard-nvim",
+    config = [[require('config.dashboard-nvim')]]
+  }
   use { 'simeji/winresizer' }
+
+
   use { 'lambdalisue/suda.vim' }
+
+  ------------------------------- COLORS --------------------------------------
+  use({ 'rose-pine/neovim', as = 'rose-pine' })
   use { "Tsuzat/NeoSolarized.nvim"}
-  -- use { 'ibhagwan/fzf-lua' }
-  -- use { "kiyoon/jupynium.nvim", 
-  --   run = "/home/sandro0198/anaconda3/condabin/conda run --no-capture-output -n nvim pip install .",
-  --   config=[[require('config.jupynium')]] }
+  -- Highlight colors in CSS files
+  use { 'brenoprata10/nvim-highlight-colors' }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

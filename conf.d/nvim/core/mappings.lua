@@ -100,15 +100,6 @@ keymap.set("x", "c", '"_c')
 keymap.set("n", "<leader><space>", "<cmd>StripTrailingWhitespace<cr>", { desc = "remove trailing space" })
 
 
--- Move current line up and down
--- keymap.set("n", "<A-k>", '<cmd>call utils#SwitchLine(line("."), "up")<cr>', { desc = "move line up" })
--- keymap.set("n", "<A-j>", '<cmd>call utils#SwitchLine(line("."), "down")<cr>', { desc = "move line down" })
-
--- Move current visual-line selection up and down
--- keymap.set("x", "<A-k>", '<cmd>call utils#MoveSelection("up")<cr>', { desc = "move selection up" })
-
--- keymap.set("x", "<A-j>", '<cmd>call utils#MoveSelection("down")<cr>', { desc = "move selection down" })
-
 -- Windows mappings
 keymap.set("n", "<c-w>e", "<cmd>WinResizerStartResize<CR>")
 keymap.set("n", "<left>", "<c-w>h")
@@ -157,6 +148,9 @@ keymap.set("c", "<C-A>", "<HOME>")
 -- Delete the character to the right of the cursor
 keymap.set("i", "<C-D>", "<DEL>")
 
+-- Delete the word before the cursor
+keymap.set("i", "<C-D>", "<DEL>")
+
 -- Esc più comodo
 keymap.set("i", "kj", "<ESC>")
 
@@ -164,6 +158,7 @@ keymap.set("i", "kj", "<ESC>")
 keymap.set("n", "è", "\"+p")
 keymap.set({"n", "v"}, "<C-y>", "\"+y")
 keymap.set({"n", "v"}, "<C-p>", "\"+p")
+keymap.set("i", "<C-p>", "<C-r>+", { noremap = true })
 
 -- Impostazioni di yanky
 vim.keymap.set("n", "[", "<Plug>(YankyCycleForward)")
