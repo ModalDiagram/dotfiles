@@ -139,7 +139,8 @@ fi
 sleep 0.3
 # echo "Selected $file"
 if [[ -f $file ]]; then
-  if [[ $(xdg-mime query default $(xdg-mime query filetype $file)) == *gedit* ]]; then
+  default_app=$(xdg-mime query default $(xdg-mime query filetype $file))
+  if [[ $default_app == *gedit*  || -z $default_app ]]; then
     nvim $file
   else
     xdg-open $file
