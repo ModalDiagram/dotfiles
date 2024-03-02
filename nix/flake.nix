@@ -3,10 +3,11 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://nix-community.cachix.org"
+      "https://nix-community.cachix.org" "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 
@@ -16,13 +17,17 @@
     stable.url = "nixpkgs/nixos-23.11";
     fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
 
+    hyprland = {
+      url = "github:hyprwm/Hyprland?ref=v0.36.0";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fixed, ... }@inputs:{
+  outputs = { self, nixpkgs, home-manager, fixed, hyprland, ... }@inputs:{
     nixosConfigurations = {
       "lenovo" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
