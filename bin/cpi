@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ ! -f /tmp/last_screenshot.txt ]]; then
+  exit
+fi
+file=$(cat /tmp/last_screenshot.txt)
+mv $file $1

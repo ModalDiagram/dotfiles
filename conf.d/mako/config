@@ -8,6 +8,7 @@ max-visible=3
 [urgency=high]
 layer=overlay
 border-color=#dc322f
+anchor=top-left
 
 [app-name="spotify"]
 border-color=#1DB954

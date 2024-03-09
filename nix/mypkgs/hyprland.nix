@@ -53,7 +53,6 @@
 
 
     services.xserver.enable = true;
-    services.xserver.videoDrivers = [ "amdgpu" ];
     services.xserver.displayManager.sddm = {
       enable = true;
       theme = "sugar-candy";
@@ -102,7 +101,6 @@
         libreoffice
         mako # notification system developed by swaywm maintainer
         nwg-look
-        obsidian
         okular
         pavucontrol
         playerctl

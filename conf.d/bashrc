@@ -30,3 +30,4 @@ alias renix="sudo nixos-rebuild --flake /data/dotfiles/nix/flake.nix#lenovo swit
 alias rewaybar="pkill -SIGUSR2 waybar"
 alias sd=". sd"
 alias sdd=". sd -d"
+complete -F _fzf_file_completion -o default -o bashdefault cpi

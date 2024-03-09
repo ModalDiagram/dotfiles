@@ -8,7 +8,7 @@
 
   # Bootloader.
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" "i2c-dev" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;

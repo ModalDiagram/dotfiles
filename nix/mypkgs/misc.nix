@@ -35,6 +35,7 @@
       unzip
       vim
       wget
+      wev
       zip
 
       awscli2
