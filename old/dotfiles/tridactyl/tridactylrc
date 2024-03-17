@@ -1,6 +1,0 @@
-bind J tabnext
-bind K tabprev
-unbind .
-bind . fillcmdline_notrail
-bind --mode=ex <C-j> ex.next_completion
-bind --mode=ex <C-k> ex.prev_completion

@@ -12,7 +12,7 @@
   boot.kernelModules = [ "kvm-amd" "i2c-dev" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 30;
+  boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_6;
 
@@ -93,7 +93,7 @@
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "input" "i2c" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "i2c" "vboxusers" ];
   };
 
   systemd.timers."low-battery" = {
@@ -142,6 +142,7 @@
       ".config/waybar/".source                = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/waybar";
       ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";
       ".config/wofi/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wofi";
+      ".config/xournalpp/toolbar.ini".source  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/xournalpp/toolbar.ini";
     };
 
     # The state version is required and should stay at the version you

@@ -41,7 +41,11 @@
       awscli2
       google-cloud-sdk
       firebase-tools
+      spice-vdagent
     ];
+
+    # virtualisation.virtualbox.host.enable = true;
+    # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
     services.tailscale.enable = true;
     systemd.services.tailscaled.wantedBy = lib.mkForce [];

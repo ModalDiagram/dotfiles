@@ -1,6 +1,0 @@
-#!/bin/bash
-
-if [[ -f /tmp/nvim_last_file ]]; then
-  file=$(cat /tmp/nvim_last_file)
-  nvim "$file"
-fi

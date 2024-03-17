@@ -1,1 +1,0 @@
-../../parent/ftplugin/lua.lua

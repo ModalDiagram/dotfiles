@@ -1,5 +1,0 @@
-#!/bin/bash
-
-firefox --new-window -url bitly.com -url https://www.poste.it/cerca/index.html#/risultati-cerca-cap/ -url https://www.tryrating.com/login?originalUrl=%2Fapp%2Fhome -url file:///data/OneDrive/altri_programmi/guidelines/maps_guidelines.pdf -url file:///data/OneDrive/altri_programmi/guidelines/it_guidelines.pdf &
-firefox --new-window -url https://www.google.com/maps -url https://www.bing.com/maps/ -ulr https://www.nonsolocap.it/cap/ &
-firefox --new-window &

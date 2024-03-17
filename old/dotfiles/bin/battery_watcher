@@ -1,7 +1,0 @@
-#!/bin/bash
-
-battery=$(acpi -b)
-battery=${battery%\%*}
-battery=${battery#*,}
-
-notify-send -u critical "Batteria: $battery%, data: $(date +"%D %T")"

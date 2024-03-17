@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+nix-shell -p python311Packages.weasyprint
+if [[ -f "$1" ]]; then
+  weasyprint "$1" "$2"
+fi

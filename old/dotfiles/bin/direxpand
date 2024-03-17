@@ -1,9 +1,0 @@
-#!/bin/bash
-
-path="$1"
-if [[ "$path" == *"$"* ]]; then
-  variable=${path#*$}
-  variable=${variable%/*}
-  echo "$path"
-else echo "$path"
-fi

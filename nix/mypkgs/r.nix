@@ -22,6 +22,7 @@ let r_packages = [
   geoR
   GGally
   ggplot2
+  ggtext
   ghyp
   gridExtra
   hopkins
@@ -38,6 +39,7 @@ let r_packages = [
   RecordLinkage
   reshape2
   rmarkdown
+  psych
   sn
   stringdist
   stringi
@@ -45,6 +47,7 @@ let r_packages = [
   textreuse
   tidyverse
   vcd
+  visdat
   xtable
 ];
 in
