@@ -93,7 +93,7 @@
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "input" "i2c" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "i2c" "vboxusers" "docker" ];
   };
 
   systemd.timers."low-battery" = {

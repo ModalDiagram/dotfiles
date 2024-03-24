@@ -62,10 +62,11 @@ return require('packer').startup(function(use)
   -- DAP manager
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }
   use { "folke/neodev.nvim", config = [[require('config.neodev')]] }
+  use { "nvim-neotest/nvim-nio" }
   use {
     "rcarriga/nvim-dap-ui",
     after = {"nvim-dap", "neodev.nvim"},
-    requires = {"mfussenegger/nvim-dap"},
+    requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
     config = [[require('config.dapui')]]
   }
 

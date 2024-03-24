@@ -14,6 +14,7 @@ let r_packages = [
   fitdistrplus
   flexCWM
   flexclust
+  flexdashboard
   foreign
   fpc
   gamlss
@@ -40,6 +41,7 @@ let r_packages = [
   reshape2
   rmarkdown
   psych
+  shinydashboard
   sn
   stringdist
   stringi

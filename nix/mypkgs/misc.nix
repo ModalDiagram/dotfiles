@@ -47,6 +47,11 @@
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
+    # virtualisation.docker.enable = true;
+    # virtualisation.docker.rootless = {
+    #   enable = true;
+    #   setSocketVariable = true;
+    # };
     services.tailscale.enable = true;
     systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
