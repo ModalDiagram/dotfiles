@@ -25,7 +25,7 @@ minutes=$((minutes / 60 ))
 text+=${minutes}m
 
 # Prendo il ratio e formatto
-ratio=$($survey_path/bin/ratio)
+ratio=$($survey_path/bin/evaluate_ratio.sh)
 tooltip="Mode: ${mode}s. Ratio: ${ratio}."
 printf '{"text":"%s","tooltip":"%s","class":"%s","percentage":%s}\n' \
 			"$text" "$tooltip" "num" "$num"

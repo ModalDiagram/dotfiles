@@ -96,10 +96,10 @@
   },
   "custom/survey_num": {
     "return-type": "json",
-    "exec": "~/.local/share/survey/bin/num",
+    "exec": "~/.local/share/survey/bin/survey_module.sh",
     "format": "{}",
-    "on-click": "~/.local/share/survey/bin/add",
-    "on-click-right": "sleep 0.1 && ~/.local/share/survey/menu",
+    "on-click": "~/.local/share/survey/bin/add_task.sh",
+    "on-click-right": "sleep 0.1 && ~/.local/share/survey/menu.sh",
     "signal": 13,
     "interval": "once",
   },

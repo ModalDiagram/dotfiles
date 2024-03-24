@@ -1,0 +1,121 @@
+---
+title: "Sandro's report in Tryrating"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+runtime: shiny
+---
+
+```{r, include = FALSE}
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(shiny)
+library(flexdashboard)
+library(ggtext)
+
+df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
+colnames(df) <- c("timestamp", "mode", "count")
+df["date"] <- lapply(df["timestamp"], FUN = lubridate::date)
+
+main_df <- eventReactive(input$refresh, {
+  df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
+  colnames(df) <- c("timestamp", "mode", "count")
+  df["date"] <- lapply(df["timestamp"], FUN = lubridate::date)
+})
+
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+
+```{r}
+first_day <- today()
+mday(first_day) <- 1
+
+
+sliderInput("day.initial", label = "Initial day of the plot",
+            min = min(df$date), max = max(df$date), value = first_day)
+
+```
+
+Column
+----------------------------------
+### hh:mm worked per day
+
+```{r, include = FALSE}
+
+day.min <- min(df$date)
+day.max <- max(df$date)
+wday(day.min) <- 6
+list_of_sundays <- c(day.min)
+while (day.min < day.max) {
+  day.min <- day.min + days(7)
+  list_of_sundays <- c(list_of_sundays, day.min)
+}
+list_of_sundays = data.frame(list_of_sundays)
+```
+
+```{r}
+to_hm <- function(seconds) {
+  return(sprintf("%02d:%02d", seconds %/% 3600, (seconds %% 3600) %/% 60))
+}
+
+df2 <- df %>%
+  group_by(date) %>%
+  summarise(seconds = sum(mode))
+
+colors <- rep("Other", nrow(df2))
+colors[df2$date == today()] <- "Today"
+colors[df2$date == (today() - days(1))] <- "Yesterday"
+
+renderPlot(
+  ggplot(df2, aes(x=date, y=seconds)) +
+    geom_bar(stat = "identity", aes(fill=colors)) +
+    xlim(input$day.initial - days(10), NA) +
+    geom_text(aes(y= 1.05 * seconds, label = to_hm(seconds), colour = "#808080"), vjust=0, size = 3, show.legend = FALSE) +
+    geom_text(data = list_of_sundays,
+              aes(x = list_of_sundays, y = Inf, label=paste("friday", day(list_of_sundays), "\n"), hjust = 1),
+              colour="red",
+              angle=90,
+              text=element_text(size=11)) +
+    geom_vline(xintercept = list_of_sundays$list_of_sundays, linetype = "dashed", colour = "red") +
+    theme_classic() +
+    theme(
+          axis.text.y = element_blank(),
+          axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.line.x = element_line(colour = "#808080")
+    ) +
+    scale_colour_manual(aesthetics = c("colour", "fill"),
+                        values = c("Other" = "#287FD5", "Yesterday" = "#3333FF", "Today" = "#001580"))
+)
+```
+
+### hh:mm worked per month (from 19th of the current month to 20th of the following)
+
+```{r}
+
+df3 <- df
+df3$month <- floor_date(df$date, "month") + months(ifelse(day(df$date) > 19, 0, -1))
+df3 <- df3 %>%
+  group_by(month = month) %>%
+  summarise(seconds = sum(mode))
+
+renderPlot(
+  ggplot(df3, aes(x=month, y=seconds)) +
+    geom_bar(stat = "identity", fill = "#287FD5") +
+    geom_text(aes(y= 1.05 * seconds, label = to_hm(seconds)), colour = "#808080", vjust=0) +
+    theme_classic() +
+    theme(
+          axis.text.y = element_blank(),
+          axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.line.x = element_line(colour = "#808080"),
+  )
+)
+
+```
