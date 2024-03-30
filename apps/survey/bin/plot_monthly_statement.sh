@@ -23,7 +23,7 @@ fi
 if ! netstat -tulpn 2> /dev/null | grep -q 127.0.0.1:3838; then
   echo "Running daemon"
   Rscript -e 'rmarkdown::run("~/.local/share/survey/bin/plot.Rmd", shiny_args = list(port = 3838))' &
+  sleep 2
 fi
 
-sleep 2
 firefox 127.0.0.1:3838

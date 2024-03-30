@@ -2,11 +2,13 @@
 title: "Sandro's report in Tryrating"
 output:
   flexdashboard::flex_dashboard:
-    orientation: columns
+    vertical_layout: scroll
 runtime: shiny
 ---
 
 ```{r, include = FALSE}
+# In this block of code we read the data as a dataframe, clean it and define
+# the minimum and maximum worked days
 library(lubridate)
 library(ggplot2)
 library(dplyr)
@@ -16,14 +18,11 @@ library(ggtext)
 
 df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
 colnames(df) <- c("timestamp", "mode", "count")
-df["date"] <- lapply(df["timestamp"], FUN = lubridate::date)
+# df["date"] <- lapply(df["timestamp"], FUN = as_datetime())
+df$date <- as_datetime(df$timestamp)
 
-main_df <- eventReactive(input$refresh, {
-  df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
-  colnames(df) <- c("timestamp", "mode", "count")
-  df["date"] <- lapply(df["timestamp"], FUN = lubridate::date)
-})
-
+df.day.min <- min(date(df$date))
+df.day.max <- max(date(df$date))
 ```
 
 Column {.sidebar}
@@ -31,12 +30,17 @@ Column {.sidebar}
 
 
 ```{r}
+# Here we define the selectors on the sidebar
 first_day <- today()
 mday(first_day) <- 1
 
 
 sliderInput("day.initial", label = "Initial day of the plot",
-            min = min(df$date), max = max(df$date), value = first_day)
+            min = df.day.min, max = df.day.max, value = first_day)
+
+selectInput("selected.day",
+            label = "Day in which to see hours",
+            choices = sort(unique(date(df$date)), decreasing = TRUE))
 
 ```
 
@@ -44,43 +48,44 @@ Column
 ----------------------------------
 ### hh:mm worked per day
 
-```{r, include = FALSE}
-
-day.min <- min(df$date)
-day.max <- max(df$date)
-wday(day.min) <- 6
-list_of_sundays <- c(day.min)
-while (day.min < day.max) {
-  day.min <- day.min + days(7)
-  list_of_sundays <- c(list_of_sundays, day.min)
-}
-list_of_sundays = data.frame(list_of_sundays)
-```
-
 ```{r}
+# Here we make a graph of the number of hours worked per day
+
+# first we create the array of all the fridays to plot them in the graph later
+# we transform it to a dataframe because ggplot works with dataframes
+day.tmp <- df.day.min
+wday(day.tmp) <- 6
+fridays <- seq(day.tmp, df.day.max, by = "1 week")
+fridays <- c(fridays, tail(fridays, 1) + weeks(1))
+fridays = data.frame(fridays)
+
+# this functions turns the label from seconds to hh:mm
 to_hm <- function(seconds) {
   return(sprintf("%02d:%02d", seconds %/% 3600, (seconds %% 3600) %/% 60))
 }
 
+# we group by date (ignoring the hms part) and sum the worked seconds
 df2 <- df %>%
-  group_by(date) %>%
+  group_by(date = date(date)) %>%
   summarise(seconds = sum(mode))
 
+# we set different colors for the hours worked today, yesterday and the other days
 colors <- rep("Other", nrow(df2))
 colors[df2$date == today()] <- "Today"
 colors[df2$date == (today() - days(1))] <- "Yesterday"
 
+# plot
 renderPlot(
   ggplot(df2, aes(x=date, y=seconds)) +
     geom_bar(stat = "identity", aes(fill=colors)) +
-    xlim(input$day.initial - days(10), NA) +
+    xlim(input$day.initial, NA) +
     geom_text(aes(y= 1.05 * seconds, label = to_hm(seconds), colour = "#808080"), vjust=0, size = 3, show.legend = FALSE) +
-    geom_text(data = list_of_sundays,
-              aes(x = list_of_sundays, y = Inf, label=paste("friday", day(list_of_sundays), "\n"), hjust = 1),
+    geom_text(data = fridays,
+              aes(x = fridays, y = Inf, label=paste("friday", day(fridays), "\n"), hjust = 1),
               colour="red",
               angle=90,
               text=element_text(size=11)) +
-    geom_vline(xintercept = list_of_sundays$list_of_sundays, linetype = "dashed", colour = "red") +
+    geom_vline(xintercept = fridays$fridays, linetype = "dashed", colour = "red") +
     theme_classic() +
     theme(
           axis.text.y = element_blank(),
@@ -94,16 +99,82 @@ renderPlot(
 )
 ```
 
-### hh:mm worked per month (from 19th of the current month to 20th of the following)
+### hh:mm worked in selected day
 
 ```{r}
+library(hms)
+library(tidyr)
 
+# we create an array of every 5 minutes of a day
+br <- as_hms(seq.POSIXt(as.POSIXct(as_hms("05:00:00")), as.POSIXct(as_hms("23:00:00")), by="5 min"))
+
+renderPlot({
+  selected.day.df <- df[date(df$date) == input$selected.day,]
+  # we round the hours two the closest 5 min so that we can then group by
+  # this periods and fill the missing ones
+  selected.day.df$date <- round_date(selected.day.df$date, "5 min")
+  selected.day.df <- selected.day.df %>%
+    group_by(intervals = date) %>%
+    summarise(seconds = sum(mode))
+
+  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals))
+  selected.day.df <- selected.day.df %>%
+    complete(intervals = br, fill=list(seconds=0))
+
+  # here we create the arrays of lower ticks, when work starts,
+  # and upper_ticks, when work ends
+  diffthan0 <- which(selected.day.df$seconds != 0)
+  lower_ticks <- hms()
+  upper_ticks <- hms()
+  for (idx in diffthan0) {
+    if (selected.day.df$seconds[idx - 1] == 0) {
+      lower_ticks=c(lower_ticks, selected.day.df$intervals[idx-1])
+    }
+    if (selected.day.df$seconds[idx + 1] == 0) {
+      upper_ticks=c(upper_ticks, selected.day.df$intervals[idx+1])
+    }
+  }
+
+  # this function takes a hms object and returns the string hh:mm
+  to_hm <- function(hms) {
+    return(format(as.POSIXct(hms), format = "%H:%M"))
+  }
+
+  # plot
+  ggplot(selected.day.df, aes(x=intervals, y=seconds)) +
+    geom_line(colour = "#287FD5") +
+    scale_x_time(name = "Starting time",
+                 breaks = lower_ticks,
+                 position = "bottom",
+                 labels = to_hm,
+                 sec.axis = dup_axis(name = "Ending time", breaks = upper_ticks)) +
+    theme_classic() +
+    theme(
+          axis.text.y = element_blank(),
+          axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.x.bottom = element_text(angle = 45, hjust = 1),
+          axis.text.x.top = element_text(angle = 45, hjust = 0),
+          axis.line.x = element_line(colour = "#808080")
+    )
+})
+```
+
+
+### hh:mm worked per month (from 20th of the current month to 19th of the following)
+
+```{r}
+# working months usually go from the 19th of the current month to the 20th of the following
 df3 <- df
+# when the day is greater than 19 we put the survey in the following month
 df3$month <- floor_date(df$date, "month") + months(ifelse(day(df$date) > 19, 0, -1))
+# group by month
 df3 <- df3 %>%
   group_by(month = month) %>%
   summarise(seconds = sum(mode))
 
+# plot
 renderPlot(
   ggplot(df3, aes(x=month, y=seconds)) +
     geom_bar(stat = "identity", fill = "#287FD5") +
@@ -117,5 +188,4 @@ renderPlot(
           axis.line.x = element_line(colour = "#808080"),
   )
 )
-
 ```
