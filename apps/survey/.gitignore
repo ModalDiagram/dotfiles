@@ -1,3 +1,7 @@
 images/
 .virtual_documents/
 python/.ipynb_checkpoints/
+obfuscate.txt
+count.txt
+data.txt
+timestamps.txt

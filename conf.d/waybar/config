@@ -99,6 +99,7 @@
     "exec": "~/.local/share/survey/bin/survey_module.sh",
     "format": "{}",
     "on-click": "~/.local/share/survey/bin/add_task.sh",
+    "on-click-middle": "~/.local/share/survey/bin/change_obfuscate.sh",
     "on-click-right": "sleep 0.1 && ~/.local/share/survey/menu.sh",
     "signal": 13,
     "interval": "once",

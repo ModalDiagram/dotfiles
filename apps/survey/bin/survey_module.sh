@@ -27,5 +27,12 @@ text+=${minutes}m
 # Prendo il ratio e formatto
 ratio=$($survey_path/bin/evaluate_ratio.sh)
 tooltip="Mode: ${mode}s. Ratio: ${ratio}."
+
+if [[ $(cat $survey_path/obfuscate.txt) == "yes" ]]; then
+printf '{"text":"||||","tooltip":"Time: %s, %s","class":"%s","percentage":%s}\n' \
+			"$text" "$tooltip" "num" "$num"
+exit
+fi
+
 printf '{"text":"%s","tooltip":"%s","class":"%s","percentage":%s}\n' \
 			"$text" "$tooltip" "num" "$num"
