@@ -18,7 +18,7 @@
     fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
 
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.36.0";
+      url = "github:hyprwm/Hyprland?ref=v0.37.1";
     };
 
     home-manager = {
