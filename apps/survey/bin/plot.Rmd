@@ -92,6 +92,7 @@ renderPlot(
           axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
+          axis.title.x = element_text(colour = "#808080"),
           axis.line.x = element_line(colour = "#808080")
     ) +
     scale_colour_manual(aesthetics = c("colour", "fill"),
@@ -110,28 +111,24 @@ br <- as_hms(seq.POSIXt(as.POSIXct(as_hms("05:00:00")), as.POSIXct(as_hms("23:00
 
 renderPlot({
   selected.day.df <- df[date(df$date) == input$selected.day,]
-  # we round the hours two the closest 5 min so that we can then group by
+  # we round the hours two the closest 10 min so that we can then group by
   # this periods and fill the missing ones
-  selected.day.df$date <- round_date(selected.day.df$date, "5 min")
+  selected.day.df$date <- round_date(selected.day.df$date, "10 min")
   selected.day.df <- selected.day.df %>%
     group_by(intervals = date) %>%
     summarise(seconds = sum(mode))
 
   selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals))
-  selected.day.df <- selected.day.df %>%
-    complete(intervals = br, fill=list(seconds=0))
 
   # here we create the arrays of lower ticks, when work starts,
   # and upper_ticks, when work ends
-  diffthan0 <- which(selected.day.df$seconds != 0)
-  lower_ticks <- hms()
-  upper_ticks <- hms()
-  for (idx in diffthan0) {
-    if (selected.day.df$seconds[idx - 1] == 0) {
-      lower_ticks=c(lower_ticks, selected.day.df$intervals[idx-1])
-    }
-    if (selected.day.df$seconds[idx + 1] == 0) {
-      upper_ticks=c(upper_ticks, selected.day.df$intervals[idx+1])
+  lower_ticks <- c(1)
+  upper_ticks <- c(length(selected.day.df$intervals))
+  for (idx in 2:length(selected.day.df$intervals)) {
+    print(idx)
+    if ((selected.day.df$intervals[idx] - selected.day.df$intervals[idx - 1]) > minutes(10)) {
+      upper_ticks <- c(upper_ticks, idx - 1)
+      lower_ticks <- c(lower_ticks, idx)
     }
   }
 
@@ -141,25 +138,28 @@ renderPlot({
   }
 
   # plot
-  ggplot(selected.day.df, aes(x=intervals, y=seconds)) +
-    geom_line(colour = "#287FD5") +
+  ggplot(selected.day.df, aes(x=intervals)) +
+    geom_bar(aes(weight=seconds), fill = "#287FD5") +
     scale_x_time(name = "Starting time",
-                 breaks = lower_ticks,
+                 breaks = selected.day.df$intervals[lower_ticks],
                  position = "bottom",
                  labels = to_hm,
-                 sec.axis = dup_axis(name = "Ending time", breaks = upper_ticks)) +
+                 sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
+                 limits=c(parse_hm("06:00"), parse_hm("23:00"))) +
     theme_classic() +
     theme(
           axis.text.y = element_blank(),
           axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.x.bottom = element_text(angle = 45, hjust = 1),
-          axis.text.x.top = element_text(angle = 45, hjust = 0),
+          axis.title.x = element_text(colour = "#808080"),
+          axis.text.x.bottom = element_text(angle = 45, hjust = 1, colour = "#808080"),
+          axis.text.x.top = element_text(angle = 45, hjust = 0, colour = "#808080"),
           axis.line.x = element_line(colour = "#808080")
     )
 })
 ```
+
 
 
 ### hh:mm worked per month (from 20th of the current month to 19th of the following)
@@ -185,6 +185,7 @@ renderPlot(
           axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
+          axis.title.x = element_text(colour = "#808080"),
           axis.line.x = element_line(colour = "#808080"),
   )
 )
