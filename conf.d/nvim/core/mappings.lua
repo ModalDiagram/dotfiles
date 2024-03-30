@@ -30,14 +30,12 @@ keymap.set("n", "<leader>q", "<cmd>x<cr>", { silent = true, desc = "quit current
 keymap.set("n", "<leader>Q", "<cmd>qa!<cr>", { silent = true, desc = "quit nvim" })
 
 -- move between buffers
-keymap.set("n", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
-keymap.set("n", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
-keymap.set("i", "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
-keymap.set("i", "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
+keymap.set({"n", "i"}, "<a-h>", "<cmd>bprevious<cr>", { silent = true, desc = "previous buffer" })
+keymap.set({"n", "i"}, "<a-l>", "<cmd>bnext<cr>", { silent = true, desc = "next buffer" })
 
 -- Copy entire buffer.
 keymap.set("n", "<leader>by", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
-keymap.set("n", "<leader>bD", "<cmd>bd!<cr>", { desc = "delete current buffer" })
+keymap.set("n", "<leader>bD", "<cmd>bd!<cr>", { desc = "delete current buffer without saving" })
 keymap.set("n", "<leader>bd", "<cmd>w<cr><cmd>bd<cr>", { desc = "delete current buffer" })
 
 -- Navigate with telescope (<c-d> to remove buffer)
@@ -116,40 +114,35 @@ keymap.set("i", "<c-k>", "<Esc><C-W>k")
 keymap.set("i", "<c-j>", "<Esc><C-W>j")
 
 -- Break inserted text into smaller undo units when we insert some punctuation chars.
-local undo_ch = { ",", ".", "!", "?", ";", ":" }
-for _, ch in ipairs(undo_ch) do
-  keymap.set("i", ch, ch .. "<c-g>u")
-end
+-- local undo_ch = { ",", ".", "!", "?", ";", ":" }
+-- for _, ch in ipairs(undo_ch) do
+--   keymap.set("i", ch, ch .. "<c-g>u")
+-- end
 
 -- Keep cursor position after yanking
-keymap.set("n", "y", "myy")
+-- keymap.set("n", "y", "myy")
 
-api.nvim_create_autocmd("TextYankPost", {
-  pattern = "*",
-  group = api.nvim_create_augroup("restore_after_yank", { clear = true }),
-  callback = function()
-    vim.cmd([[
-      silent! normal! `y
-      silent! delmarks y
-    ]])
-  end,
-})
+-- api.nvim_create_autocmd("TextYankPost", {
+--   pattern = "*",
+--   group = api.nvim_create_augroup("restore_after_yank", { clear = true }),
+--   callback = function()
+--     vim.cmd([[
+--       silent! normal! `y
+--       silent! delmarks y
+--     ]])
+--   end,
+-- })
 
--- Go to the beginning and end of current line in insert mode quickly
-keymap.set("i", "<c-a>", "<HOME>")
-keymap.set("i", "<c-s>", "<END>")
--- Go to the beginning and end of current line in normal mode quickly
-keymap.set("n", "<c-a>", "<HOME>")
-keymap.set("n", "<c-s>", "<END>")
+-- Go to the beginning and end of current line quickly
+keymap.set({"n", "i"}, "<c-a>", "<HOME>")
+keymap.set({"n", "i"}, "<c-s>", "<END>")
+keymap.set({"n", "i"}, "<c-e>", "<END>", { noremap = true })
 
 -- Go to beginning of command in command-line mode
 keymap.set("c", "<C-A>", "<HOME>")
 
 -- Delete the character to the right of the cursor
-keymap.set("i", "<C-D>", "<DEL>")
-
--- Delete the word before the cursor
-keymap.set("i", "<C-D>", "<DEL>")
+keymap.set({"n", "i"}, "<C-D>", "<DEL>")
 
 -- Esc più comodo
 keymap.set("i", "kj", "<ESC>")

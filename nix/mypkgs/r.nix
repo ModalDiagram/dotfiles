@@ -7,6 +7,7 @@ let r_packages = [
   copula
   cowplot
   datasetsICR
+  DataExplorer
   dbscan
   e1071
   factoextra
@@ -42,6 +43,7 @@ let r_packages = [
   rmarkdown
   psych
   shinydashboard
+  skimr
   sn
   stringdist
   stringi
