@@ -19,7 +19,7 @@ library(ggtext)
 df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
 colnames(df) <- c("timestamp", "mode", "count")
 # df["date"] <- lapply(df["timestamp"], FUN = as_datetime())
-df$date <- as_datetime(df$timestamp)
+df$date <- as_datetime(df$timestamp, tz = "")
 
 df.day.min <- min(date(df$date))
 df.day.max <- max(date(df$date))
@@ -118,7 +118,7 @@ renderPlot({
     group_by(intervals = date) %>%
     summarise(seconds = sum(mode))
 
-  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals))
+  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals, tz = ""))
 
   # here we create the arrays of lower ticks, when work starts,
   # and upper_ticks, when work ends
