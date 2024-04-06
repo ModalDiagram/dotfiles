@@ -138,13 +138,15 @@ renderPlot({
   }
 
   # plot
+  # add secondary axis once scales 1.3 reaches stable
+  # breaks = selected.day.df$intervals[lower_ticks],
+  # sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
   ggplot(selected.day.df, aes(x=intervals)) +
     geom_bar(aes(weight=seconds), fill = "#287FD5") +
     scale_x_time(name = "Starting time",
-                 breaks = selected.day.df$intervals[lower_ticks],
+                 breaks = selected.day.df$intervals[c(lower_ticks, upper_ticks)],
                  position = "bottom",
                  labels = to_hm,
-                 sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
                  limits=c(parse_hm("06:00"), parse_hm("23:00"))) +
     theme_classic() +
     theme(
