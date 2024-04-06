@@ -25,10 +25,12 @@
       imv
       jq
       lm_sensors
+      mpv
       pkg-config
       powerline-go
       ripgrep
       rustup
+      smplayer
       stow
       tldr
       udev

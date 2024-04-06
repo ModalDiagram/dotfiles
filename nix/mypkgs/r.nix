@@ -41,6 +41,7 @@ let r_packages = [
   RecordLinkage
   reshape2
   rmarkdown
+  plotly
   psych
   shinydashboard
   skimr
@@ -52,6 +53,7 @@ let r_packages = [
   tidyverse
   vcd
   visdat
+  vtable
   xtable
 ];
 in

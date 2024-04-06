@@ -25,6 +25,12 @@ let fixed_pkgs = fixed.legacyPackages.${pkgs.system}; in
           grffile
           titling
           soul
+          multirow
+          wrapfig
+          tabu
+          threeparttable
+          threeparttablex
+          makecell
           #(setq org-latex-compiler "lualatex")
           #(setq org-preview-latex-default-process 'dvisvgm)
       ;})

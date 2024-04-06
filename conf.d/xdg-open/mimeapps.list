@@ -11,3 +11,4 @@ application/x-shellscript=org.gnome.gedit.desktop
 image/png=imv.desktop
 image/jpeg=imv.desktop
 text=org.gnome.gedit.desktop
+audio/mpeg=smplayer.desktop
