@@ -15,4 +15,4 @@ if [[ -z $(hyprctl -j monitors |  jq '.[] | select(.focused == false)') ]]; then
   x=$((x - screen_pos[0]))
   y=$((y - screen_pos[1]))
 fi
-echo "$x $y"> /tmp/survey_cursor
+echo "$x,$y"> /tmp/survey_cursor

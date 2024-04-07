@@ -133,12 +133,12 @@
       ".local/share/my_lock/".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/my_lock";
       ".local/share/wl_fix/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/apps/wl_fix";
       ".config/mimeapps.list".source          = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/xdg-open/mimeapps.list";
-      ".config/kbapp/".source                 = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/kbapp";
       ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/libinput-gestures/libinput-gestures.conf";
       ".config/alacritty/".source             = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/alacritty/solarized";
       ".config/hypr/hyprpaper.conf".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/hypr/hyprpaper.conf";
       ".config/nvim/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/nvim";
       ".config/mako/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/mako";
+      ".config/kbapp/".source                 = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/kbapp";
       ".config/waybar/".source                = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/waybar";
       ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";
       ".config/wofi/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wofi";
