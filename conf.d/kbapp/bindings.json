@@ -1,0 +1,83 @@
+[
+  {
+    "name": "firefox",
+    "up": "leftcontrol leftshift tab",
+    "left": "leftalt left",
+    "right": "leftalt right",
+    "down": "leftcontrol tab",
+    "rightdown": "leftcontrol delete",
+    "key_d": "leftcontrol delete",
+    "key_k": "leftcontrol leftshift tab",
+    "key_j": "leftcontrol tab",
+    "key_l": "down",
+    "key_h": "up",
+    "key_s": "leftalt d",
+    "key_d": "leftcontrol delete",
+    "key_J": "leftalt leftshift down",
+    "key_K": "leftalt leftshift up ",
+    "key_S": "leftalt up"
+  },{
+    "name": "obsidian",
+    "up": "leftcontrol leftshift tab",
+    "down": "leftcontrol tab",
+    "left": "leftalt leftcontrol left",
+    "right": "leftalt leftcontrol right",
+    "rightdown": "leftcontrol w",
+    "tab3_down": "h"
+  },{
+    "name": "com.github.xournalpp.xournalpp",
+    "up": "leftcontrol leftshift tab",
+    "down": "leftcontrol tab",
+    "left": "leftalt leftcontrol left",
+    "right": "leftalt leftcontrol right",
+    "rightdown": "leftcontrol w"
+  },{
+    "name": "ferdium",
+    "up": "leftcontrol leftalt left",
+    "down": "leftcontrol leftalt right",
+    "left": "leftalt left",
+    "right": "leftalt right"
+  },{
+    "name": "impress",
+    "up": "pageup",
+    "down": "pagedown"
+  },{
+    "name": "org.kde.okular",
+    "key_s": "f7"
+  },{
+    "name": ".java",
+    "left": "leftalt left",
+    "right": "leftalt right",
+    "rightdown": "leftcontrol f4"
+  },{
+    "name": "org.kde.dolphin",
+    "left": "leftalt left",
+    "right": "leftalt right",
+    "up": "leftcontrol leftshift tab",
+    "down": "leftcontrol tab "
+  },{
+    "name": "chromium-browser",
+    "left": "leftalt left",
+    "right": "leftalt right",
+    "up": "leftcontrol leftshift tab",
+    "down": "leftcontrol tab "
+  },{
+    "name": "Spotify Premium",
+    "left": "leftalt left",
+    "right": "leftalt right",
+    "key_s": "leftcontrol l",
+    "key_l": "exec:playerctl -p spotify next",
+    "key_h": "exec:playerctl -p spotify previous"
+  },{
+    "name": "default",
+    "up": "leftmeta leftshift tab",
+    "down": "leftmeta tab",
+    "left": "leftmeta h",
+    "right": "leftmeta l",
+    "leftup": "leftmeta n",
+    "rightup": "leftmeta tab",
+    "leftdown": "leftmeta backslash",
+    "3hold": "leftcontrol mouse:left mouse:100,100",
+    "4hold": "leftshift mouse:left"
+  }
+]

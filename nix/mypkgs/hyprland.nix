@@ -63,8 +63,8 @@
     services.udev.extraRules = ''
         KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
       '';
-    systemd.packages = [ pkgs.ydotool ];
-    systemd.user.services.ydotool.wantedBy = [ "default.target" ];
+    # systemd.packages = [ pkgs.ydotool ];
+    # systemd.user.services.ydotool.wantedBy = [ "default.target" ];
     systemd.user.services.opentabletdriver.wantedBy = [ "default.target" ];
 
     hardware.opengl = {
