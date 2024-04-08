@@ -77,7 +77,7 @@
     "leftup": "leftmeta n",
     "rightup": "leftmeta tab",
     "leftdown": "leftmeta backslash",
-    "3hold": "leftcontrol mouse:left mouse:100,100",
+    "3hold": "leftcontrol mouse:left",
     "4hold": "leftshift mouse:left"
   }
 ]
