@@ -27,6 +27,8 @@
 
     services.flatpak.enable = true;
 
+    services.udisks2.enable = true;
+
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -108,6 +110,7 @@
         sway-contrib.grimshot
         swaylock-effects
         swayidle
+        udiskie
         wayland
         wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
         wofi
