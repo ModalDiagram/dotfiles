@@ -60,6 +60,7 @@
     "format": "{icon} {capacity}%",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"],
     "format-almost_full": " Full",
+    "format-charging-almost_full": " Full",
     "format-charging": " {capacity}%",
     "on-scroll-up": "setlight.sh + 1",
     "on-scroll-down": "setlight.sh - 1",

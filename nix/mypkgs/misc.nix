@@ -24,9 +24,11 @@
       gnumake
       imv
       jq
+      jmtpfs
       lm_sensors
       mpv
       pkg-config
+      polkit-kde-agent
       powerline-go
       ripgrep
       rustup

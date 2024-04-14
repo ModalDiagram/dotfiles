@@ -23,14 +23,14 @@
     "left": "leftalt leftcontrol left",
     "right": "leftalt leftcontrol right",
     "rightdown": "leftcontrol w",
-    "tab3_down": "h"
+    "tab_topright": "0",
+    "tab_botright": "h"
   },{
     "name": "com.github.xournalpp.xournalpp",
-    "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab",
-    "left": "leftalt leftcontrol left",
-    "right": "leftalt leftcontrol right",
-    "rightdown": "leftcontrol w"
+    "up": "pageup",
+    "down": "pagedown",
+    "tab_topright": "pageup",
+    "tab_botright": "pagedown"
   },{
     "name": "ferdium",
     "up": "leftcontrol leftalt left",
@@ -76,7 +76,7 @@
     "right": "leftmeta l",
     "leftup": "leftmeta n",
     "rightup": "leftmeta tab",
-    "leftdown": "leftmeta backslash",
+    "leftdown": "leftmeta shift tab",
     "3hold": "leftcontrol mouse:left",
     "4hold": "leftshift mouse:left"
   }
