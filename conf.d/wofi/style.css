@@ -1,16 +1,17 @@
+
 window {
   font-family: "IosevkaTerm Nerd Font", "DejaVu Sans", "Font Awesome 5 Free";
   margin: 0px;
   border: 1px solid rgba(0, 0, 0, 0.9);
-  background-color: #1b1a1d;
-  border-radius: 10px;
+  background-color: #32302f;
+  border-radius: 20px;
 }
 
 #input {
   margin: 5px;
   border: none;
-  color: #eee8d5;
-  background-color: #555169;
+  color: #d4be98;
+  background-color: #3c3836;
 }
 
 #inner-box {
@@ -51,8 +52,8 @@ window {
 }
 
 #entry:selected {
-  background-color: #d8caac;
-  color: #161320;
+  background-color: #ebdbb2;
+  color: #654735;
   border-radius: 5px;
   border: none;
 }

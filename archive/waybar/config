@@ -1,29 +1,24 @@
 {
   "layer": "top",
-  "margin-top": 10,
-  "margin-right": 10,
-  "margin-left": 10,
   "modules-left": [
+    "clock",
+    "hyprland/workspaces",
     "idle_inhibitor",
     "custom/my_lock",
-    "custom/survey_num",
-    "hyprland/workspaces",
-    "tray",
-  ],
-  "modules-center": [
-    "hyprland/submap",
-    "clock",
+    "hyprland/submap"
   ],
   "modules-right": [
+    "custom/survey_num",
     "wireplumber",
     "cpu",
     "network",
     "battery",
     "custom/powermenu",
+    "tray"
   ],
 
   "hyprland/workspaces": {
-    "format": "{id}",
+    "format": "{icon}",
     "on-click": "activate",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1"
@@ -73,24 +68,23 @@
   },
   "clock": {
     "interval": 1,
-    "format": "{:%H:%M, %d %B}",
+    "format": " {:%I:%M}",
     "tooltip": true,
-    "on-click": "gsimplecal"
+    "tooltip-format": "{:%A, %d %B %Y}\n<tt>{calendar}</tt>"
   },
   "cpu": {
-    "interval": 2,
-    "format": " {usage}%"
+    "interval": 1,
+    "format": "  {usage}%"
   },
   "network": {
     "interval": 1,
-    "format-wifi": "󰤨",
-    "format-ethernet": "󰈀",
-    "format-linked": "󰤟",
-    "format-disconnected": "",
-    "tooltip-format": "{essid}",
+    "format-wifi": "󰤨  {essid}",
+    "format-ethernet": "󰈀  {ifname} ({ipaddr})",
+    "format-linked": "󰤟  {essid} (No IP)",
+    "format-disconnected": " Disconnected",
     "on-click": "alacritty -e nmtui",
     "max-length": 6,
-    "tooltip": true
+    "tooltip": false
   },
   "custom/powermenu": {
     "format": "",

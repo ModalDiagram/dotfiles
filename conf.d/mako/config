@@ -1,21 +1,21 @@
-background-color=#1b1a1d
-text-color=#eee8d5
-border-color=#eee8d5
+background-color=#32302f
+text-color=#d4be98
+border-color=#d4be98
 border-radius=5
 border-size=2
 max-visible=3
 
 [urgency=high]
 layer=overlay
-border-color=#dc322f
+border-color=#ea6962
 anchor=top-left
 
 [app-name="spotify"]
-border-color=#1DB954
+border-color=#a9b665
 
 [app-name="Ferdium"]
 default-timeout=10000
-border-color=#9600AF
+border-color=#d3869b
 
 [app-name="wlfix"]
 on-button-left=exec makoctl invoke -n $id wl-copy
