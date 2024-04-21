@@ -1,2 +1,2 @@
 require("nvim-highlight-colors").setup()
-vim.cmd("HighlightColorsOn")
+vim.cmd("HighlightColors On")
