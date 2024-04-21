@@ -61,13 +61,17 @@
       wayland.enable = true;
     };
 
-
+    # rule 1: add access to uinput for users of group uinput
+    # rule 2: add access to touchpad for users of group uinput (for gestures)
     services.udev.extraRules = ''
-        KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+        KERNEL=="uinput", GROUP="uinput", MODE="0660"
+        KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="ELAN06FA:00 04F3:3280 Touchpad", GROUP="uinput"
       '';
+        # KERNEL=="event[0-9]*", SUBSYSTEM=="input", ATTRS{name}=="ELAN06FA:00 04F3:3280 Touchpad", GROUP="uinput", OPTIONS+="static_node=uinput"
     # systemd.packages = [ pkgs.ydotool ];
     # systemd.user.services.ydotool.wantedBy = [ "default.target" ];
     systemd.user.services.opentabletdriver.wantedBy = [ "default.target" ];
+
 
     hardware.opengl = {
       ## radv: an open-source Vulkan driver from freedesktop
@@ -97,6 +101,7 @@
         gnome.zenity
         gojq
         grim # screenshot functionality
+        gsimplecal
         hyprpaper
         libinput-gestures
         libnotify

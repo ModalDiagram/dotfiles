@@ -27,7 +27,9 @@ let r_packages = [
   ggtext
   ghyp
   gridExtra
+  gt
   hopkins
+  ISLR
   KernSmooth
   labstatR
   languageserver

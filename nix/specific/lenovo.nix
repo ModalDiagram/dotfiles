@@ -88,12 +88,13 @@
 
   # Create the group i2c which is needed for external monitor brightness
   users.groups.i2c = {};
+  users.groups.uinput = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "input" "i2c" "vboxusers" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "docker" ];
   };
 
   systemd.timers."low-battery" = {

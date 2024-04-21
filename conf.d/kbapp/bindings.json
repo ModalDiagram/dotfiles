@@ -23,7 +23,7 @@
     "left": "leftalt leftcontrol left",
     "right": "leftalt leftcontrol right",
     "rightdown": "leftcontrol w",
-    "tab_topright": "0",
+    "tab_topright": "p",
     "tab_botright": "h"
   },{
     "name": "com.github.xournalpp.xournalpp",
