@@ -22,6 +22,7 @@ let r_packages = [
   gamlss_mx
   gclus
   geoR
+  glmnet
   GGally
   ggplot2
   ggtext
@@ -56,6 +57,7 @@ let r_packages = [
   vcd
   visdat
   vtable
+  webshot2
   xtable
 ];
 in

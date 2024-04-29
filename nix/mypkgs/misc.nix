@@ -27,6 +27,7 @@
       jmtpfs
       lm_sensors
       mpv
+      pdftk
       pkg-config
       polkit-kde-agent
       powerline-go
