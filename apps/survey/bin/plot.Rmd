@@ -1,8 +1,7 @@
 ---
 title: "Sandro's report in Tryrating"
 output:
-  flexdashboard::flex_dashboard:
-    vertical_layout: scroll
+  flexdashboard::flex_dashboard
 runtime: shiny
 ---
 
@@ -23,6 +22,7 @@ df$date <- as_datetime(df$timestamp, tz = "")
 
 df.day.min <- min(date(df$date))
 df.day.max <- max(date(df$date))
+
 ```
 
 Column {.sidebar}
@@ -46,9 +46,138 @@ selectInput("selected.day",
 
 Column
 ----------------------------------
+
+```{r}
+format_seconds <- function(seconds) {
+  hours <- seconds %/% 3600
+  minutes <- (seconds %% 3600) %/% 60
+  return(paste(hours, "h ", minutes, "m"))
+}
+```
+
+### Hours worked today {.value-box}
+```{r}
+# Get seconds of today
+seconds_today <- df %>%
+  filter(date(date) == today()) %>%
+  summarize(seconds_today = sum(mode)) %>%
+  pull()
+
+renderValueBox({
+  valueBox(
+    value = format_seconds(seconds_today),
+    color = if (duration(seconds_today) < hours(2)) "warning" else "primary"
+  )
+})
+```
+
+### Hours worked this week (Sat-Fri) {.value-box}
+```{r}
+# Get seconds of this week
+last_friday <- today() - wday(today() + 1)
+seconds_this_week <- df %>%
+  filter(date(date) > last_friday) %>%
+  summarise(seconds_this_week = sum(mode)) %>%
+  pull()
+
+renderValueBox({
+  valueBox(
+    value = format_seconds(seconds_this_week),
+    color = if (duration(seconds_this_week) < hours(10)) "warning" else "primary"
+  )
+})
+```
+
+### Hours worked this month (20th-19th) {.value-box}
+```{r}
+# Get seconds of this month
+last_19 <- today()
+if (mday(last_19) <= 19) {
+  last_19 <- last_19 - months(1)
+}
+mday(last_19) <- 19
+seconds_this_month <- df %>%
+  filter(date(date) > last_19) %>%
+  summarise(seconds_this_month = sum(mode)) %>%
+  pull()
+
+renderValueBox({
+  valueBox(
+    value = format_seconds(seconds_this_month),
+  )
+})
+```
+
+### hh:mm worked in selected day
+
+```{r}
+library(hms)
+library(tidyr)
+
+
+renderPlot({
+  selected.day.df <- df %>%
+    filter(date(date) == input$selected.day) %>%
+    mutate(date = round_date(date, "10 min")) %>%
+    group_by(intervals = date) %>%
+    summarise(seconds = sum(mode))
+
+  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals, tz = ""))
+
+  # here we create the arrays of lower ticks, when work starts,
+  # and upper_ticks, when work ends
+  lower_ticks <- c(1)
+  upper_ticks <- c(length(selected.day.df$intervals))
+  if (length(selected.day.df$intervals) > 1) {
+    for (idx in 2:length(selected.day.df$intervals)) {
+      print(idx)
+      if ((selected.day.df$intervals[idx] - selected.day.df$intervals[idx - 1]) > minutes(10)) {
+        upper_ticks <- c(upper_ticks, idx - 1)
+        lower_ticks <- c(lower_ticks, idx)
+      }
+    }
+  }
+
+  # this function takes a hms object and returns the string hh:mm
+  to_hm <- function(hms) {
+    return(format(as.POSIXct(hms), format = "%H:%M"))
+  }
+
+  # plot
+  # add secondary axis once scales 1.3 reaches stable
+  # breaks = selected.day.df$intervals[lower_ticks],
+  # sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
+  ggplot(selected.day.df, aes(x=intervals)) +
+    geom_bar(aes(weight=seconds, fill = "blue"), show.legend = FALSE) +
+    scale_x_time(name = "Starting time",
+                 breaks = selected.day.df$intervals[c(lower_ticks, upper_ticks)],
+                 position = "bottom",
+                 labels = to_hm,
+                 limits=c(parse_hm("06:00"), parse_hm("23:00"))) +
+    theme_classic() +
+    theme(
+          axis.text.y = element_blank(),
+          axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.title.x = element_text(colour = "#808080"),
+          axis.text.x.bottom = element_text(angle = 45, hjust = 1, colour = "#808080"),
+          axis.text.x.top = element_text(angle = 45, hjust = 0, colour = "#808080"),
+          axis.line.x = element_line(colour = "#808080")
+    ) +
+    scale_fill_manual(values = c("blue" = "#287FD5"))
+})
+```
+
+
+
+
+Column
+----------------------------------
 ### hh:mm worked per day
 
 ```{r}
+library(plotly)
 # Here we make a graph of the number of hours worked per day
 
 # first we create the array of all the fridays to plot them in the graph later
@@ -75,16 +204,16 @@ colors[df2$date == today()] <- "Today"
 colors[df2$date == (today() - days(1))] <- "Yesterday"
 
 # plot
-renderPlot(
+renderPlot({
   ggplot(df2, aes(x=date, y=seconds)) +
-    geom_bar(stat = "identity", aes(fill=colors)) +
+    geom_bar(stat = "identity", aes(fill=colors), show.legend = FALSE) +
     xlim(input$day.initial, NA) +
-    geom_text(aes(y= 1.05 * seconds, label = to_hm(seconds), colour = "#808080"), vjust=0, size = 3, show.legend = FALSE) +
+    geom_text(aes(y= seconds, label = to_hm(seconds), colour = "grey"), nudge_y = 1000, vjust=0, size = 3, show.legend = FALSE) +
     geom_text(data = fridays,
               aes(x = fridays, y = Inf, label=paste("friday", day(fridays), "\n"), hjust = 1),
               colour="red",
               angle=90,
-              text=element_text(size=11)) +
+              ) +
     geom_vline(xintercept = fridays$fridays, linetype = "dashed", colour = "red") +
     theme_classic() +
     theme(
@@ -93,75 +222,14 @@ renderPlot(
           axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.title.x = element_text(colour = "#808080"),
+          axis.text.x = element_text(colour = "#808080"),
           axis.line.x = element_line(colour = "#808080")
     ) +
     scale_colour_manual(aesthetics = c("colour", "fill"),
-                        values = c("Other" = "#287FD5", "Yesterday" = "#3333FF", "Today" = "#001580"))
-)
-```
-
-### hh:mm worked in selected day
-
-```{r}
-library(hms)
-library(tidyr)
-
-# we create an array of every 5 minutes of a day
-br <- as_hms(seq.POSIXt(as.POSIXct(as_hms("05:00:00")), as.POSIXct(as_hms("23:00:00")), by="5 min"))
-
-renderPlot({
-  selected.day.df <- df[date(df$date) == input$selected.day,]
-  # we round the hours two the closest 10 min so that we can then group by
-  # this periods and fill the missing ones
-  selected.day.df$date <- round_date(selected.day.df$date, "10 min")
-  selected.day.df <- selected.day.df %>%
-    group_by(intervals = date) %>%
-    summarise(seconds = sum(mode))
-
-  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals, tz = ""))
-
-  # here we create the arrays of lower ticks, when work starts,
-  # and upper_ticks, when work ends
-  lower_ticks <- c(1)
-  upper_ticks <- c(length(selected.day.df$intervals))
-  for (idx in 2:length(selected.day.df$intervals)) {
-    print(idx)
-    if ((selected.day.df$intervals[idx] - selected.day.df$intervals[idx - 1]) > minutes(10)) {
-      upper_ticks <- c(upper_ticks, idx - 1)
-      lower_ticks <- c(lower_ticks, idx)
-    }
-  }
-
-  # this function takes a hms object and returns the string hh:mm
-  to_hm <- function(hms) {
-    return(format(as.POSIXct(hms), format = "%H:%M"))
-  }
-
-  # plot
-  # add secondary axis once scales 1.3 reaches stable
-  # breaks = selected.day.df$intervals[lower_ticks],
-  # sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
-  ggplot(selected.day.df, aes(x=intervals)) +
-    geom_bar(aes(weight=seconds), fill = "#287FD5") +
-    scale_x_time(name = "Starting time",
-                 breaks = selected.day.df$intervals[c(lower_ticks, upper_ticks)],
-                 position = "bottom",
-                 labels = to_hm,
-                 limits=c(parse_hm("06:00"), parse_hm("23:00"))) +
-    theme_classic() +
-    theme(
-          axis.text.y = element_blank(),
-          axis.line.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(colour = "#808080"),
-          axis.text.x.bottom = element_text(angle = 45, hjust = 1, colour = "#808080"),
-          axis.text.x.top = element_text(angle = 45, hjust = 0, colour = "#808080"),
-          axis.line.x = element_line(colour = "#808080")
-    )
+                        values = c("grey" = "#808080", "Other" = "#287FD5", "Yesterday" = "#3333FF", "Today" = "#001580"),
+                        limits = c("Other", "Yesterday", "Today"))
 })
 ```
-
 
 
 ### hh:mm worked per month (from 20th of the current month to 19th of the following)
