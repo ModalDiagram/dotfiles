@@ -27,6 +27,78 @@
       networking.networkmanager.wifi.backend = "iwd";
     })
     {
+      # to connect to WLUCTSTUD
+      # nmcli connection add type wifi con-name "WLUCTSTUD1" ifname wlp1s0 ssid "WLUCTSTUD" wifi-sec.key-mgmt wpa-eap 802-1x.identity "frtsdr01p21f209u@studium.unict.it" 802-1x.password <PASSWORD> 802-1x.system-ca-certs no 802-1x.eap "peap" 802-1x.phase2-auth mschapv2
+      networking.networkmanager.ensureProfiles.environmentFiles = [ 
+        "/home/sandro0198/network.env"
+      ];
+      networking.networkmanager.ensureProfiles.profiles = {
+        hotspot = {
+          connection = {
+            id = "POCO F5";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "POCO F5";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$PSK_POCO";
+          };
+        };
+        uni_wifi = {
+          connection = {
+            id = "WLUCTSTUD";
+            type = "wifi";
+            autoconnect = false;
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "WLUCTSTUD";
+          };
+          wifi-security = {
+            key-mgmt = "wpa-eap";
+          };
+          "802-1x" = {
+            eap = "peap;";
+            identity = "$UNI_IDENTITY";
+            password = "$UNI_PASSWORD";
+            phase2-auth = "mschapv2";
+          };
+        };
+        militello_wifi = {
+          connection = {
+            id = "Vodafone-C00510203";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "Vodafone-C00510203";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$MILITELLO_WIFI_PASSWORD";
+          };
+        };
+        piana_wifi = {
+          connection = {
+            id = "iliadbox-107A2C";
+            type = "wifi";
+          };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "iliadbox-107A2C";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$PIANA_WIFI_PASSWORD";
+          };
+        };
+      };
       networking.wireless.networks.Vodafone-C00510203.pskRaw = "c0e26f412b3077cc6e3179fac7ebecd31902c2cf541a73af168b47e504b13b5a";
       networking.wireless.networks."POCO F5".pskRaw = "4345acaf2e98e22e5ca125a3606a1069a647754c16d3a31a84551b7d0cc36412";
       networking.wireless.networks."Home&Life SuperWiFi-1E71".pskRaw = "b4d33351ac5e31987712b429f443eea91498c9651879daacd6f816612f564969";
