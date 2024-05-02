@@ -37,6 +37,6 @@ stdenv.mkDerivation {
     rm $out/share/sddm/themes/sugar-candy/theme.conf
     cp -aR ${my_files}/sugar-candy.conf $out/share/sddm/themes/sugar-candy/theme.conf
     mkdir -p $out/share/sddm/themes/sugar-candy/my_wallpapers/
-    cp -aR ${my_files}/hl2.png $out/share/sddm/themes/sugar-candy/my_wallpapers/
+    cp -aR ${my_files}/linux_gruvbox.png $out/share/sddm/themes/sugar-candy/my_wallpapers/
   '';
 }
