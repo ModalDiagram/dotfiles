@@ -17,6 +17,7 @@ my_python_packages = ps: with ps; [
   python-lsp-server
   requests
   selenium
+  python-telegram-bot
 ];
 in {
   options.mypkgs.python = {

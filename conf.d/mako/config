@@ -14,8 +14,11 @@ anchor=top-left
 border-color=#a9b665
 
 [app-name="Ferdium"]
-default-timeout=10000
+default-timeout=5000
 border-color=#d3869b
+
+[app-name="udiskie"]
+default-timeout=3000
 
 [app-name="wlfix"]
 on-button-left=exec makoctl invoke -n $id wl-copy

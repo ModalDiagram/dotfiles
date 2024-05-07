@@ -19,6 +19,7 @@
         nil
         nodejs
         nodePackages.bash-language-server
+        vscode-langservers-extracted
         php
         rust-analyzer
         shellcheck

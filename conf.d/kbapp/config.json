@@ -11,10 +11,9 @@
     "key_j": "leftcontrol tab",
     "key_l": "down",
     "key_h": "up",
-    "key_s": "leftalt d",
-    "key_d": "leftcontrol delete",
+    "search": "leftalt d",
+    "delete": "ctrl w",
     "key_J": "leftalt leftshift down",
-    "key_K": "leftalt leftshift up ",
     "key_S": "leftalt up"
   },{
     "name": "obsidian",
@@ -43,7 +42,7 @@
     "down": "pagedown"
   },{
     "name": "org.kde.okular",
-    "key_s": "f7"
+    "search": "f7"
   },{
     "name": ".java",
     "left": "leftalt left",
@@ -54,20 +53,20 @@
     "left": "leftalt left",
     "right": "leftalt right",
     "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab "
+    "down": "leftcontrol tab"
   },{
     "name": "chromium-browser",
     "left": "leftalt left",
     "right": "leftalt right",
     "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab "
+    "down": "leftcontrol tab"
   },{
     "name": "Spotify Premium",
     "left": "leftalt left",
     "right": "leftalt right",
-    "key_s": "leftcontrol l",
-    "key_l": "exec:playerctl -p spotify next",
-    "key_h": "exec:playerctl -p spotify previous"
+    "search": "leftcontrol l",
+    "down": "exec:playerctl -p spotify next",
+    "up": "exec:playerctl -p spotify previous"
   },{
     "name": "default",
     "up": "leftmeta leftshift tab",

@@ -6,6 +6,7 @@ let r_packages = [
   clValid
   copula
   cowplot
+  cvms
   datasetsICR
   DataExplorer
   dbscan
@@ -16,6 +17,7 @@ let r_packages = [
   flexCWM
   flexclust
   flexdashboard
+  flextable
   foreign
   fpc
   gamlss
@@ -41,11 +43,13 @@ let r_packages = [
   moments
   NbClust
   plot3D
+  plotly
+  pROC
+  psych
   RecordLinkage
   reshape2
   rmarkdown
-  plotly
-  psych
+  ROCR
   shinydashboard
   skimr
   sn
@@ -54,6 +58,7 @@ let r_packages = [
   TeachingDemos
   textreuse
   tidyverse
+  tree
   vcd
   visdat
   vtable

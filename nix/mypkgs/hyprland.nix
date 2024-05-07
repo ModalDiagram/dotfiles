@@ -42,7 +42,6 @@
       enable = true;
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-wlr
       ];
 
       config.common.default = [
@@ -126,6 +125,7 @@
 
       programs.waybar = {
         enable = true;
+        systemd.enable = true;
       };
 
       wayland.windowManager.hyprland = {

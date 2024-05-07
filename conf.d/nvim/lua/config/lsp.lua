@@ -32,3 +32,4 @@ require("lspconfig").nil_ls.setup{}
 require("lspconfig").texlab.setup{}
 require("lspconfig").gopls.setup{}
 require("lspconfig").clangd.setup{}
+require("lspconfig").jsonls.setup{}
