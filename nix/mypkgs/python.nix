@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }: let
 my_python_packages = ps: with ps; [
   beautifulsoup4
+  boto3
   debugpy
-  google-cloud-firestore
-  google-cloud-storage
   lxml
   jedi-language-server
   jupyterlab-lsp
@@ -16,6 +15,7 @@ my_python_packages = ps: with ps; [
   python-lsp-ruff
   python-lsp-server
   requests
+  scipy
   selenium
   python-telegram-bot
 ];

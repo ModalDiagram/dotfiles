@@ -15,11 +15,13 @@
       dconf
       ddcutil
       dolphin
+      ferdium
       fd
       fzf
       gcc
       gedit
       gh
+      gimp
       glib
       gnumake
       imv
@@ -27,13 +29,16 @@
       jmtpfs
       lm_sensors
       mpv
+      obsidian
       pdftk
       pkg-config
       polkit-kde-agent
       powerline-go
       ripgrep
       rustup
+      ncdu
       smplayer
+      spotify
       stow
       tldr
       udev

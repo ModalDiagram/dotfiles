@@ -85,12 +85,12 @@
         };
         piana_wifi = {
           connection = {
-            id = "iliadbox-107A2C";
+            id = "$PIANA_WIFI_ID";
             type = "wifi";
           };
           wifi = {
             mode = "infrastructure";
-            ssid = "iliadbox-107A2C";
+            ssid = "$PIANA_WIFI_ID";
           };
           wifi-security = {
             auth-alg = "open";

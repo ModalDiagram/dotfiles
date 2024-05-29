@@ -29,13 +29,6 @@ file=/tmp/music_daemon.lock
 
 if [[ "$1" == "kill" ]]; then
   if [[ -f "$file" ]]; then
-    # echo "file esiste"
-    # while read -r pid; do
-    #   kill -SIGINT $pid
-    # done < <(cat $file)
-    #kill $(cat "$file")
-    # if ps -p "$pid" >> /dev/null; then
-    # kill -- -$(ps -o pgid= $pid | grep -o [0-9]*)
     pgid=$(cat /tmp/music_daemon.lock)
     while read -r pid; do
       kill $pid
@@ -50,24 +43,21 @@ echo $$ > "$file"
 
 IFS=$'\t'
 current_id=-1
-# while true;do
-#   sleep 0.1
-# done
-# if [[ "$status" == "Stopped" ]]; then printf ""; exit; fi
-while read -r playing artist title; do
+while read -r playing artist title album; do
   if [[ "$playing" == ⏹️ ]]; then printf '{"text":}\n';
   else
     playing=${playing:1};
     artist=${artist:1};
     title=${title:1};
+    album=${album:1};
     # echo "$playing";
     # echo "$artist";
     # echo "$title";
     if [[ current_id -eq "-1" ]]; then
-      current_id=$(notify-send -p -a spotify -t 10000 "Playing $title by $artist")
+      current_id=$(notify-send -p -a spotify -t 10000 "$title" "$artist - $album")
     else
-      current_id=$(notify-send -p -r "$current_id" -a spotify -t 10000 "Playing $title by $artist")
+      current_id=$(notify-send -p -r "$current_id" -a spotify -t 10000 "$title" "$artist - $album")
     fi
   fi
-done < <(playerctl --follow metadata --player playerctld --format                        $':{{emoji(status)}}\t:{{markup_escape(artist)}}\t:{{markup_escape(title)}}')
+done < <(playerctl --follow metadata --player playerctld --format                        $':{{emoji(status)}}\t:{{markup_escape(artist)}}\t:{{markup_escape(title)}}\t:{{markup_escape(album)}}')
 

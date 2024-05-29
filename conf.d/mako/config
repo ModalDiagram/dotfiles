@@ -13,6 +13,9 @@ anchor=top-left
 [app-name="spotify"]
 border-color=#a9b665
 
+[app-name="Spotify"]
+invisible=1
+
 [app-name="Ferdium"]
 default-timeout=5000
 border-color=#d3869b

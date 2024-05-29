@@ -14,6 +14,7 @@ library(dplyr)
 library(shiny)
 library(flexdashboard)
 library(ggtext)
+library(plotly)
 
 df <- data.frame(read.csv("~/.local/share/survey/data.txt"))
 colnames(df) <- c("timestamp", "mode", "count")
@@ -25,24 +26,24 @@ df.day.max <- max(date(df$date))
 
 ```
 
-Column {.sidebar}
------------------------------------------------------------------------
+<!-- Column {.sidebar} -->
+<!-- ----------------------------------------------------------------------- -->
 
 
-```{r}
-# Here we define the selectors on the sidebar
-first_day <- today()
-mday(first_day) <- 1
+<!-- ```{r} -->
+<!-- # Here we define the selectors on the sidebar -->
+<!-- first_day <- today() -->
+<!-- mday(first_day) <- 1 -->
 
 
-sliderInput("day.initial", label = "Initial day of the plot",
-            min = df.day.min, max = df.day.max, value = first_day)
+<!-- sliderInput("day.initial", label = "Initial day of the plot", -->
+<!--             min = df.day.min, max = df.day.max, value = first_day) -->
 
-selectInput("selected.day",
-            label = "Day in which to see hours",
-            choices = sort(unique(date(df$date)), decreasing = TRUE))
+<!-- selectInput("selected.day", -->
+<!--             label = "Day in which to see hours", -->
+<!--             choices = sort(unique(date(df$date)), decreasing = TRUE)) -->
 
-```
+<!-- ``` -->
 
 Column
 ----------------------------------
@@ -111,18 +112,26 @@ renderValueBox({
 ### hh:mm worked in selected day
 
 ```{r}
+# change plot with strip chart https://datacornering.com/how-to-create-a-jitter-plot-in-r-with-ggplot2-plotly-and-base/
 library(hms)
 library(tidyr)
 
 
-renderPlot({
+renderPlotly({
+  if (is.null(event_data("plotly_click", source = "C"))) {
+    filter_date <- today()
+  }
+  else {
+    filter_date <- event_data("plotly_click", source = "C")$x
+  }
+
   selected.day.df <- df %>%
-    filter(date(date) == input$selected.day) %>%
+    filter(date(date) == filter_date) %>%
     mutate(date = round_date(date, "10 min")) %>%
     group_by(intervals = date) %>%
     summarise(seconds = sum(mode))
 
-  selected.day.df$intervals <- as_hms(as_datetime(selected.day.df$intervals, tz = ""))
+  # selected.day.df$intervals <- as_datetime(selected.day.df$intervals, tz = "")
 
   # here we create the arrays of lower ticks, when work starts,
   # and upper_ticks, when work ends
@@ -143,29 +152,26 @@ renderPlot({
     return(format(as.POSIXct(hms), format = "%H:%M"))
   }
 
+  xmin <- (function(date) {
+    dt <- as_datetime(date)
+    hour(dt) <- 6
+    minute(dt) <- 0
+    return(dt)
+  })(filter_date)
+  xmax <- (function(date) {
+    hour(date) = 23
+    return(date)
+  })(xmin)
   # plot
-  # add secondary axis once scales 1.3 reaches stable
-  # breaks = selected.day.df$intervals[lower_ticks],
-  # sec.axis = dup_axis(name = "Ending time", breaks = selected.day.df$intervals[upper_ticks]),
-  ggplot(selected.day.df, aes(x=intervals)) +
-    geom_bar(aes(weight=seconds, fill = "blue"), show.legend = FALSE) +
-    scale_x_time(name = "Starting time",
-                 breaks = selected.day.df$intervals[c(lower_ticks, upper_ticks)],
-                 position = "bottom",
-                 labels = to_hm,
-                 limits=c(parse_hm("06:00"), parse_hm("23:00"))) +
-    theme_classic() +
-    theme(
-          axis.text.y = element_blank(),
-          axis.line.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(colour = "#808080"),
-          axis.text.x.bottom = element_text(angle = 45, hjust = 1, colour = "#808080"),
-          axis.text.x.top = element_text(angle = 45, hjust = 0, colour = "#808080"),
-          axis.line.x = element_line(colour = "#808080")
-    ) +
-    scale_fill_manual(values = c("blue" = "#287FD5"))
+  plot_ly(data = selected.day.df, x = ~intervals, y = ~seconds, type = "bar", source = "C") %>%
+    layout(xaxis = list(
+             type = "date",
+             tickformat = "%H:%M",
+             tickvals = selected.day.df$intervals[c(lower_ticks, upper_ticks)],
+             tickmode = "array",
+             tickangle = 90,
+             range = c(xmin, xmax))
+            )
 })
 ```
 
@@ -180,83 +186,117 @@ Column
 library(plotly)
 # Here we make a graph of the number of hours worked per day
 
-# first we create the array of all the fridays to plot them in the graph later
-# we transform it to a dataframe because ggplot works with dataframes
-day.tmp <- df.day.min
-wday(day.tmp) <- 6
-fridays <- seq(day.tmp, df.day.max, by = "1 week")
-fridays <- c(fridays, tail(fridays, 1) + weeks(1))
-fridays = data.frame(fridays)
+renderPlotly({
 
-# this functions turns the label from seconds to hh:mm
+  if (is.null(event_data("plotly_click", source = "B"))) {
+    first_day_month <- (function(day) { mday(day) <- 1; return(day) })(today())
+  }
+  else {
+    selected_month <- event_data("plotly_click", source = "B")$x
+    first_day_month <- (function(month, day) { month(day) <- selected_month; mday(day) <- 1; return(day) })(selected_month, today())
+  }
+  last_day_month <- first_day_month + months(1) - days(1)
+
+  # we group by date (ignoring the hms part) and sum the worked seconds
+  df2 <- df %>%
+    filter(date(date) >= first_day_month) %>%
+    group_by(date = date(date)) %>%
+    summarise(duration = as_datetime(sum(mode)), seconds = sum(mode))
+
+  # first we create the array of all the fridays to plot them in the graph later
+  # we transform it to a dataframe because ggplot works with dataframes
+  day.tmp <- first_day_month
+  wday(day.tmp) <- 6
+  day.tmp <- day.tmp - weeks(1)
+  fridays <- seq(day.tmp, last_day_month, by = "1 week")
+  fridays <- c(fridays, tail(fridays, 1) + weeks(1))
+
+  # we set different colors for the hours worked today, yesterday and the other days
+  colors <- rep("Other", nrow(df2))
+  colors[df2$date == today()] <- "Today"
+  colors[df2$date == (today() - days(1))] <- "Yesterday"
+
+  # plot
+  p <- plot_ly(data = df2, x = ~date, y = ~duration, type = "bar", source = "C") %>%
+    layout(
+      xaxis = list(range = c(first_day_month, last_day_month)),
+      yaxis = list(tickformat = "%H:%M")
+    )
+
+  shapes = list()
+  for(i in 1:(length(fridays) / 2)) {
+    shapes[[i]] <- list(type = "rect", fillcolor = "black", x0 = fridays[2 * i - 1], x1 = fridays[2 * i], y0 = 0, y1 = 1, yref = "paper", opacity = 0.2)
+  }
+
+  df_annotations <- df %>%
+    mutate(week = cut(date(date), fridays, right = TRUE)) %>%
+    filter(!is.na(week)) %>%
+    group_by(week) %>%
+    summarise(seconds_week = sum(mode))
+
+  to_hm <- function(seconds) {
+    return(sprintf("%02d:%02d", seconds %/% 3600, (seconds %% 3600) %/% 60))
+  }
+
+  # create annotations with hh:mm worked in each week
+  annotations <- apply(df_annotations, MARGIN = 1, FUN = function(x) {
+    first_day_week <- date(x[1])
+    # if the week started last month, the text is on the 1st day of the month
+    if (first_day_week < first_day_month) {
+      first_day_week <- first_day_month
+    # if the week ends on next month, the text is on the last day of the month
+    } else if (first_day_week + days(3) > last_day_month) {
+      first_day_week <- last_day_month
+    } else {
+      first_day_week <- first_day_week + days(3)
+    }
+    return(list(
+      x = first_day_week,
+      y = 1,
+      text = to_hm(as.numeric(x[2])),
+      xref = "x",
+      yref = "paper",
+      showarrow = FALSE,
+      ax = 0,
+      ay = 40
+    ))
+  })
+
+  p <- layout(p, shapes = shapes, annotations = annotations)
+  p
+})
+```
+
+<!-- ### events -->
+
+<!-- ```{r} -->
+<!-- renderPrint({ -->
+<!--   print("yes") -->
+<!--   print(event_data("plotly_click", source = "B")) -->
+<!-- }) -->
+<!-- ``` -->
+
+### hh:mm worked per month
+
+```{r}
 to_hm <- function(seconds) {
   return(sprintf("%02d:%02d", seconds %/% 3600, (seconds %% 3600) %/% 60))
 }
 
-# we group by date (ignoring the hms part) and sum the worked seconds
-df2 <- df %>%
-  group_by(date = date(date)) %>%
-  summarise(seconds = sum(mode))
-
-# we set different colors for the hours worked today, yesterday and the other days
-colors <- rep("Other", nrow(df2))
-colors[df2$date == today()] <- "Today"
-colors[df2$date == (today() - days(1))] <- "Yesterday"
+df3 <- df %>%
+  group_by(month = month(as_date(date))) %>%
+  summarise(seconds = sum(mode)) %>%
+  mutate(hm = to_hm(seconds))
 
 # plot
-renderPlot({
-  ggplot(df2, aes(x=date, y=seconds)) +
-    geom_bar(stat = "identity", aes(fill=colors), show.legend = FALSE) +
-    xlim(input$day.initial, NA) +
-    geom_text(aes(y= seconds, label = to_hm(seconds), colour = "grey"), nudge_y = 1000, vjust=0, size = 3, show.legend = FALSE) +
-    geom_text(data = fridays,
-              aes(x = fridays, y = Inf, label=paste("friday", day(fridays), "\n"), hjust = 1),
-              colour="red",
-              angle=90,
-              ) +
-    geom_vline(xintercept = fridays$fridays, linetype = "dashed", colour = "red") +
-    theme_classic() +
-    theme(
-          axis.text.y = element_blank(),
-          axis.line.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(colour = "#808080"),
-          axis.text.x = element_text(colour = "#808080"),
-          axis.line.x = element_line(colour = "#808080")
-    ) +
-    scale_colour_manual(aesthetics = c("colour", "fill"),
-                        values = c("grey" = "#808080", "Other" = "#287FD5", "Yesterday" = "#3333FF", "Today" = "#001580"),
-                        limits = c("Other", "Yesterday", "Today"))
-})
-```
-
-
-### hh:mm worked per month (from 20th of the current month to 19th of the following)
-
-```{r}
-# working months usually go from the 19th of the current month to the 20th of the following
-df3 <- df
-# when the day is greater than 19 we put the survey in the following month
-df3$month <- floor_date(df$date, "month") + months(ifelse(day(df$date) > 19, 0, -1))
-# group by month
-df3 <- df3 %>%
-  group_by(month = month) %>%
-  summarise(seconds = sum(mode))
-
-# plot
-renderPlot(
-  ggplot(df3, aes(x=month, y=seconds)) +
-    geom_bar(stat = "identity", fill = "#287FD5") +
-    geom_text(aes(y= 1.05 * seconds, label = to_hm(seconds)), colour = "#808080", vjust=0) +
-    theme_classic() +
-    theme(
-          axis.text.y = element_blank(),
-          axis.line.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title.x = element_text(colour = "#808080"),
-          axis.line.x = element_line(colour = "#808080"),
-  )
+renderPlotly(
+  plot_ly(data = df3, x = ~month, y = ~seconds, text = ~hm, type = "bar", source = "B") %>%
+    layout(
+      yaxis = list(title = "", tickmode = "array", tickvals = list()),
+      xaxis = list(
+        ticktext = list("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+        tickvals = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+        tickmode = "array")
+    )
 )
 ```

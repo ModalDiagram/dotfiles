@@ -6,6 +6,7 @@ let r_packages = [
   clValid
   copula
   cowplot
+  crossval
   cvms
   datasetsICR
   DataExplorer
@@ -22,6 +23,7 @@ let r_packages = [
   fpc
   gamlss
   gamlss_mx
+  gbm
   gclus
   geoR
   glmnet
@@ -46,6 +48,7 @@ let r_packages = [
   plotly
   pROC
   psych
+  randomForest
   RecordLinkage
   reshape2
   rmarkdown
@@ -57,7 +60,9 @@ let r_packages = [
   stringi
   TeachingDemos
   textreuse
+  tidytext
   tidyverse
+  tm
   tree
   vcd
   visdat
