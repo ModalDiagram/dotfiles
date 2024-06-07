@@ -53,8 +53,7 @@
     security.pam.services.swaylock = {};
 
 
-    services.xserver.enable = true;
-    services.xserver.displayManager.sddm = {
+    services.displayManager.sddm = {
       enable = true;
       theme = "sugar-candy";
       wayland.enable = true;
@@ -78,8 +77,9 @@
       driSupport = true;
       driSupport32Bit = true;
 
-      ## amdvlk: an open-source Vulkan driver from AMD
-      extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd mesa.drivers libGL ];
+      ## amdvlk is an alternative driver
+      ## libGL is needed for many electron apps; mesa and libva for steam
+      extraPackages = with pkgs; [ amdvlk libGL mesa libva ];
       extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
       setLdLibraryPath = true;
     };
@@ -94,7 +94,6 @@
         blueberry
         brightnessctl
         chromium
-        eww-wayland
         gh
         glib # gsettings
         # dracula-theme # gtk theme

@@ -13,17 +13,17 @@
 
   inputs = {
     # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-23.11";
-    stable.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-24.05";
+    stable.url = "nixpkgs/nixos-24.05";
     # fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
-    fixed.url = "nixpkgs/nixos-23.11";
+    fixed.url = "nixpkgs/nixos-24.05";
 
     hyprland = {
       url = "github:hyprwm/Hyprland?ref=v0.39.1";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
