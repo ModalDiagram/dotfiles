@@ -12,3 +12,4 @@ image/png=imv.desktop
 image/jpeg=imv.desktop
 text=org.gnome.gedit.desktop
 audio/mpeg=smplayer.desktop
+x-scheme-handler/obsidian=obsidian.desktop

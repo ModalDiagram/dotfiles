@@ -9,15 +9,15 @@
   # Bootloader.
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" "i2c-dev" ];
+  boot.kernelModules = [ "amdgpu" "kvm-amd" "i2c-dev" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_8;
 
   # Fixes for amd
-  boot.kernelParams = ["amdgpu.gpu_recovery=1" "amdgpu.sg_display=0"];
+  # boot.kernelParams = ["amdgpu.gpu_recovery=1" "amdgpu.sg_display=0"];
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];

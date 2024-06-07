@@ -24,6 +24,7 @@
       gimp
       glib
       gnumake
+      gparted
       imv
       jq
       jmtpfs
@@ -96,6 +97,25 @@
 
     programs.git.enable = true;
     programs.firefox.enable = true;
+    programs.steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraPkgs = pkgs: with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
+      };
+    };
+    programs.steam.gamescopeSession.enable = true;
+
     hardware.opentabletdriver.enable = true;
     security.polkit.enable = true;
 
