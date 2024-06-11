@@ -31,4 +31,5 @@ alias rewaybar="pkill -SIGUSR2 waybar"
 alias sd=". sd"
 alias sdd=". sd -d"
 alias sdc=". sd /data/dotfiles/"
+alias frc="frip /data/dotfiles/"
 complete -F _fzf_file_completion -o default -o bashdefault cpi

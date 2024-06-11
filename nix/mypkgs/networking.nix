@@ -76,6 +76,7 @@
           wifi = {
             mode = "infrastructure";
             ssid = "Vodafone-C00510203";
+            band="bg";
           };
           wifi-security = {
             auth-alg = "open";
@@ -107,6 +108,7 @@
         iptables -A INPUT -p tcp -i wlan0 --dport 5000:5002 -j ACCEPT
         iptables -A INPUT -p tcp -i tailscale0 --dport 5000:5002 -j ACCEPT
       '';
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
     }
     (lib.mkIf (config.mypkgs.networking.bluetooth.enable) {
       hardware.bluetooth.enable = true; # enables support for Bluetooth

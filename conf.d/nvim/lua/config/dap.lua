@@ -42,4 +42,34 @@ dap.configurations.python = {
   }
 }
 
+dap.adapters.lldb = {
+    type = "executable",
+    command = "lldb-vscode", -- adjust as needed
+    name = "lldb",
+}
+
+dap.configurations.rust = {
+    {
+        name = "frip",
+        type = "lldb",
+        request = "launch",
+        console = "integratedTerminal";
+        program = function()
+            return vim.fn.getcwd() .. "/target/debug/frip"
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    },
+    {
+        name = "hello-dap",
+        type = "lldb",
+        request = "launch",
+        program = function()
+            return vim.fn.getcwd() .. "/target/debug/hello-dap"
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    },
+}
+
 dap.defaults.fallback.terminal_win_cmd = 'tabnew'
