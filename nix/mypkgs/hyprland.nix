@@ -38,18 +38,18 @@
     };
     services.dbus.enable = true;
 
-    xdg.portal = {
-      enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-      ];
+    # xdg.portal = {
+    #   enable = true;
+    #   extraPortals = [
+    #     pkgs.xdg-desktop-portal-gtk
+    #   ];
 
-      config.common.default = [
-        "hyprland"
-        "wlr"
-        "gtk"
-      ];
-    };
+    #   config.common.default = [
+    #     "hyprland"
+    #     "wlr"
+    #     "gtk"
+    #   ];
+    # };
     security.pam.services.swaylock = {};
 
 
@@ -114,7 +114,6 @@
         slurp # screenshot functionality
         sway-contrib.grimshot
         swaylock-effects
-        swayidle
         udiskie
         wayland
         wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
@@ -123,6 +122,29 @@
         xournalpp
         ydotool
       ];
+
+      services.swayidle = {
+        enable = true;
+        timeouts = [
+          {
+            timeout = 300;
+            command = "${pkgs.libnotify}/bin/notify-send -p --urgency=critical \"Turning off in 10 seconds\" > /tmp/suspend_notification_id.txt";
+            resumeCommand = "${pkgs.mako}/bin/makoctl dismiss -n $(${pkgs.coreutils-full}/bin/cat /tmp/suspend_notification_id.txt)";
+          }
+          {
+            timeout = 310;
+            command = "/run/current-system/sw/bin/hyprctl dispatch dpms off eDP-1";
+            resumeCommand = "/run/current-system/sw/bin/hyprctl dispatch dpms on eDP-1";
+          }
+          {
+            timeout = 309;
+            command = "export PATH=/home/sandro0198/.nix-profile/bin/:/run/current-system/sw/bin/; bash /home/sandro0198/.local/share/my_lock/my_lock.sh";
+          }
+        ];
+        events = [
+          { event = "before-sleep"; command = "export PATH=/home/sandro0198/.nix-profile/bin/:/run/current-system/sw/bin/; bash /home/sandro0198/.local/share/my_lock/my_lock.sh"; }
+        ];
+      };
 
       programs.waybar = {
         enable = true;
