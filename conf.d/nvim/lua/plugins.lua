@@ -109,7 +109,7 @@ return require('packer').startup(function(use)
 
   ---------------------------- UTILITIES --------------------------------------
   -- Git plugins
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]], tag = "v0.0.1" }
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   -- show and trim trailing whitespaces

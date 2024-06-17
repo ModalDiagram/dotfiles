@@ -10,6 +10,7 @@
     home-manager.users.${config.main-user} = {
       home.packages = with pkgs; [
         neovim
+        gcc
         go
         gopls
         jdk17

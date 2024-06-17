@@ -73,6 +73,7 @@
           ./specific/sserver.nix
           ./mypkgs {
             mypkgs.neovim.enable = true;
+            mypkgs.python.enable = true;
           }
         ];
       };
