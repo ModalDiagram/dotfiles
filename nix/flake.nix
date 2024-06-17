@@ -55,6 +55,24 @@
           }
         ];
       };
+      "sserver" = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+
+        specialArgs = { inherit self system inputs nixpkgs fixed; };
+        modules = [
+          {
+            options.main-user = nixpkgs.lib.mkOption {
+              type = nixpkgs.lib.types.str;
+              default = "sserver";
+            };
+          }
+          home-manager.nixosModules.home-manager
+          ./specific/sserver.nix
+          ./mypkgs {
+            mypkgs.neovim.enable = true;
+          }
+        ];
+      };
     };
   };
 }

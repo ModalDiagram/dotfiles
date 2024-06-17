@@ -94,7 +94,7 @@
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" ];
   };
 
   systemd.timers."low-battery" = {
@@ -109,14 +109,24 @@
   systemd.services."low-battery" = let
     battery-threshold = "15";
   in {
-    path = [ pkgs.libnotify ];
+    path = [ pkgs.libnotify pkgs.mako ];
     script = ''
       ${pkgs.bash}/bin/bash -c '
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID/bus"
         capacity=$(cat /sys/class/power_supply/BAT0/capacity)
         status=$(cat /sys/class/power_supply/BAT0/status)
         if [[ $capacity -lt ${battery-threshold} && $status != *Charging* ]]; then
-          notify-send -t 60000 -u critical "Low battery: $capacity%"
+          existing_id=$(cat /tmp/battery_notification_id.txt)
+          if [[ -n $existing_id ]]; then
+            notify-send -p -r $existing_id -u critical "Low battery: $capacity%" > /tmp/battery_notification_id.txt
+          else
+            notify-send -p -u critical "Low battery: $capacity%" > /tmp/battery_notification_id.txt
+          fi
+        else
+          if [[ -f /tmp/battery_notification_id.txt ]]; then
+            makoctl dismiss -n $(cat /tmp/battery_notification_id.txt)
+            rm /tmp/battery_notification_id.txt
+          fi
         fi
       '
     '';

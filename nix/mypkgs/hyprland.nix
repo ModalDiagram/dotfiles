@@ -38,18 +38,17 @@
     };
     services.dbus.enable = true;
 
-    # xdg.portal = {
-    #   enable = true;
-    #   extraPortals = [
-    #     pkgs.xdg-desktop-portal-gtk
-    #   ];
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+      ];
 
-    #   config.common.default = [
-    #     "hyprland"
-    #     "wlr"
-    #     "gtk"
-    #   ];
-    # };
+      config.common.default = [
+        "hyprland"
+        "gtk"
+      ];
+    };
     security.pam.services.swaylock = {};
 
 

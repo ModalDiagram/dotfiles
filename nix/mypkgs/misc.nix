@@ -23,11 +23,13 @@
       gh
       gimp
       glib
+      gnome.gnome-boxes
       gnumake
       gparted
       imv
       jq
       jmtpfs
+      linuxKernel.packages.linux_6_8.perf
       lm_sensors
       mpv
       obsidian
@@ -55,16 +57,43 @@
       spice-vdagent
     ];
 
+    services.openssh.enable = true;
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          packages = [(pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd];
+        };
+      };
+    };
 
-    # virtualisation.docker.enable = true;
-    # virtualisation.docker.rootless = {
-    #   enable = true;
-    #   setSocketVariable = true;
-    # };
+    virtualisation.docker.enable = true;
+    virtualisation.docker.rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
     services.tailscale.enable = true;
     systemd.services.tailscaled.wantedBy = lib.mkForce [];
+
+  environment.etc."nextcloud-admin-pass".text = "Pw123456789$";
+  services.nextcloud = {
+    enable = false;
+    package = pkgs.nextcloud29;
+    hostName = "localhost";
+    config.adminpassFile = "/etc/nextcloud-admin-pass";
+    settings = {
+      trusted_domains = [ "192.168.1.18" ];
+    };
+  };
 
     systemd.timers."subitoTracker" = {
       wantedBy = [ "timers.target" ];

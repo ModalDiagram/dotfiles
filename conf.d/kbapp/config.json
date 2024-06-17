@@ -44,6 +44,8 @@
     "name": "org.kde.okular",
     "up": "pageup",
     "down": "pagedown",
+    "tab_topright": "left",
+    "tab_botright": "right",
     "search": "f7"
   },{
     "name": ".java",
