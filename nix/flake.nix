@@ -47,7 +47,10 @@
             mypkgs.hyprland.enable = true;
             mypkgs.neovim.enable = true;
             mypkgs.python.enable = true;
-            mypkgs.networking.interface = "wpa_supplicant";
+            mypkgs.networking = {
+              enable = true;
+              interface = "wpa_supplicant";
+            };
             mypkgs.rlang.enable = true;
             mypkgs.sql.enable = true;
             mypkgs.tex.enable = true;

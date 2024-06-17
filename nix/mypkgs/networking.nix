@@ -1,5 +1,10 @@
 { config, lib, ... }: {
   options.mypkgs.networking = {
+    enable = lib.mkOption {
+      description = "enable network functionality";
+      type = lib.types.bool;
+      default = false;
+    };
     interface = lib.mkOption {
       description = "interface to use: wpa_supplicant, iwd";
       type = lib.types.str;
@@ -11,7 +16,7 @@
       default = true;
     };
   };
-  config = lib.mkMerge [
+  config = lib.mkIf (config.mypkgs.networking.enable == true) (lib.mkMerge [
     (lib.mkIf (config.mypkgs.networking.interface == "wpa_supplicant") {
       networking.networkmanager.enable = true;
     })
@@ -113,5 +118,5 @@
     (lib.mkIf (config.mypkgs.networking.bluetooth.enable) {
       hardware.bluetooth.enable = true; # enables support for Bluetooth
     })
-  ];
+  ]);
 }
