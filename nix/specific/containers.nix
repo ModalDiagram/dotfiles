@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, home-manager, ... }: {
+{ config, pkgs, lib, modulesPath, home-manager, node-red-contrib-sunevents, node-red-home-assistant, ... }: {
   networking = {
     # nftables = {
     #   enable = true;
@@ -23,7 +23,86 @@
           proto = "tcp";
           destination = "192.168.100.11:80";
         }
+        {
+          sourcePort = 8123;
+          proto = "tcp";
+          destination = "192.168.100.12:8123";
+        }
+        {
+          sourcePort = 1880;
+          proto = "tcp";
+          destination = "192.168.100.13:1880";
+        }
       ];
+    };
+  };
+
+  containers.node-red = {
+    autoStart = true;
+    privateNetwork = true;
+    hostAddress = "192.168.100.10";
+    localAddress = "192.168.100.13";
+
+    config = { config, pkgs, lib, ... }: {
+      services.node-red = {
+        enable = true;
+      };
+
+      systemd.tmpfiles.rules = [
+        "L+ ${config.services.node-red.userDir}/node_modules 0755 ${config.services.node-red.user} ${config.services.node-red.group} - ${node-red-contrib-sunevents}/lib/node_modules"
+        "L+ ${config.services.node-red.userDir}/node_modules 0755 ${config.services.node-red.user} ${config.services.node-red.group} - ${node-red-home-assistant}/lib/node_modules"
+      ];
+
+
+      networking = {
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [ 1880 ];
+        };
+        # Use systemd-resolved inside the container
+        # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+        useHostResolvConf = lib.mkForce false;
+      };
+
+      system.stateVersion = "24.05";
+      services.resolved.enable = true;
+    };
+  };
+
+  containers.hass = {
+    autoStart = true;
+    privateNetwork = true;
+    hostAddress = "192.168.100.10";
+    localAddress = "192.168.100.12";
+
+    config = { config, pkgs, lib, ... }: {
+      services.home-assistant = {
+        enable = true;
+        extraComponents = [
+          # Components required to complete the onboarding
+          "esphome"
+          "met"
+          "radio_browser"
+        ];
+        config = {
+          # Includes dependencies for a basic setup
+          # https://www.home-assistant.io/integrations/default_config/
+          default_config = {};
+        };
+      };
+
+      networking = {
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [ 8123 ];
+        };
+        # Use systemd-resolved inside the container
+        # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
+        useHostResolvConf = lib.mkForce false;
+      };
+
+      system.stateVersion = "24.05";
+      services.resolved.enable = true;
     };
   };
 
