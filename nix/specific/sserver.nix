@@ -19,7 +19,11 @@
       fsType = "ext4";
     };
 
-  swapDevices = [ ];
+    swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 4*1024;
+  } ];
+
 
   home-manager.users.${config.main-user} = { config, ... }: {
     home.stateVersion = "24.05";
@@ -34,6 +38,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP>
   networking.useDHCP = lib.mkDefault true;
+  networking.interfaces.enp1s0.ipv4.addresses = [ { address = "192.168.122.1"; prefixLength = 24; } ];
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

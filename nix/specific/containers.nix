@@ -1,13 +1,4 @@
 {  node-red-contrib-sunevents, node-red-home-assistant, ... }: {
-  networking.interfaces.br0 = {
-    virtual = true;
-    ipv4.addresses = [
-      {
-        address = "10.0.0.1";
-        prefixLength = 24;
-      }
-    ];
-  };
   networking = {
     nftables = {
       enable = true;
@@ -32,15 +23,15 @@
       enableIPv6 = true;
       forwardPorts = [
         {
-          sourcePort = 80;
+          sourcePort = 800;
           proto = "tcp";
           destination = "192.168.100.11:80";
         }
-        {
-          sourcePort = 8123;
-          proto = "tcp";
-          destination = "192.168.100.12:8123";
-        }
+        # {
+        #   sourcePort = 8123;
+        #   proto = "tcp";
+        #   destination = "192.168.100.12:8123";
+        # }
         {
           sourcePort = 1880;
           proto = "tcp";
@@ -55,23 +46,76 @@
     };
   };
 
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts."0.0.0.0" = {
+      extraConfig = ''
+        proxy_buffering off;
+        client_max_body_size 1G;
+      '';
+      locations."^~ /.well-known" = {
+        priority = 9000;
+        extraConfig = ''
+          absolute_redirect off;
+          location ~ ^/\\.well-known/(?:carddav|caldav)$ {
+            return 301 /nextcloud/remote.php/dav;
+          }
+          location ~ ^/\\.well-known/host-meta(?:\\.json)?$ {
+            return 301 /nextcloud/public.php?service=host-meta-json;
+          }
+          location ~ ^/\\.well-known/(?!acme-challenge|pki-validation) {
+            return 301 /nextcloud/index.php$request_uri;
+          }
+          try_files $uri $uri/ =404;
+        '';
+      };
+      locations."/nextcloud" = {
+        priority = 9999;
+        extraConfig = ''
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-NginX-Proxy true;
+          proxy_set_header X-Forwarded-Proto http;
+          proxy_pass http://192.168.100.11:80/; # tailing / is important!
+          proxy_set_header Host $host;
+          proxy_cache_bypass $http_upgrade;
+          proxy_redirect off;
+        '';
+      };
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://192.168.100.12:8123";
+      };
+      locations."/nodered" = {
+        proxyPass = "http://192.168.100.12:1880";
+      };
+      locations."/paper" = {
+        proxyWebsockets = true;
+        proxyPass = "http://192.168.100.13:28981";
+      };
+    };
+  };
+
   containers.paperless = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.13";
-
     config = { config, pkgs, lib, ... }: {
-      services.node-red = {
-        enable = true;
-      };
+      system.stateVersion = "24.05";
+
       environment.etc."paperless-admin-pass".text = "admin";
       services.paperless = {
         enable = true;
         passwordFile = "/etc/paperless-admin-pass";
         address = "0.0.0.0";
+        settings = {
+          PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
+          PAPERLESS_USE_X_FORWARD_HOST = true;
+          PAPERLESS_USE_X_FORWARD_PORT = true;
+        };
       };
-
       networking = {
         firewall = {
           enable = true;
@@ -82,8 +126,8 @@
         useHostResolvConf = lib.mkForce false;
       };
 
-      system.stateVersion = "24.05";
       services.resolved.enable = true;
+
     };
   };
 
@@ -96,6 +140,7 @@
     config = { config, pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
 
+      # TOFIX
       systemd.tmpfiles.rules = [
         "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
         "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
@@ -120,6 +165,11 @@
           # Includes dependencies for a basic setup
           # https://www.home-assistant.io/integrations/default_config/
           camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
+          http = {
+              server_host = "0.0.0.0";
+              trusted_proxies = [ "192.168.100.10" "192.168.122.40" ];
+              use_x_forwarded_for = true;
+            };
         };
       };
 
@@ -143,20 +193,27 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
-    hostAddress6 = "fc00::1";
-    localAddress6 = "fc00::2";
     config = { config, pkgs, lib, ... }: {
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
-        hostName = "localhost";
+        hostName = "192.168.100.11";
         settings = {
-          trusted_domains = [ "192.168.100.11" "192.168.122.40" ];
+          trusted_domains = [ "192.168.100.10" "192.168.100.11" "192.168.122.40" ];
+          # overwritewebroot = "/";
+          # overwritewebroot = "/nextcloud";
+          # overwriteprotocol = "http";
+          # overwritehost = "192.168.100.11";
+          overwritewebroot = "/nextcloud";
+          overwrite.cli.url = "$http://192.168.100.11/nextcloud/";
+          "htaccess.RewriteBase" = "/nextcloud";
+          "overwrite.cli.url" = "192.168.100.11/nextcloud";
+          "opcache.interned_strings_buffer" = 20;
         };
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
       };
 
-      system.stateVersion = "23.11";
+      system.stateVersion = "24.05";
 
       networking = {
         firewall = {
