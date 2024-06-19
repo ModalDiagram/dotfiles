@@ -21,28 +21,6 @@
       externalInterface = "enp1s0";
       # Lazy IPv6 connectivity for the container
       enableIPv6 = true;
-      forwardPorts = [
-        {
-          sourcePort = 800;
-          proto = "tcp";
-          destination = "192.168.100.11:80";
-        }
-        # {
-        #   sourcePort = 8123;
-        #   proto = "tcp";
-        #   destination = "192.168.100.12:8123";
-        # }
-        {
-          sourcePort = 1880;
-          proto = "tcp";
-          destination = "192.168.100.12:1880";
-        }
-        {
-          sourcePort = 28981;
-          proto = "tcp";
-          destination = "192.168.100.13:28981";
-        }
-      ];
     };
   };
 
@@ -70,7 +48,7 @@
           try_files $uri $uri/ =404;
         '';
       };
-      locations."/nextcloud" = {
+      locations."/nextcloud/" = {
         priority = 9999;
         extraConfig = ''
           proxy_set_header X-Real-IP $remote_addr;
@@ -87,7 +65,8 @@
         proxyWebsockets = true;
         proxyPass = "http://192.168.100.12:8123";
       };
-      locations."/nodered" = {
+      locations."/red" = {
+        proxyWebsockets = true;
         proxyPass = "http://192.168.100.12:1880";
       };
       locations."/paper" = {
@@ -149,6 +128,12 @@
 
       services.node-red = {
         enable = true;
+        configFile = "${pkgs.writeText "settings.js" ''
+        module.exports = {
+          uiHost: "0.0.0.0",
+          httpAdminRoot: ''\'/red''\'
+        }
+        ''}";
       };
       services.home-assistant = {
         enable = true;
@@ -197,19 +182,18 @@
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
-        hostName = "192.168.100.11";
-        settings = {
-          trusted_domains = [ "192.168.100.10" "192.168.100.11" "192.168.122.40" ];
-          # overwritewebroot = "/";
-          # overwritewebroot = "/nextcloud";
-          # overwriteprotocol = "http";
-          # overwritehost = "192.168.100.11";
-          overwritewebroot = "/nextcloud";
-          overwrite.cli.url = "$http://192.168.100.11/nextcloud/";
-          "htaccess.RewriteBase" = "/nextcloud";
-          "overwrite.cli.url" = "192.168.100.11/nextcloud";
-          "opcache.interned_strings_buffer" = 20;
-        };
+        hostName = "192.168.122.40";
+        settings = let
+            prot = "http"; # or https
+            host = "192.168.122.40";
+            dir = "/nextcloud";
+          in {
+            overwriteprotocol = prot;
+            overwritehost = host;
+            overwritewebroot = dir;
+            overwrite.cli.url = "${prot}://${host}${dir}/";
+            htaccess.RewriteBase = dir;
+          };
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
       };
 
