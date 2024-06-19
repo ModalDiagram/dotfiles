@@ -60,6 +60,7 @@
     services.openssh.enable = true;
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+    programs.virt-manager.enable = true;
     virtualisation.libvirtd = {
       enable = true;
       qemu = {

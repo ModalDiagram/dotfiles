@@ -113,7 +113,7 @@
         iptables -A INPUT -p tcp -i wlan0 --dport 5000:5002 -j ACCEPT
         iptables -A INPUT -p tcp -i tailscale0 --dport 5000:5002 -j ACCEPT
       '';
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [ 80 443 8554 ];
     }
     (lib.mkIf (config.mypkgs.networking.bluetooth.enable) {
       hardware.bluetooth.enable = true; # enables support for Bluetooth
