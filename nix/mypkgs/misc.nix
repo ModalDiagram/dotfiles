@@ -52,8 +52,6 @@
       zip
 
       awscli2
-      google-cloud-sdk
-      firebase-tools
       spice-vdagent
     ];
 
@@ -77,24 +75,13 @@
       };
     };
 
-    virtualisation.docker.enable = true;
-    virtualisation.docker.rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+    # virtualisation.docker.enable = true;
+    # virtualisation.docker.rootless = {
+    #   enable = true;
+    #   setSocketVariable = true;
+    # };
     services.tailscale.enable = true;
     systemd.services.tailscaled.wantedBy = lib.mkForce [];
-
-  environment.etc."nextcloud-admin-pass".text = "Pw123456789$";
-  services.nextcloud = {
-    enable = false;
-    package = pkgs.nextcloud29;
-    hostName = "localhost";
-    config.adminpassFile = "/etc/nextcloud-admin-pass";
-    settings = {
-      trusted_domains = [ "192.168.1.18" ];
-    };
-  };
 
     systemd.timers."subitoTracker" = {
       wantedBy = [ "timers.target" ];
