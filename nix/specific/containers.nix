@@ -1,4 +1,4 @@
-{  node-red-contrib-sunevents, node-red-home-assistant, ... }: {
+{ config, lib, node-red-contrib-sunevents, node-red-home-assistant, ... }: {
   networking = {
     nftables = {
       enable = true;
@@ -70,8 +70,19 @@
         proxyPass = "http://192.168.100.12:1880";
       };
       locations."/paper" = {
-        proxyWebsockets = true;
-        proxyPass = "http://192.168.100.13:28981";
+        extraConfig = ''
+          proxy_pass http://192.168.100.13:28981/paper;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+
+          proxy_redirect off;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Host $server_name;
+          add_header Referrer-Policy "strict-origin-when-cross-origin";
+        '';
       };
     };
   };
@@ -81,7 +92,12 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.13";
+    ephemeral = true;
+    bindMounts = {
+      "/var/lib/paperless" = { hostPath = "/home/sserver/backup_dir/paperless_data"; isReadOnly = false; };
+    };
     config = { config, pkgs, lib, ... }: {
+      users.users.paperless.uid = lib.mkForce 1013;
       system.stateVersion = "24.05";
 
       environment.etc."paperless-admin-pass".text = "admin";
@@ -90,6 +106,7 @@
         passwordFile = "/etc/paperless-admin-pass";
         address = "0.0.0.0";
         settings = {
+          # PAPERLESS_URL = "http://192.168.122.40/paper";
           PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;
@@ -116,10 +133,19 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.12";
 
+    ephemeral = true;
+    bindMounts = {
+      "/var/lib/hass" = { hostPath = "/home/sserver/backup_dir/hass_data"; isReadOnly = false; };
+    };
+    bindMounts = {
+      "/var/lib/node-red" = { hostPath = "/home/sserver/backup_dir/nodered_data"; isReadOnly = false; };
+    };
     config = { config, pkgs, lib, ... }: {
+      users.users.hass.uid = lib.mkForce 1012;
+      users.users.hass.isSystemUser = true;
+      users.users.node-red.uid = lib.mkForce 1014;
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
 
-      # TOFIX
       systemd.tmpfiles.rules = [
         "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
         "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
@@ -178,7 +204,12 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
+    ephemeral = true;
+    bindMounts = {
+      "/var/lib/nextcloud" = { hostPath = "/home/sserver/backup_dir/nextcloud_data"; isReadOnly = false; };
+    };
     config = { config, pkgs, lib, ... }: {
+      users.users.nextcloud.uid = lib.mkForce 1011;
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
@@ -195,6 +226,20 @@
             htaccess.RewriteBase = dir;
           };
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
+        extraAppsEnable = true;
+        extraApps = {
+          inherit (config.services.nextcloud.package.packages.apps) calendar tasks;
+          memories = pkgs.fetchNextcloudApp {
+              sha256 = "sha256-DJPskJ4rTECTaO1XJFeOD1EfA3TQR4YXqG+NIti0UPE=";
+              url = "https://github.com/pulsejet/memories/releases/download/v7.3.1/memories.tar.gz";
+              license = "gpl3";
+          };
+          maps = pkgs.fetchNextcloudApp {
+              sha256 = "sha256-LOQBR3LM7artg9PyD8JFVO/FKVnitALDulXelvPQFb8=";
+              url = "https://github.com/nextcloud/maps/releases/download/v1.4.0/maps-1.4.0.tar.gz";
+              license = "gpl3";
+          };
+        };
       };
 
       system.stateVersion = "24.05";
