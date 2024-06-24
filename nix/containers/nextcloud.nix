@@ -4,15 +4,31 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
-    ephemeral = true;
-    bindMounts = {
-      "/var/lib/nextcloud" = { hostPath = "/home/sserver/backup_dir/nextcloud_data"; isReadOnly = false; };
-    };
+    # ephemeral = true;
+    # bindMounts = {
+    #   "/var/lib/nextcloud" = { hostPath = "/home/sserver/backup_dir/nextcloud_data"; isReadOnly = false; };
+    # };
+
     config = { config, pkgs, lib, ... }: {
+      systemd.services."nextcloud-setup" = {
+          requires = ["postgresql.service"];
+          after = ["postgresql.service"];
+      };
+
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
         hostName = "192.168.122.40";
+
+        # Database options
+        config = {
+          dbtype = "pgsql";
+          dbuser = "nextcloud";
+          dbhost = "/run/postgresql";
+          dbname = "nextcloud";
+          dbpassFile = "${pkgs.writeText "dbpass" "test123"}";
+        };
+
         settings = let
             prot = "http"; # or https
             host = "192.168.122.40";
@@ -25,6 +41,7 @@
             htaccess.RewriteBase = dir;
           };
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
+
         extraAppsEnable = true;
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) calendar tasks;
@@ -40,6 +57,19 @@
           };
         };
       };
+
+      services.postgresql = {
+        enable = true;
+
+        # Ensure the database, user, and permissions always exist
+        ensureDatabases = [ "nextcloud" ];
+        ensureUsers = [
+          { name = "nextcloud";
+            ensureDBOwnership = true;
+          }
+        ];
+      };
+
 
       system.stateVersion = "24.05";
 
