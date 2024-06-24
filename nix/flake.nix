@@ -78,7 +78,7 @@
           }
           home-manager.nixosModules.home-manager
           ./specific/sserver.nix
-          ./specific/containers.nix
+          ./containers
           ./mypkgs {
             mypkgs.neovim.enable = true;
             mypkgs.python.enable = true;
