@@ -4,15 +4,61 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
-    # ephemeral = true;
-    # bindMounts = {
-    #   "/var/lib/nextcloud" = { hostPath = "/home/sserver/backup_dir/nextcloud_data"; isReadOnly = false; };
-    # };
+    bindMounts = {
+      "/backup_repo" = { hostPath = "/home/kopia/backups"; isReadOnly = false; };
+    };
 
     config = { config, pkgs, lib, ... }: {
+      environment.systemPackages = [ pkgs.kopia ];
+      users.users.kopia = {
+        uid = 1555;
+        isNormalUser = true;
+        group = "users";
+        hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
+        extraGroups = [ "nextcloud" ];
+      };
+
+#       systemd.timers."backup_nextcloud" = {
+#         wantedBy = [ "timers.target" ];
+#           timerConfig = {
+#         OnBootSec = "1m";
+#         OnUnitActiveSec = "1m";
+#             # Persistent = true;
+#             # OnCalendar = "*-*-* 2:00:00";
+#             Unit = "backup_nextcloud.service";
+#           };
+#       };
+
+#       systemd.services."backup_nextcloud" = {
+#         script = ''
+#           ${pkgs.bash}/bin/bash -c '
+#             kopia snapshot create /var/lib/nextcloud/data
+#           '
+#         '';
+#         serviceConfig = {
+#           Type = "oneshot";
+#           User = "kopia";
+#         };
+#         requires = [ "dump_sql.service" ];
+#         after = [ "dump_sql.service" ];
+#       };
+
+#       systemd.services."dump_sql" = {
+#         script = ''
+#           ${pkgs.bash}/bin/bash -c '
+
+#           '
+#         '';
+#         serviceConfig = {
+#           Type = "oneshot";
+#           User = "nextcloud";
+#         };
+#       };
+
+
       systemd.services."nextcloud-setup" = {
-          requires = ["postgresql.service"];
-          after = ["postgresql.service"];
+        requires = ["postgresql.service"];
+        after = ["postgresql.service"];
       };
 
       services.nextcloud = {
@@ -68,6 +114,10 @@
             ensureDBOwnership = true;
           }
         ];
+
+        authentication = ''
+          local   all   nextcloud   md5
+        '';
       };
 
 

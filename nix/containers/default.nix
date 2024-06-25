@@ -6,6 +6,13 @@
     ./hass.nix
   ];
 
+  users.users.kopia = {
+    uid = 1555;
+    isNormalUser = true;
+    group = "users";
+    hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
+  };
+
   networking = {
     nftables = {
       enable = true;
