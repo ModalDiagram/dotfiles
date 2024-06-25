@@ -103,7 +103,7 @@
       home-manager.nixosModules.home-manager
       ./specific/homelab.nix
       ./containers {
-        containers1.ipaddr = "sanfio.eu";
+        containers1.ipaddr = "www.sanfio.eu";
         containers1.interface = "wlp2s0";
       }
       ./mypkgs {

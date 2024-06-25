@@ -17,7 +17,7 @@
         passwordFile = "/etc/paperless-admin-pass";
         address = "0.0.0.0";
         settings = {
-          PAPERLESS_URL = "${ipaddr}";
+          PAPERLESS_URL = "https://" + "${ipaddr}";
           PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;
