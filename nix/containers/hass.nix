@@ -1,16 +1,16 @@
-{ node-red-home-assistant, node-red-contrib-sunevents, ... }: {
+{ config, node-red-home-assistant, node-red-contrib-sunevents, ... }: let ipaddr = config.containers1.ipaddr; in {
   containers.hass = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.12";
 
-    bindMounts = {
-      "/backup_dir_hass" = { hostPath = "/home/sserver/backup_dir/hass_data"; isReadOnly = false; };
-    };
-    bindMounts = {
-      "/backup_dir_red" = { hostPath = "/home/sserver/backup_dir/nodered_data"; isReadOnly = false; };
-    };
+    # bindMounts = {
+    #   "/backup_dir_hass" = { hostPath = "/home/sserver/backup_dir/hass_data"; isReadOnly = false; };
+    # };
+    # bindMounts = {
+    #   "/backup_dir_red" = { hostPath = "/home/sserver/backup_dir/nodered_data"; isReadOnly = false; };
+    # };
     config = { config, pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
 
@@ -30,35 +30,6 @@
         ''}";
       };
 
-      systemd.timers."backup_hass" = {
-        wantedBy = [ "timers.target" ];
-          timerConfig = {
-        OnBootSec = "1m";
-        OnUnitActiveSec = "1m";
-            # Persistent = true;
-            # OnCalendar = "*-*-* 2:00:00";
-            Unit = "backup_hass.service";
-          };
-      };
-
-      systemd.services."backup_hass" = {
-        script = ''
-          ${pkgs.bash}/bin/bash -c '
-            if [[ -f /var/lib/node-red/flows_hass.json ]]; then
-              cp /var/lib/node-red/flows_hass.json /backup_dir_red
-            fi
-
-            if [[ -d /var/lib/hass ]]; then
-              cp -r /var/lib/hass /backup_dir_hass
-            fi
-          '
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          User = "hass";
-        };
-      };
-
       services.home-assistant = {
         enable = true;
         extraComponents = [
@@ -71,12 +42,12 @@
           "ffmpeg"
         ];
         config = {
-          # Includes dependencies for a basic setup
-          # https://www.home-assistant.io/integrations/default_config/
+          homeassistant = {
+            external_url = "https://www.sanfio.eu";
+          };
           camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
           http = {
-              server_host = "0.0.0.0";
-              trusted_proxies = [ "192.168.100.10" "192.168.122.40" ];
+              trusted_proxies = [ "192.168.100.10" ];
               use_x_forwarded_for = true;
             };
         };

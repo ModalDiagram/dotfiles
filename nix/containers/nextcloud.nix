@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: let ipaddr = config.containers1.ipaddr; in {
   containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;
@@ -9,7 +9,7 @@
     };
 
     config = { config, pkgs, lib, ... }: {
-      environment.systemPackages = [ pkgs.kopia ];
+      environment.systemPackages = [ pkgs.kopia pkgs.nextcloud29 ];
       users.users.kopia = {
         uid = 1555;
         isNormalUser = true;
@@ -64,7 +64,7 @@
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
-        hostName = "192.168.122.40";
+        hostName = "${ipaddr}";
 
         # Database options
         config = {
@@ -77,7 +77,7 @@
 
         settings = let
             prot = "http"; # or https
-            host = "192.168.122.40";
+            host = "${ipaddr}";
             dir = "/nextcloud";
           in {
             overwriteprotocol = prot;
@@ -115,9 +115,9 @@
           }
         ];
 
-        authentication = ''
-          local   all   nextcloud   md5
-        '';
+        # authentication = ''
+        #   local   all   nextcloud   md5
+        # '';
       };
 
 

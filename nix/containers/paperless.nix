@@ -1,13 +1,13 @@
-{ ... }: {
+{ config, ... }: let ipaddr = config.containers1.ipaddr; in {
   containers.paperless = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.13";
     ephemeral = true;
-    bindMounts = {
-      "/var/lib/paperless" = { hostPath = "/home/sserver/backup_dir/paperless_data"; isReadOnly = false; };
-    };
+    # bindMounts = {
+    #   "/var/lib/paperless" = { hostPath = "/home/sserver/backup_dir/paperless_data"; isReadOnly = false; };
+    # };
     config = { config, pkgs, lib, ... }: {
       system.stateVersion = "24.05";
 
@@ -17,7 +17,7 @@
         passwordFile = "/etc/paperless-admin-pass";
         address = "0.0.0.0";
         settings = {
-          PAPERLESS_URL = "http://192.168.122.40";
+          PAPERLESS_URL = "${ipaddr}";
           PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;

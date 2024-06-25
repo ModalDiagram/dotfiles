@@ -64,7 +64,7 @@
       "sserver" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
 
-        specialArgs = { 
+        specialArgs = {
           inherit self system inputs nixpkgs fixed dream2nix;
           node-red-contrib-sunevents = self.packages.x86_64-linux.node-red-contrib-sunevents;
           node-red-home-assistant = self.packages.x86_64-linux.node-red-home-assistant;
@@ -85,7 +85,34 @@
           }
         ];
       };
+      "homelab" = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+
+      specialArgs = {
+        inherit self system inputs nixpkgs fixed dream2nix;
+        node-red-contrib-sunevents = self.packages.x86_64-linux.node-red-contrib-sunevents;
+        node-red-home-assistant = self.packages.x86_64-linux.node-red-home-assistant;
+      };
+      modules = [
+      {
+      options.main-user = nixpkgs.lib.mkOption {
+        type = nixpkgs.lib.types.str;
+        default = "homelab";
+      };
+      }
+      home-manager.nixosModules.home-manager
+      ./specific/homelab.nix
+      ./containers {
+        containers1.ipaddr = "sanfio.eu";
+        containers1.interface = "wlp2s0";
+      }
+      ./mypkgs {
+        mypkgs.neovim.enable = true;
+        mypkgs.python.enable = true;
+      }
+      ];
     };
+   };
 
     packages.${system} = dream2nix.lib.importPackages {
       projectRoot = ./.;
