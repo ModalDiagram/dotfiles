@@ -15,6 +15,7 @@
     # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-24.05";
     stable.url = "nixpkgs/nixos-24.05";
+    sops-nix.url = "github:Mic92/sops-nix";
     # fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
     fixed.url = "nixpkgs/nixos-24.05";
 
@@ -30,7 +31,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fixed, hyprland, dream2nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, fixed, hyprland, dream2nix, sops-nix, ... }@inputs:
   let system = "x86_64-linux"; in {
     nixosConfigurations = {
       "lenovo" = nixpkgs.lib.nixosSystem rec {
@@ -45,6 +46,8 @@
             };
           }
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
+          ./system/sops.nix
           ./specific/lenovo.nix
           ./mypkgs {
             mypkgs.hyprland.enable = true;

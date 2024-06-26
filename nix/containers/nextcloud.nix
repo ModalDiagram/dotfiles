@@ -72,7 +72,7 @@
           dbuser = "nextcloud";
           dbhost = "/run/postgresql";
           dbname = "nextcloud";
-          dbpassFile = "${pkgs.writeText "dbpass" "test123"}";
+          dbpassFile = "/run/secrets/nextcloud_password";
         };
 
         settings = let
@@ -86,7 +86,7 @@
             overwrite.cli.url = "${prot}://${host}${dir}/";
             htaccess.RewriteBase = dir;
           };
-        config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
+        config.adminpassFile = "/run/secrets/nextcloud_password";
 
         extraAppsEnable = true;
         extraApps = {

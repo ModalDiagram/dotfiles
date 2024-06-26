@@ -11,10 +11,9 @@
     config = { config, pkgs, lib, ... }: {
       system.stateVersion = "24.05";
 
-      environment.etc."paperless-admin-pass".text = "admin";
       services.paperless = {
         enable = true;
-        passwordFile = "/etc/paperless-admin-pass";
+        passwordFile = "/run/secrets/paperless_password";
         address = "0.0.0.0";
         settings = {
           PAPERLESS_URL = "https://" + "${ipaddr}";

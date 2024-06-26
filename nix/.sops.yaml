@@ -1,0 +1,9 @@
+keys:
+  - &admin_lenovo age13z28kvszk7euaajd5uc64vjxyxdqwe4x52esjg829rqr9ls3juqsv6yp4d
+  - &admin_homelab age1gjy9y8mxt4v5p86e7drwtsrufdwf4kvks8zkymw622ec0w92za4sph8vv3
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *admin_lenovo
+      - *admin_homelab

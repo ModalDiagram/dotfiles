@@ -35,7 +35,7 @@
       # to connect to WLUCTSTUD
       # nmcli connection add type wifi con-name "WLUCTSTUD1" ifname wlp1s0 ssid "WLUCTSTUD" wifi-sec.key-mgmt wpa-eap 802-1x.identity "frtsdr01p21f209u@studium.unict.it" 802-1x.password <PASSWORD> 802-1x.system-ca-certs no 802-1x.eap "peap" 802-1x.phase2-auth mschapv2
       networking.networkmanager.ensureProfiles.environmentFiles = [ 
-        "/home/sandro0198/network.env"
+        "/run/secrets/network.env"
       ];
       networking.networkmanager.ensureProfiles.profiles = {
         hotspot = {
