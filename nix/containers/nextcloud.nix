@@ -76,7 +76,7 @@
         };
 
         settings = let
-            prot = "http"; # or https
+            prot = "https"; # or https
             host = "${ipaddr}";
             dir = "/nextcloud";
           in {

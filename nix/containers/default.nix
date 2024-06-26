@@ -20,6 +20,7 @@
   config = {
 
     # Wireguard setup
+    # TODO: remove dependence on the current ipaddr of the wireless network
     environment.systemPackages = [ pkgs.wireguard-tools ];
     networking.wireguard.interfaces = {
       wg0 = {
@@ -28,13 +29,13 @@
 
         postSetup = ''
           ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
-          ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 127.0.0.1
+          ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 192.168.1.5
         '';
 
         # This undoes the above command
         postShutdown = ''
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
-          ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 127.0.0.1
+          ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 192.168.1.5
         '';
 
         privateKeyFile = "/home/homelab/server_private.key";
@@ -90,7 +91,6 @@
         # extraConfig = ''
         #   client_max_body_size 1G;
         # '';
-
         locations."/" = {
           proxyWebsockets = true;
           proxyPass = "http://192.168.100.12:8123";

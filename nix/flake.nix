@@ -103,7 +103,7 @@
       home-manager.nixosModules.home-manager
       ./specific/homelab.nix
       ./containers {
-        containers1.ipaddr = "www.sanfio.eu";
+        containers1.ipaddr = "10.0.0.5";
         containers1.interface = "wlp2s0";
       }
       ./mypkgs {
@@ -112,7 +112,7 @@
       }
       ];
     };
-   };
+  };
 
     packages.${system} = dream2nix.lib.importPackages {
       projectRoot = ./.;

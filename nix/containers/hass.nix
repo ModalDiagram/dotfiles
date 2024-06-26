@@ -43,7 +43,7 @@
         ];
         config = {
           homeassistant = {
-            external_url = "https://www.sanfio.eu";
+            external_url = "https://" + "${ipaddr}";
           };
           camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
           http = {
