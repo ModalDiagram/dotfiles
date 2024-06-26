@@ -2,6 +2,26 @@
   system.stateVersion = "23.11";
   networking.hostName = "lenovo";
 
+  environment.systemPackages = [ pkgs.wireguard-tools ];
+  networking.wireguard.interfaces = {
+    wg0 = {
+      ips = [ "10.0.0.2/24" ]; # The IP address for the server on the VPN
+      privateKeyFile = "/home/sandro0198/client_private.key";
+      peers = [
+        {
+          publicKey = "iWgmnEyKwcO2XgKyrobpA300Ix5sKXybXTl733gRdHI=";
+          allowedIPs = [ "10.0.0.5" "192.168.1.5" ]; # The IP range for the VPN
+          endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
+
+  # Ensure the WireGuard module is enabled
+  networking.firewall.allowedUDPPorts = [ 51820 ];
+
+
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
