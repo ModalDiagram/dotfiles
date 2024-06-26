@@ -89,7 +89,7 @@
     "format-linked": "󰤟",
     "format-disconnected": "",
     "tooltip-format": "{essid}",
-    "on-click": "alacritty -e nmtui",
+    "on-click": "alacritty -T network_selector -e nmtui",
     "max-length": 6,
     "tooltip": true
   },
