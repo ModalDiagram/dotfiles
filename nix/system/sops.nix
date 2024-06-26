@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
+  imports = [ inputs.sops-nix.nixosModules.sops ];
+
   config = {
     environment.systemPackages = [ pkgs.sops pkgs.ssh-to-age ];
 

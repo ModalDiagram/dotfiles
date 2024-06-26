@@ -5,15 +5,23 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.13";
     ephemeral = true;
+    bindMounts = {
+      "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
+    };
     # bindMounts = {
     #   "/var/lib/paperless" = { hostPath = "/home/sserver/backup_dir/paperless_data"; isReadOnly = false; };
     # };
     config = { config, pkgs, lib, ... }: {
+      environment.etc."paperless_password" = {
+        source = "/run/secrets/paperless_password";
+        mode = "0400";
+        user = "paperless";
+      };
       system.stateVersion = "24.05";
 
       services.paperless = {
         enable = true;
-        passwordFile = "/run/secrets/paperless_password";
+        passwordFile = "/etc/paperless_password";
         address = "0.0.0.0";
         settings = {
           PAPERLESS_URL = "https://" + "${ipaddr}";

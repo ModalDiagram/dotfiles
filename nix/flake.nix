@@ -46,7 +46,6 @@
             };
           }
           home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
           ./system/sops.nix
           ./specific/lenovo.nix
           ./mypkgs {
@@ -97,22 +96,23 @@
         node-red-home-assistant = self.packages.x86_64-linux.node-red-home-assistant;
       };
       modules = [
-      {
-      options.main-user = nixpkgs.lib.mkOption {
-        type = nixpkgs.lib.types.str;
-        default = "homelab";
-      };
-      }
-      home-manager.nixosModules.home-manager
-      ./specific/homelab.nix
-      ./containers {
-        containers1.ipaddr = "10.0.0.5";
-        containers1.interface = "wlp2s0";
-      }
-      ./mypkgs {
-        mypkgs.neovim.enable = true;
-        mypkgs.python.enable = true;
-      }
+        {
+          options.main-user = nixpkgs.lib.mkOption {
+            type = nixpkgs.lib.types.str;
+            default = "homelab";
+          };
+        }
+        home-manager.nixosModules.home-manager
+        ./system/sops.nix
+        ./specific/homelab.nix
+        ./containers {
+          containers1.ipaddr = "10.0.0.5";
+          containers1.interface = "wlp2s0";
+        }
+        ./mypkgs {
+          mypkgs.neovim.enable = true;
+          mypkgs.python.enable = true;
+        }
       ];
     };
   };

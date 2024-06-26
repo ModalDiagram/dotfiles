@@ -6,9 +6,15 @@
     localAddress = "192.168.100.11";
     bindMounts = {
       "/backup_repo" = { hostPath = "/home/kopia/backups"; isReadOnly = false; };
+      "/run/secrets/nextcloud_password" = { hostPath = "/run/secrets/nextcloud_password"; };
     };
 
     config = { config, pkgs, lib, ... }: {
+      environment.etc."nextcloud_password" = {
+        source = "/run/secrets/nextcloud_password";
+        mode = "0400";
+        user = "nextcloud";
+      };
       environment.systemPackages = [ pkgs.kopia pkgs.nextcloud29 ];
       users.users.kopia = {
         uid = 1555;
@@ -72,7 +78,7 @@
           dbuser = "nextcloud";
           dbhost = "/run/postgresql";
           dbname = "nextcloud";
-          dbpassFile = "/run/secrets/nextcloud_password";
+          dbpassFile = "/etc/nextcloud_password";
         };
 
         settings = let
@@ -86,7 +92,7 @@
             overwrite.cli.url = "${prot}://${host}${dir}/";
             htaccess.RewriteBase = dir;
           };
-        config.adminpassFile = "/run/secrets/nextcloud_password";
+        config.adminpassFile = "/etc/nextcloud_password";
 
         extraAppsEnable = true;
         extraApps = {
