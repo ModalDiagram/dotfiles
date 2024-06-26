@@ -18,6 +18,43 @@
   };
 
   config = {
+
+    # Wireguard setup
+    environment.systemPackages = [ pkgs.wireguard-tools ];
+    networking.wireguard.interfaces = {
+      wg0 = {
+        ips = [ "10.0.0.1/24" ]; # The IP address for the server on the VPN
+        listenPort = 51820;
+
+        postSetup = ''
+          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
+          ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 127.0.0.1
+        '';
+
+        # This undoes the above command
+        postShutdown = ''
+          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
+          ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 127.0.0.1
+        '';
+
+        privateKeyFile = "/home/homelab/server_private.key";
+        peers = [
+          {
+            publicKey = "xEm6HUXJVJmhL5qQGycHewTLfmuyWQzIlI79XAV4vC4=";
+            allowedIPs = [ "10.0.0.2/32" ]; # The IP address for the client on the VPN
+          }
+          {
+            publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
+            allowedIPs = [ "10.0.0.3/32" ]; # The IP address for the client on the VPN
+          }
+        ];
+      };
+    };
+
+    # Ensure the WireGuard module is enabled
+    networking.firewall.allowedUDPPorts = [ 51820 ];
+
+
     users.users.kopia = {
       uid = 1555;
       isNormalUser = true;
@@ -28,7 +65,7 @@
     networking = {
       nat = {
         enable = true;
-        internalInterfaces = ["ve-+"];
+        internalInterfaces = ["ve-+" "wg0"];
         externalInterface = "${config.containers1.interface}";
         # Lazy IPv6 connectivity for the container
         enableIPv6 = true;
