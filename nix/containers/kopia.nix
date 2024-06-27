@@ -1,4 +1,4 @@
-{ config, ... }: let ipaddr = config.containers1.ipaddr; in {
+{ ... }: {
   containers.kopia = {
     autoStart = true;
     privateNetwork = true;
@@ -18,6 +18,19 @@
         uid = 1555;
         isNormalUser = true;
         hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
+      };
+
+      systemd.services.kopia-server = {
+        description = "Kopia Repository Server";
+        after = [ "network.target" ];
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          ExecStart = "${pkgs.kopia}/bin/kopia server start --address=192.168.100.14:51515 --tls-cert-file /home/kopia/my.cert --tls-key-file /home/kopia/my.key";
+          ExecStop = "${pkgs.kopia}/bin/kopia server shutdown --address=192.168.100.14:51515";
+          Restart = "always";
+          User = "kopia";
+        };
       };
     };
   };
