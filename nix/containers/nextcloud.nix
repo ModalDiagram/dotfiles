@@ -15,52 +15,33 @@
         mode = "0400";
         user = "nextcloud";
       };
-      environment.systemPackages = [ pkgs.kopia pkgs.nextcloud29 ];
-      users.users.kopia = {
-        uid = 1555;
-        isNormalUser = true;
-        group = "users";
-        hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
-        extraGroups = [ "nextcloud" ];
+
+      environment.systemPackages = [ pkgs.kopia ];
+
+      systemd.timers."backup_nextcloud" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-* 2:00:00";
+            Unit = "backup_nextcloud.service";
+          };
       };
 
-#       systemd.timers."backup_nextcloud" = {
-#         wantedBy = [ "timers.target" ];
-#           timerConfig = {
-#         OnBootSec = "1m";
-#         OnUnitActiveSec = "1m";
-#             # Persistent = true;
-#             # OnCalendar = "*-*-* 2:00:00";
-#             Unit = "backup_nextcloud.service";
-#           };
-#       };
-
-#       systemd.services."backup_nextcloud" = {
-#         script = ''
-#           ${pkgs.bash}/bin/bash -c '
-#             kopia snapshot create /var/lib/nextcloud/data
-#           '
-#         '';
-#         serviceConfig = {
-#           Type = "oneshot";
-#           User = "kopia";
-#         };
-#         requires = [ "dump_sql.service" ];
-#         after = [ "dump_sql.service" ];
-#       };
-
-#       systemd.services."dump_sql" = {
-#         script = ''
-#           ${pkgs.bash}/bin/bash -c '
-
-#           '
-#         '';
-#         serviceConfig = {
-#           Type = "oneshot";
-#           User = "nextcloud";
-#         };
-#       };
-
+      systemd.services."backup_nextcloud" = {
+        path = [ pkgs.util-linux config.services.nextcloud.occ config.services.postgresql.package pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            nextcloud-occ maintenance:mode --on
+            pg_dump nextcloud -f /var/lib/nextcloud/data/postgresqlbkp.bak
+            kopia snapshot create /var/lib/nextcloud/data
+            nextcloud-occ maintenance:mode --off
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "nextcloud";
+        };
+      };
 
       systemd.services."nextcloud-setup" = {
         requires = ["postgresql.service"];
@@ -120,10 +101,6 @@
             ensureDBOwnership = true;
           }
         ];
-
-        # authentication = ''
-        #   local   all   nextcloud   md5
-        # '';
       };
 
 

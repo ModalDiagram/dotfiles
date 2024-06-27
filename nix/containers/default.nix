@@ -4,6 +4,7 @@
     ./paperless.nix
     ./nextcloud.nix
     ./hass.nix
+    ./kopia.nix
   ];
 
   options.containers1 = {
@@ -52,16 +53,15 @@
       };
     };
 
-    # Ensure the WireGuard module is enabled
-    networking.firewall.allowedUDPPorts = [ 51820 ];
 
 
     users.users.kopia = {
       uid = 1555;
       isNormalUser = true;
-      group = "users";
+      group = "backup_users";
       hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
     };
+    users.groups.backup_users.gid = 1666;
 
     networking = {
       nat = {
@@ -70,6 +70,15 @@
         externalInterface = "${config.containers1.interface}";
         # Lazy IPv6 connectivity for the container
         enableIPv6 = true;
+      };
+      firewall = {
+        # Open Wireguard port
+        allowedUDPPorts = [ 51820 ];
+        allowedTCPPorts = [ 51515 ];
+        extraCommands = ''
+            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
+            ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -p tcp --dport 51515 -j DNAT --to-destination 192.168.1.14:51515
+        '';
       };
     };
 

@@ -9,7 +9,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  environment.systemPackages = with pkgs; [ git vim gh ripgrep fd brightnessctl ];
+  environment.systemPackages = with pkgs; [ git vim gh ripgrep fd brightnessctl kopia ];
   # Rules for brightnessctl
   services.udev.extraRules = ''
         KERNEL=="event[0-9]*", SUBSYSTEM=="backlight", GROUP="video"
