@@ -9,5 +9,7 @@
     sops.secrets."network.env" = { sopsFile = ../secrets/network.env; format = "dotenv"; };
     sops.secrets.nextcloud_password = { sopsFile = ../secrets/containers.json; format = "json"; };
     sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+    sops.secrets.lenovo_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
+    sops.secrets.homelab_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
   };
 }
