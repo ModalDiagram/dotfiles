@@ -4,20 +4,41 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.13";
-    ephemeral = true;
     bindMounts = {
       "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
     };
-    # bindMounts = {
-    #   "/var/lib/paperless" = { hostPath = "/home/sserver/backup_dir/paperless_data"; isReadOnly = false; };
-    # };
     config = { config, pkgs, lib, ... }: {
+      environment.systemPackages = [ pkgs.kopia ];
+
       environment.etc."paperless_password" = {
         source = "/run/secrets/paperless_password";
         mode = "0400";
         user = "paperless";
       };
       system.stateVersion = "24.05";
+
+      systemd.timers."backup_paperless" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-* 2:00:00";
+            Unit = "backup_paperless.service";
+          };
+      };
+
+      systemd.services."backup_paperless" = {
+        path = [ config.services.postgresql.package pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            pg_dump paperless -f /var/lib/paperless/postgresqlbkp.bak
+            kopia snapshot create /var/lib/paperless
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "paperless";
+        };
+      };
 
       services.paperless = {
         enable = true;
@@ -28,8 +49,22 @@
           PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;
+          PAPERLESS_DBHOST = "/run/postgresql";
         };
       };
+
+      services.postgresql = {
+        enable = true;
+
+        # Ensure the database, user, and permissions always exist
+        ensureDatabases = [ "paperless" ];
+        ensureUsers = [
+          { name = "paperless";
+            ensureDBOwnership = true;
+          }
+        ];
+      };
+
       networking = {
         firewall = {
           enable = true;
