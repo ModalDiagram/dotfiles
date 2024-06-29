@@ -29,6 +29,7 @@
       imv
       jq
       jmtpfs
+      kopia
       linuxKernel.packages.linux_6_8.perf
       lm_sensors
       mpv
