@@ -26,7 +26,7 @@
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
-          ExecStart = "${pkgs.kopia}/bin/kopia server start --address=192.168.100.14:51515 --tls-cert-file /home/kopia/my.cert --tls-key-file /home/kopia/my.key";
+          ExecStart = "${pkgs.kopia}/bin/kopia server start --address=192.168.100.14:51515 --tls-cert-file /home/kopia/newcert.cert --tls-key-file /home/kopia/newkey.key";
           ExecStop = "${pkgs.kopia}/bin/kopia server shutdown --address=192.168.100.14:51515";
           Restart = "always";
           User = "kopia";
