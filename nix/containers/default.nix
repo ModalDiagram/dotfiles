@@ -42,7 +42,15 @@
       };
     };
 
-
+    services.ddclient = {
+      enable = true;
+      ssl = true;
+      use = "web, web='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
+      protocol = "cloudflare";
+      zone = "sanfio.eu";
+      domains = [ "sanfio.eu" "www.sanfio.eu" ];
+      passwordFile = "/run/secrets/cloudflare_token";
+    };
 
     users.users.kopia = {
       uid = 1555;
@@ -65,7 +73,7 @@
         allowedUDPPorts = [ 51820 ];
         allowedTCPPorts = [ 51515 ];
         extraCommands = ''
-            ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -p tcp --dport 51515 -j DNAT --to-destination 192.168.1.14:51515
+            ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -p tcp --dport 51515 -j DNAT --to-destination 192.168.100.14:51515
             ${pkgs.iptables}/bin/iptables -t nat -A PREROUTING -d 10.0.0.5/24 -j DNAT --to-destination 192.168.1.5
             ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j MASQUERADE
         '';

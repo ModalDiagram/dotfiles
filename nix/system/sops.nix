@@ -11,5 +11,6 @@
     sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
     sops.secrets.lenovo_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
     sops.secrets.homelab_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
+    sops.secrets.cloudflare_token = { sopsFile = ../secrets/containers.json; format = "json"; };
   };
 }
