@@ -12,5 +12,7 @@
     sops.secrets.lenovo_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
     sops.secrets.homelab_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
     sops.secrets.cloudflare_token = { sopsFile = ../secrets/containers.json; format = "json"; };
+    sops.secrets.telegram_bot_api = { sopsFile = ../secrets/telegram.json; format = "json"; };
+    sops.secrets.chat_id = { sopsFile = ../secrets/telegram.json; format = "json"; };
   };
 }

@@ -42,6 +42,12 @@
       };
     };
 
+
+    systemd.timers."ddclient" = {
+      timerConfig = {
+        Persistent = true;
+      };
+    };
     services.ddclient = {
       enable = true;
       ssl = true;
