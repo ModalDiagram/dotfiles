@@ -7,7 +7,17 @@
     bindMounts = {
       "/backup_repo" = { hostPath = "/home/kopia/backups"; isReadOnly = false; };
       "/run/secrets/nextcloud_password" = { hostPath = "/run/secrets/nextcloud_password"; };
+      # fuse is needed to mount inside the containers (eg kopia backups)
+      fuse = {
+        hostPath = "/dev/fuse"; mountPoint = "/dev/fuse"; isReadOnly = false;
+      };
     };
+    allowedDevices = [
+      {
+        modifier = "rwm";
+        node = "/dev/fuse";
+      }
+    ];
 
     config = { config, pkgs, lib, ... }: {
       environment.etc."nextcloud_password" = {

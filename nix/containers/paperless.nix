@@ -6,7 +6,18 @@
     localAddress = "192.168.100.13";
     bindMounts = {
       "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
+      # fuse is needed to mount inside the containers (eg kopia backups)
+      fuse = {
+        hostPath = "/dev/fuse"; mountPoint = "/dev/fuse"; isReadOnly = false;
+      };
     };
+    allowedDevices = [
+      {
+        modifier = "rwm";
+        node = "/dev/fuse";
+      }
+    ];
+
     config = { config, pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.kopia ];
 

@@ -4,13 +4,21 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.12";
+    allowedDevices = [
+      {
+        modifier = "rwm";
+        node = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+      }
+    ];
 
-    # bindMounts = {
-    #   "/backup_dir_hass" = { hostPath = "/home/sserver/backup_dir/hass_data"; isReadOnly = false; };
-    # };
-    # bindMounts = {
-    #   "/backup_dir_red" = { hostPath = "/home/sserver/backup_dir/nodered_data"; isReadOnly = false; };
-    # };
+    bindMounts = {
+      sonoff = {
+        hostPath = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+        mountPoint = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+        isReadOnly = false;
+      };
+    };
+
     config = { config, pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
 
