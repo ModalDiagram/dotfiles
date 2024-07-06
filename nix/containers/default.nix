@@ -43,12 +43,21 @@
     };
 
 
+    users.users.ddclient.isSystemUser = true;
+    users.users.ddclient.group = "users";
+    systemd.services.ddclient.serviceConfig.User = "ddclient";
     systemd.timers."ddclient" = {
       timerConfig = {
         Persistent = true;
       };
     };
-    services.ddclient = {
+    services.ddclient = let 
+      notify-script = pkgs.writeShellScript "notify-script.sh" ''
+        BOT_TOKEN=$(cat /run/secrets/telegram_bot_api)
+        CHAT_ID=$(cat /run/secrets/chat_id)
+        ${pkgs.curl}/bin/curl -s --data "text=Ip has changed. Restart your wireguard connections." --data "chat_id=$CHAT_ID" 'https://api.telegram.org/bot'$BOT_TOKEN'/sendMessage'
+      '';
+    in {
       enable = true;
       ssl = true;
       use = "web, web='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
@@ -56,6 +65,9 @@
       zone = "sanfio.eu";
       domains = [ "sanfio.eu" "www.sanfio.eu" ];
       passwordFile = "/run/secrets/cloudflare_token";
+      extraConfig = ''
+        postscript=${notify-script}
+      '';
     };
 
     users.users.kopia = {
