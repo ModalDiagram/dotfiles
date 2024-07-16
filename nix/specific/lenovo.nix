@@ -11,7 +11,7 @@
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
           allowedIPs = [ "10.0.0.5" ]; # The IP range for the VPN
-          endpoint = "93.65.229.123:51820"; # The server's public IP address and port
+          endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }
       ];

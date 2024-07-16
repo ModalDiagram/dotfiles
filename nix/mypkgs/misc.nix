@@ -54,6 +54,7 @@
 
       awscli2
       spice-vdagent
+      rclone
     ];
 
     services.openssh.enable = true;
