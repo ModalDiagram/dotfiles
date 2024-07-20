@@ -1,6 +1,4 @@
 { config, pkgs, lib, inputs, ... }: {
-  imports = [ inputs.hyprland.nixosModules.default ];
-
   options.mypkgs.hyprland = {
     enable = lib.mkOption {
       description = "Enable hyprland";
@@ -10,12 +8,6 @@
   };
 
   config = lib.mkIf (config.mypkgs.hyprland.enable) {
-
-    nix.settings = {
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-  };
-
     programs.hyprland.enable = true;
 
     environment.systemPackages = with pkgs; [
@@ -104,10 +96,6 @@
     };
 
     home-manager.users.${config.main-user} = {
-      imports = [
-        inputs.hyprland.homeManagerModules.default
-      ];
-
       home.packages = with pkgs; [
         alacritty
         blueberry
