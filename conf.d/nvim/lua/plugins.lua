@@ -52,6 +52,8 @@ return require('packer').startup(function(use)
   }
   use { "folke/trouble.nvim", requires = "nvim-tree/nvim-web-devicons" }
 
+  -- Folding scopes
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = [[require('config.ufo')]] }
   -- Extra LSP servers
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
   use { 'jalvesaq/Nvim-R' }
