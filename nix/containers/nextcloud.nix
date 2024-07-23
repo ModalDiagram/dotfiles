@@ -26,7 +26,7 @@
         user = "nextcloud";
       };
 
-      environment.systemPackages = [ pkgs.kopia ];
+      environment.systemPackages = [ pkgs.kopia config.services.nextcloud.occ ];
 
       systemd.timers."backup_nextcloud" = {
         wantedBy = [ "timers.target" ];
@@ -82,9 +82,11 @@
             overwritewebroot = dir;
             overwrite.cli.url = "${prot}://${host}${dir}/";
             htaccess.RewriteBase = dir;
+            trusted_proxies = [ "192.168.100.10" "10.0.0.2" ];
           };
         config.adminpassFile = "/etc/nextcloud_password";
 
+        appstoreEnable = true;
         extraAppsEnable = true;
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) calendar tasks;

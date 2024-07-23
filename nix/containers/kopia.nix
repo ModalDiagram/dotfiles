@@ -8,7 +8,7 @@
     config = { config, pkgs, lib, ... }: {
       system.stateVersion = "24.05";
 
-      environment.systemPackages = [ pkgs.kopia ];
+      environment.systemPackages = [ pkgs.kopia pkgs.rclone ];
 
       networking.firewall = {
         enable = true;
