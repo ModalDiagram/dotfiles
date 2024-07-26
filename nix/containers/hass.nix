@@ -4,20 +4,21 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.12";
-    allowedDevices = [
-      {
-        modifier = "rwm";
-        node = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-      }
-    ];
+    # Hass crashes if the device is not present
+    # allowedDevices = [
+    #   {
+    #     modifier = "rwm";
+    #     node = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+    #   }
+    # ];
 
-    bindMounts = {
-      sonoff = {
-        hostPath = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-        mountPoint = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-        isReadOnly = false;
-      };
-    };
+    # bindMounts = {
+    #   sonoff = {
+    #     hostPath = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+    #     mountPoint = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+    #     isReadOnly = false;
+    #   };
+    # };
 
     config = { config, pkgs, lib, ... }: {
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
@@ -51,7 +52,7 @@
         ];
         config = {
           homeassistant = {
-            external_url = "https://" + "${ipaddr}";
+            external_url = "https://hass.sanfio.eu";
           };
           camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
           http = {

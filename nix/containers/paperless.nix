@@ -1,4 +1,4 @@
-{ config, ... }: let ipaddr = config.containers1.ipaddr; in {
+{ ... }: {
   containers.paperless = {
     autoStart = true;
     privateNetwork = true;
@@ -56,8 +56,7 @@
         passwordFile = "/etc/paperless_password";
         address = "0.0.0.0";
         settings = {
-          PAPERLESS_URL = "https://" + "${ipaddr}";
-          PAPERLESS_FORCE_SCRIPT_NAME = "/paper";
+          PAPERLESS_URL = "https://paper.sanfio.eu";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;
           PAPERLESS_DBHOST = "/run/postgresql";

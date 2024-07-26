@@ -1,4 +1,4 @@
-{ config, ... }: let ipaddr = config.containers1.ipaddr; in {
+{ ... }: {
   containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;
@@ -26,7 +26,12 @@
         user = "nextcloud";
       };
 
-      environment.systemPackages = [ pkgs.kopia config.services.nextcloud.occ ];
+      environment.systemPackages = with pkgs; [
+        kopia
+        ffmpeg
+        exiftool
+        config.services.nextcloud.occ
+      ];
 
       systemd.timers."backup_nextcloud" = {
         wantedBy = [ "timers.target" ];
@@ -61,7 +66,7 @@
       services.nextcloud = {
         enable = true;
         package = pkgs.nextcloud29;
-        hostName = "${ipaddr}";
+        hostName = "nextcloud.sanfio.eu";
 
         # Database options
         config = {
@@ -74,14 +79,11 @@
 
         settings = let
             prot = "https"; # or https
-            host = "${ipaddr}";
-            dir = "/nextcloud";
+            host = "nextcloud.sanfio.eu";
           in {
             overwriteprotocol = prot;
             overwritehost = host;
-            overwritewebroot = dir;
-            overwrite.cli.url = "${prot}://${host}${dir}/";
-            htaccess.RewriteBase = dir;
+            overwrite.cli.url = "${prot}://${host}";
             trusted_proxies = [ "192.168.100.10" "10.0.0.2" ];
           };
         config.adminpassFile = "/etc/nextcloud_password";
