@@ -92,16 +92,6 @@
         extraAppsEnable = true;
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) calendar tasks;
-          memories = pkgs.fetchNextcloudApp {
-              sha256 = "sha256-DJPskJ4rTECTaO1XJFeOD1EfA3TQR4YXqG+NIti0UPE=";
-              url = "https://github.com/pulsejet/memories/releases/download/v7.3.1/memories.tar.gz";
-              license = "gpl3";
-          };
-          maps = pkgs.fetchNextcloudApp {
-              sha256 = "sha256-LOQBR3LM7artg9PyD8JFVO/FKVnitALDulXelvPQFb8=";
-              url = "https://github.com/nextcloud/maps/releases/download/v1.4.0/maps-1.4.0.tar.gz";
-              license = "gpl3";
-          };
         };
       };
 
