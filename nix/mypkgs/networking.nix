@@ -19,6 +19,7 @@
   config = lib.mkIf (config.mypkgs.networking.enable == true) (lib.mkMerge [
     (lib.mkIf (config.mypkgs.networking.interface == "wpa_supplicant") {
       networking.networkmanager.enable = true;
+      networking.networkmanager.wifi.powersave = true;
     })
     (lib.mkIf (config.mypkgs.networking.interface == "iwd") {
       # networking.networkmanager.enable = true;

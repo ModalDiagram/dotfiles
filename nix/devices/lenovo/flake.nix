@@ -33,7 +33,7 @@
           }
           home-manager.nixosModules.home-manager
           ../../system/sops.nix
-          ../../specific/lenovo.nix
+          ./lenovo.nix
           ../../mypkgs {
             mypkgs.hyprland.enable = true;
             mypkgs.neovim.enable = true;

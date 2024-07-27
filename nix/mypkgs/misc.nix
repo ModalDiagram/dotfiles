@@ -34,6 +34,7 @@
       lm_sensors
       mpv
       obsidian
+      onedriver
       pdftk
       pkg-config
       polkit-kde-agent
