@@ -6,6 +6,7 @@
     ./hass.nix
     ./kopia.nix
     ./monitoring.nix
+    # ./kavita.nix
   ];
 
   options.containers1 = {
@@ -39,7 +40,7 @@
             allowedIPs = [ "10.0.0.3/32" ]; # The IP address for the client on the VPN
           }
           {
-            publicKey = "BiJZ0IYgx3GCBJEKxeGHXzDELOHMKlfhgNOn24NY6Hk=";
+            publicKey = "D4bRaa5DNHTkRzyFRwu1yp3WVJ+FBNDrv9yqRwVfKRg=";
             allowedIPs = [ "10.0.0.4/32" ]; # The IP address for the client on the VPN
           }
         ];
@@ -143,6 +144,26 @@
             proxyPass = "https://192.168.100.14:51515/";
           };
         };
+        # "kavita.sanfio.eu" = {
+        #   onlySSL = true;
+        #   sslCertificate = "/var/fullchain.pem";
+        #   sslCertificateKey = "/var/privkey.pem";
+        #   extraConfig = ''
+        #     client_max_body_size 1G;
+        #   '';
+        #   locations."/" = {
+        #     extraConfig = ''
+        #       proxy_set_header X-Real-IP $remote_addr;
+        #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #       proxy_set_header X-NginX-Proxy true;
+        #       proxy_set_header X-Forwarded-Proto http;
+        #       proxy_pass http://192.168.100.15:5000/; # tailing / is important!
+        #       proxy_set_header Host $host;
+        #       proxy_cache_bypass $http_upgrade;
+        #       proxy_redirect off;
+        #     '';
+        #   };
+        # };
         "hass.sanfio.eu" = {
           onlySSL = true;
           sslCertificate = "/var/fullchain.pem";
