@@ -32,4 +32,5 @@ alias sd=". sd"
 alias sdd=". sd -d"
 alias sdc=". sd /data/dotfiles/"
 alias frc="frip /data/dotfiles/"
+alias redriver="sudo modprobe -rv rtw89_8852ce; sudo modprobe -v rtw89_8852ce"
 complete -F _fzf_file_completion -o default -o bashdefault cpi

@@ -10,7 +10,7 @@
       peers = [
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
-          allowedIPs = [ "10.0.0.5" ]; # The IP range for the VPN
+          allowedIPs = [ "10.0.0.0/24" ]; # The IP range for the VPN
           endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }
@@ -38,8 +38,10 @@
 
   # Fixes for errors with h2c https://github.com/lwfinger/rtw89/issues/282
   boot.extraModprobeConfig = ''
-    options rtw89_pci disable_aspm_l1=y disable_aspm_l1ss
-    options rtw89pci disable_aspm_l1=y disable_aspm_l1ss
+    options rtw89_pci disable_aspm_l1=Y
+    options rtw89_pci disable_aspm_l1ss=Y
+    options rtw89pci disable_aspm_l1=Y 
+    options rtw89pci disable_aspm_l1ss=Y
   '';
 
   # Fixes for amd
