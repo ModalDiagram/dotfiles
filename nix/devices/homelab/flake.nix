@@ -36,7 +36,7 @@
             };
           }
           home-manager.nixosModules.home-manager
-          ../../system/sops.nix
+          ../../mypkgs/sops.nix
           ./homelab.nix
           ../../containers {
             containers1.ipaddr = "10.0.0.5";
@@ -54,7 +54,7 @@
       projectRoot = ../../.;
       # can be changed to ".git" or "flake.nix" to get rid of .project-root
       projectRootFile = "flake.nix";
-      packagesDir = ../../dream_packages;
+      packagesDir = ../../mypkgs/dream_packages;
       packageSets.nixpkgs = nixpkgs.legacyPackages.${system};
     };
   };

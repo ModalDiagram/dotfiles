@@ -32,7 +32,7 @@
             };
           }
           home-manager.nixosModules.home-manager
-          ../../system/sops.nix
+          ../../mypkgs/sops.nix
           ./lenovo.nix
           ../../mypkgs {
             mypkgs.hyprland.enable = true;
