@@ -34,7 +34,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_8;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Fixes for errors with h2c https://github.com/lwfinger/rtw89/issues/282
   boot.extraModprobeConfig = ''
