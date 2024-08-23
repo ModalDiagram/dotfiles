@@ -39,6 +39,7 @@
       polkit-kde-agent
       powerline-go
       ripgrep
+      root
       rustup
       ncdu
       smplayer
@@ -141,9 +142,12 @@
     fonts = {
       packages = with pkgs; [
         (nerdfonts.override { fonts = [ "FiraCode" "IosevkaTerm" ]; })
+        fira
       ];
       fontconfig = {
         defaultFonts = {
+          serif = [ "FiraSans" ];
+          sansSerif = [ "FiraSans" ];
           monospace = [ "IosevkaTermNerdFont" ];
         };
       };
