@@ -35,6 +35,7 @@
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  services.tlp.enable = true;
 
   # Fixes for errors with h2c https://github.com/lwfinger/rtw89/issues/282
   boot.extraModprobeConfig = ''

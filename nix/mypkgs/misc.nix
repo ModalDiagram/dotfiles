@@ -14,7 +14,9 @@
       ctags
       dconf
       ddcutil
+      melonDS
       dolphin
+      xfce.thunar
       ferdium
       fd
       fzf
@@ -59,6 +61,7 @@
     ];
 
     services.openssh.enable = true;
+    services.gvfs.enable = true;
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
     programs.virt-manager.enable = true;
@@ -77,14 +80,6 @@
         };
       };
     };
-
-    # virtualisation.docker.enable = true;
-    # virtualisation.docker.rootless = {
-    #   enable = true;
-    #   setSocketVariable = true;
-    # };
-    services.tailscale.enable = true;
-    systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
     systemd.timers."subitoTracker" = {
       wantedBy = [ "timers.target" ];
