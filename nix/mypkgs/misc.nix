@@ -8,56 +8,61 @@
   };
   config = lib.mkIf (config.mypkgs.misc.enable) {
     environment.systemPackages = with pkgs; [
+      # Command line-related packages
       bash
       bat
       bc
       ctags
       dconf
       ddcutil
-      melonDS
-      dolphin
-      xfce.thunar
-      ferdium
       fd
       fzf
       gcc
-      gedit
-      gh
-      gimp
       glib
-      gnome.gnome-boxes
       gnumake
-      gparted
-      imv
       jq
-      jmtpfs
-      kopia
-      lm_sensors
-      mpv
-      obsidian
-      onedriver
-      pdftk
-      pkg-config
-      polkit-kde-agent
       powerline-go
       ripgrep
-      root
-      rustup
-      ncdu
-      smplayer
-      spotify
-      stow
       tldr
-      udev
-      unzip
       vim
       wget
+
+      # System packages
+      jmtpfs
+      lm_sensors
+      polkit-kde-agent
+      pkg-config
+      root
+      rustup
+      udev
+
+      # Desktop environment packages
+      dolphin
+      xfce.thunar
+      gedit
+      imv
+      mpv
+      smplayer
+
+      # Utility apps
+      ferdium
+      gh
+      gimp
+      gnome.gnome-boxes
+      gparted
+      kopia
+      ncdu
+      obsidian
+      pdftk
+      rclone
+      spotify
+      stow
+      unzip
       wev
       zip
 
-      awscli2
-      spice-vdagent
-      rclone
+      # Games
+      melonDS
     ];
 
     services.openssh.enable = true;

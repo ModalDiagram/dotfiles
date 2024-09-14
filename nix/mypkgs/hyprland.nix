@@ -14,7 +14,6 @@
       libsForQt5.qt5.qtgraphicaleffects
       libsForQt5.qt5.qtsvg
       libsForQt5.qt5ct
-      (pkgs.callPackage ./build/sddm-themes.nix {})
     ];
 
     services.flatpak.enable = true;
@@ -62,12 +61,6 @@
       TTYReset = true;
       TTYVHangup = true;
       TTYVTDisallocate = true;
-    };
-
-    services.displayManager.sddm = {
-      enable = false;
-      theme = "sugar-candy";
-      wayland.enable = true;
     };
 
     # rule 1: add access to uinput for users of group uinput
@@ -150,7 +143,9 @@
           }
         ];
         events = [
-          { event = "before-sleep"; command = "export PATH=/home/sandro0198/.nix-profile/bin/:/run/current-system/sw/bin/; bash /home/sandro0198/.local/share/my_lock/my_lock.sh"; }
+          {
+            event = "before-sleep";
+            command = "export PATH=/home/sandro0198/.nix-profile/bin/:/run/current-system/sw/bin/; bash /home/sandro0198/.local/share/my_lock/my_lock.sh"; }
         ];
       };
 
