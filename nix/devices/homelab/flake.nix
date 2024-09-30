@@ -39,7 +39,6 @@
           ../../mypkgs/sops.nix
           ./homelab.nix
           ../../containers {
-            containers1.ipaddr = "10.0.0.5";
             containers1.interface = "wlp2s0";
           }
           ../../mypkgs {

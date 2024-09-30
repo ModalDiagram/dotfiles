@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Better method with certbot
+nix-shell -p certbot
+sudo certbot certonly --manual --preferred-challenges=dns -d '*.sanfio.eu'
+
+
 # Create config file with this content
 [ req ]
 default_bits           = 4096

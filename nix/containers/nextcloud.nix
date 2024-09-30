@@ -29,9 +29,12 @@
       environment.systemPackages = with pkgs; [
         kopia
         ffmpeg
+        nodejs
         exiftool
         config.services.nextcloud.occ
       ];
+
+      services.cron.enable = true;
 
       systemd.timers."backup_nextcloud" = {
         wantedBy = [ "timers.target" ];
