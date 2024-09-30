@@ -14,10 +14,6 @@
       description = "interface to use: something like wlp1s0";
       type = lib.types.str;
     };
-    ipaddr = lib.mkOption {
-      description = "ip address where containers will be served";
-      type = lib.types.str;
-    };
   };
 
   config = {
@@ -33,14 +29,14 @@
         peers = [
           {
             publicKey = "xEm6HUXJVJmhL5qQGycHewTLfmuyWQzIlI79XAV4vC4=";
-            allowedIPs = [ "10.0.0.2/32" ]; # The IP address for the client on the VPN
+           allowedIPs = [ "10.0.0.2/32" ]; # The IP address for the client on the VPN
           }
           {
             publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
             allowedIPs = [ "10.0.0.3/32" ]; # The IP address for the client on the VPN
           }
           {
-            publicKey = "D4bRaa5DNHTkRzyFRwu1yp3WVJ+FBNDrv9yqRwVfKRg=";
+            publicKey = "ox9BtZ2FOxKlyugkjIne6J6WxOUqFgBADMjH3plJQWw=";
             allowedIPs = [ "10.0.0.4/32" ]; # The IP address for the client on the VPN
           }
         ];
@@ -56,7 +52,7 @@
         Persistent = true;
       };
     };
-    services.ddclient = let 
+    services.ddclient = let
       notify-script = pkgs.writeShellScript "notify-script.sh" ''
         BOT_TOKEN=$(cat /run/secrets/telegram_bot_api)
         CHAT_ID=$(cat /run/secrets/chat_id)
@@ -114,7 +110,7 @@
           sslCertificate = "/var/fullchain.pem";
           sslCertificateKey = "/var/privkey.pem";
           extraConfig = ''
-            client_max_body_size 1G;
+            client_max_body_size 10G;
           '';
           locations."/" = {
             extraConfig = ''
@@ -217,6 +213,44 @@
           };
         };
       };
+    };
+
+    services.samba = {
+      enable = true;
+      enableNmbd = false;
+      enableWinbindd = false;
+      openFirewall = true;
+      extraConfig = ''
+        guest account = myuser
+        map to guest = Bad User
+
+        load printers = no
+        printcap name = /dev/null
+
+        log file = /var/log/samba/client.%I
+        log level = 2
+      '';
+
+      shares = {
+        nas = {
+          "path" = "/mnt/nas";
+          "guest ok" = "yes";
+          "read only" = "no";
+        };
+      };
+    };
+    services.samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+    };
+    services.avahi = {
+      publish.enable = true;
+      publish.userServices = true;
+      # ^^ Needed to allow samba to automatically register mDNS records (without the need for an `extraServiceFile`
+      nssmdns4 = true;
+      # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
+      enable = true;
+      openFirewall = true;
     };
   };
 }
