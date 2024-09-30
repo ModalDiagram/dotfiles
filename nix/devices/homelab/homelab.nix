@@ -15,7 +15,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
-    git vim gh ripgrep fd brightnessctl kopia
+    git vim gh ripgrep fd brightnessctl kopia bat cargo
   ];
   # Rules for brightnessctl
   services.udev.extraRules = ''
@@ -29,6 +29,27 @@
     isNormalUser = true;
     uid = 1000;
   };
+
+  systemd.timers."subitoTracker" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "30m";
+        OnUnitActiveSec = "30m";
+        Unit = "subitoTracker.service";
+      };
+  };
+
+  systemd.services."subitoTracker" = let python = pkgs.python311.withPackages (ps: with ps; [ requests python-telegram-bot beautifulsoup4 ]);
+  in {
+    script = ''
+      ${python}/bin/python /home/homelab/projects/subitoTracker/src/main.py > /tmp/log1.txt
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "${config.main-user}";
+    };
+  };
+
 
   system.stateVersion = "24.05";
   home-manager.users.${config.main-user} = { config, ... }: {
