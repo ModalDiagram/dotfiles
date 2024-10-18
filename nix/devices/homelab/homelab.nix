@@ -121,6 +121,9 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 22 443 ];
+      extraCommands = ''
+        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o wlp2s0 -j MASQUERADE
+      '';
     };
   };
   networking.hostName = "homelab";

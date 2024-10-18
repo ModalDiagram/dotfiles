@@ -5,12 +5,12 @@
   environment.systemPackages = [ pkgs.wireguard-tools ];
   networking.wireguard.interfaces = {
     wg0 = {
-      ips = [ "10.0.0.2/24" ]; # The IP address for the server on the VPN
+      ips = [ "16.0.0.2/24" ]; # The IP address for the server on the VPN
       privateKeyFile = "/run/secrets/lenovo_private_wireguard";
       peers = [
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
-          allowedIPs = [ "10.0.0.0/24" ]; # The IP range for the VPN
+          allowedIPs = [ "16.0.0.0/24" "192.168.1.0/24" ]; # The IP range for the VPN
           endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }
