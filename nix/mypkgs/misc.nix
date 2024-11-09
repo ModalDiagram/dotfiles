@@ -22,6 +22,7 @@
       gnumake
       jq
       powerline-go
+      recode
       ripgrep
       tldr
       vim
@@ -67,6 +68,7 @@
 
     services.openssh.enable = true;
     services.gvfs.enable = true;
+    # services.elasticsearch.enable = true;
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
     programs.virt-manager.enable = true;

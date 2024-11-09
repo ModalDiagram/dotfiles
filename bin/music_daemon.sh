@@ -47,13 +47,13 @@ while read -r playing artist title album; do
   if [[ "$playing" == ⏹️ ]]; then printf '{"text":}\n';
   else
     playing=${playing:1};
-    artist=${artist:1};
-    title=${title:1};
-    album=${album:1};
+    artist=$(echo ${artist:1} | recode xml..utf8)
+    title=$(echo ${title:1} | recode xml..utf8)
+    album=$(echo ${album:1} | recode xml..utf8)
     # echo "$playing";
     # echo "$artist";
     # echo "$title";
-    if [[ current_id -eq "-1" ]]; then
+    if [[ $current_id -eq "-1" ]]; then
       current_id=$(notify-send -p -a spotify -t 10000 "$title" "$artist - $album")
     else
       current_id=$(notify-send -p -r "$current_id" -a spotify -t 10000 "$title" "$artist - $album")
