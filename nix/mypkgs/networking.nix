@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   options.mypkgs.networking = {
     enable = lib.mkOption {
       description = "enable network functionality";
@@ -31,6 +31,8 @@
           };
         };
       };
+
+      environment.systemPackages = [ pkgs.iwgtk ];
       # networking.networkmanager.wifi.backend = "iwd";
     })
     {
