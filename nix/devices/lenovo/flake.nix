@@ -19,7 +19,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fixed, dream2nix, sops-nix, hyprland, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, fixed, sops-nix, hyprland, ... }@inputs:
   let system = "x86_64-linux"; in {
     nixosConfigurations = {
       "lenovo" = nixpkgs.lib.nixosSystem rec {
