@@ -9,7 +9,9 @@
     # fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
     fixed.url = "nixpkgs/nixos-24.05";
 
-    dream2nix.url = "github:nix-community/dream2nix";
+    hyprland = {
+          url = "github:hyprwm/Hyprland?ref=v0.45.0";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -17,7 +19,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fixed, dream2nix, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, fixed, dream2nix, sops-nix, hyprland, ... }@inputs:
   let system = "x86_64-linux"; in {
     nixosConfigurations = {
       "lenovo" = nixpkgs.lib.nixosSystem rec {

@@ -1,4 +1,6 @@
 { config, pkgs, lib, inputs, ... }: {
+  imports = [ inputs.hyprland.nixosModules.default ];
+
   options.mypkgs.hyprland = {
     enable = lib.mkOption {
       description = "Enable hyprland";
@@ -8,7 +10,11 @@
   };
 
   config = lib.mkIf (config.mypkgs.hyprland.enable) {
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    };
 
     environment.systemPackages = with pkgs; [
       libsForQt5.qt5.qtgraphicaleffects
@@ -154,8 +160,12 @@
         systemd.enable = true;
       };
 
+      # hint Electron apps to use Wayland:
+      home.sessionVariables.NIXOS_OZONE_WL = "1";
       wayland.windowManager.hyprland = {
         enable = true;
+        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+
         xwayland.enable = true;
 
         extraConfig = "source = /data/dotfiles/conf.d/hypr/hyprland.conf";
