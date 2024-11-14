@@ -22,22 +22,22 @@
     environment.systemPackages = [ pkgs.wireguard-tools ];
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "10.0.0.1/24" ]; # The IP address for the server on the VPN
+        ips = [ "16.0.0.1/24" ]; # The IP address for the server on the VPN
         listenPort = 51820;
 
         privateKeyFile = "/run/secrets/homelab_private_wireguard";
         peers = [
           {
             publicKey = "xEm6HUXJVJmhL5qQGycHewTLfmuyWQzIlI79XAV4vC4=";
-           allowedIPs = [ "10.0.0.2/32" ]; # The IP address for the client on the VPN
+           allowedIPs = [ "16.0.0.2/32" ]; # The IP address for the client on the VPN
           }
           {
             publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
-            allowedIPs = [ "10.0.0.3/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "16.0.0.3/32" ]; # The IP address for the client on the VPN
           }
           {
             publicKey = "ox9BtZ2FOxKlyugkjIne6J6WxOUqFgBADMjH3plJQWw=";
-            allowedIPs = [ "10.0.0.4/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "16.0.0.4/32" ]; # The IP address for the client on the VPN
           }
         ];
       };
@@ -133,7 +133,8 @@
           sslCertificate = "/var/fullchain.pem";
           sslCertificateKey = "/var/privkey.pem";
           extraConfig = ''
-            client_max_body_size 1G;
+            proxy_buffering off;
+            client_max_body_size 0;
           '';
           locations."/" = {
             proxyWebsockets = true;
@@ -197,7 +198,8 @@
           sslCertificate = "/var/fullchain.pem";
           sslCertificateKey = "/var/privkey.pem";
           extraConfig = ''
-            client_max_body_size 1G;
+            proxy_buffering off;
+            client_max_body_size 0;
           '';
           locations."/" = {
             extraConfig = ''

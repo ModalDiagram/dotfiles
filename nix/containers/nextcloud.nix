@@ -87,7 +87,7 @@
             overwriteprotocol = prot;
             overwritehost = host;
             overwrite.cli.url = "${prot}://${host}";
-            trusted_proxies = [ "192.168.100.10" "10.0.0.2" ];
+            trusted_proxies = [ "192.168.100.10" "16.0.0.2" ];
           };
         config.adminpassFile = "/etc/nextcloud_password";
 
