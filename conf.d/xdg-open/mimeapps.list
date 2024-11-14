@@ -13,3 +13,4 @@ image/jpeg=imv.desktop
 text=org.gnome.gedit.desktop
 audio/mpeg=smplayer.desktop
 x-scheme-handler/obsidian=obsidian.desktop
+x-scheme-handler/discord-589393213723246592=discord-589393213723246592.desktop

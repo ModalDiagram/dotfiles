@@ -64,6 +64,7 @@
 
       # Games
       melonDS
+      atlauncher
     ];
 
     services.openssh.enable = true;

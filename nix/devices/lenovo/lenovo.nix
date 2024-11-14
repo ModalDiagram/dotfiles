@@ -1,6 +1,7 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
   system.stateVersion = "23.11";
   networking.hostName = "lenovo";
+  networking.nameservers = [ "1.1.1.1" ];
 
   environment.systemPackages = [ pkgs.wireguard-tools ];
   networking.wireguard.interfaces = {
@@ -21,7 +22,6 @@
   # Ensure the WireGuard module is enabled
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
-
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -41,7 +41,7 @@
   boot.extraModprobeConfig = ''
     options rtw89_pci disable_aspm_l1=Y
     options rtw89_pci disable_aspm_l1ss=Y
-    options rtw89pci disable_aspm_l1=Y 
+    options rtw89pci disable_aspm_l1=Y
     options rtw89pci disable_aspm_l1ss=Y
   '';
 
@@ -125,6 +125,13 @@
     description = "Sandro";
     extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" ];
   };
+
+  # services.printing.enable = true;
+  # services.avahi = {
+  #   enable = true;
+  #   nssmdns4 = true;
+  #   openFirewall = true;
+  # };
 
   systemd.timers."low-battery" = {
     wantedBy = [ "timers.target" ];
