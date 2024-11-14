@@ -15,7 +15,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
-    git vim gh ripgrep fd brightnessctl kopia bat cargo
+    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk
   ];
   # Rules for brightnessctl
   services.udev.extraRules = ''
@@ -28,6 +28,27 @@
     home = "/home/homelab";
     isNormalUser = true;
     uid = 1000;
+  };
+
+  systemd.timers."check-connectivity" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "10m";
+        OnUnitActiveSec = "10m";
+        Unit = "check-connectivity.service";
+      };
+  };
+
+  systemd.services."check-connectivity" = {
+    script = ''
+      if ! ping -q -c 1 -W 1 8.8.8.8 > /dev/null 2>&1; then
+        ${pkgs.iwd}/bin/iwctl station wlan0 connect Vodafone-C00510203;
+      fi
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "${config.main-user}";
+    };
   };
 
   systemd.timers."subitoTracker" = {
@@ -116,11 +137,19 @@
     ];
 
   networking.useDHCP = lib.mkDefault true;
-  networking.networkmanager.enable = true;
+  # networking.networkmanager.enable = true;
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      Network = {
+        EnableIPv6 = false;
+      };
+    };
+  };
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 22 443 ];
+      allowedTCPPorts = [ 80 22 443 25565 ];
       extraCommands = ''
         iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o wlp2s0 -j MASQUERADE
       '';
