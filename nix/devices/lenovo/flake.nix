@@ -42,7 +42,7 @@
             mypkgs.python.enable = true;
             mypkgs.networking = {
               enable = true;
-              interface = "iwd";
+              interface = "wpa_supplicant";
             };
             mypkgs.rlang.enable = true;
             mypkgs.sql.enable = true;

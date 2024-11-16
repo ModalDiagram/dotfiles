@@ -18,18 +18,30 @@
   };
   config = lib.mkIf (config.mypkgs.networking.enable == true) (lib.mkMerge [
     (lib.mkIf (config.mypkgs.networking.interface == "wpa_supplicant") {
-      networking.networkmanager.enable = true;
-      # networking.networkmanager.wifi.powersave = true;
+      networking.wireless.enable = true;
+      networking.wireless.userControlled.enable = true;
+
+      systemd.timers."disable_powersave" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnBootSec = "1m";
+            Unit = "disable_powersave.service";
+          };
+      };
+      systemd.services."disable_powersave".script = ''
+        ${pkgs.wirelesstools}/bin/iwconfig wlp1s0 power off
+      '';
+
+      environment.systemPackages = [ pkgs.wpa_supplicant_gui ];
+
+      networking.wireless.networks.Vodafone-C00510203.pskRaw = "c0e26f412b3077cc6e3179fac7ebecd31902c2cf541a73af168b47e504b13b5a";
+      networking.wireless.networks.Vodafone5GHz-C00510203.pskRaw = "6bedac18ff2abf97d3f9a1629662e71525bf65645aee198139d04f657d10a204";
+      networking.wireless.networks."POCO F5".pskRaw = "4345acaf2e98e22e5ca125a3606a1069a647754c16d3a31a84551b7d0cc36412";
     })
     (lib.mkIf (config.mypkgs.networking.interface == "iwd") {
       # networking.networkmanager.enable = true;
       networking.wireless.iwd = {
         enable = true;
-        settings = {
-          Network = {
-            EnableIPv6 = false;
-          };
-        };
       };
 
       environment.systemPackages = [ pkgs.iwgtk ];
@@ -109,15 +121,7 @@
           };
         };
       };
-      # networking.wireless.networks.Vodafone-C00510203.pskRaw = "c0e26f412b3077cc6e3179fac7ebecd31902c2cf541a73af168b47e504b13b5a";
-      # networking.wireless.networks."POCO F5".pskRaw = "4345acaf2e98e22e5ca125a3606a1069a647754c16d3a31a84551b7d0cc36412";
-      # networking.wireless.networks."Home&Life SuperWiFi-1E71".pskRaw = "b4d33351ac5e31987712b429f443eea91498c9651879daacd6f816612f564969";
       networking.firewall.enable = true;
-      networking.firewall.extraCommands = ''
-        iptables -A INPUT -p tcp -i wlan0 --dport 5000:5002 -j ACCEPT
-        iptables -A INPUT -p tcp -i tailscale0 --dport 5000:5002 -j ACCEPT
-      '';
-      networking.firewall.allowedTCPPorts = [ 80 443 8554 ];
     }
     (lib.mkIf (config.mypkgs.networking.bluetooth.enable) {
       hardware.bluetooth.enable = true; # enables support for Bluetooth

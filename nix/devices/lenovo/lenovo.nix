@@ -11,7 +11,7 @@
       peers = [
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
-          allowedIPs = [ "16.0.0.0/24" "192.168.1.0/24" ]; # The IP range for the VPN
+          allowedIPs = [ "16.0.0.0/24" "10.10.0.10/32" ]; # The IP range for the VPN
           endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }
@@ -37,20 +37,9 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.tlp.enable = true;
 
-  # Fixes for errors with h2c https://github.com/lwfinger/rtw89/issues/282
-  boot.extraModprobeConfig = ''
-    options rtw89_pci disable_aspm_l1=Y
-    options rtw89_pci disable_aspm_l1ss=Y
-    options rtw89pci disable_aspm_l1=Y
-    options rtw89pci disable_aspm_l1ss=Y
-  '';
-
-  # Fixes for amd
-  boot.kernelParams = ["amdgpu.gpu_recovery=1" "amdgpu.sg_display=0"];
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Needed to modify the brightness of external monitors with i2c-dev
   services.udev.extraRules = ''

@@ -89,26 +89,6 @@
     #   };
     # };
 
-    systemd.timers."subitoTracker" = {
-      wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnBootSec = "60m";
-          OnUnitActiveSec = "60m";
-          Unit = "subitoTracker.service";
-        };
-    };
-
-    systemd.services."subitoTracker" = let python = pkgs.python311.withPackages (ps: with ps; [ requests python-telegram-bot beautifulsoup4 ]);
-    in {
-      script = ''
-        ${python}/bin/python /home/sandro0198/projects/python/subitoTracker/src/main.py > /tmp/log1.txt
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        User = "${config.main-user}";
-      };
-    };
-
     services.logind.extraConfig = ''
       # don’t shutdown when power button is short-pressed
       HandlePowerKey=suspend
