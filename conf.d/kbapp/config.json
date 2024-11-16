@@ -65,7 +65,7 @@
     "up": "leftcontrol leftshift tab",
     "down": "leftcontrol tab"
   },{
-    "name": "Spotify Premium",
+    "name": "spotify",
     "left": "leftalt left",
     "right": "leftalt right",
     "search": "leftcontrol l",
