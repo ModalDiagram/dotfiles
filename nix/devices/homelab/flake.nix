@@ -42,11 +42,16 @@
           ../../mypkgs/sops.nix
           ./homelab.nix
           ../../containers {
-            containers1.interface = "wlp2s0";
+            containers1.interface = "wlan0";
           }
           ../../mypkgs {
             mypkgs.neovim.enable = true;
             mypkgs.python.enable = true;
+            mypkgs.networking = {
+              enable = true;
+              interface = "wpa_supplicant";
+              bluetooth.enable = false;
+            };
           }
         ];
       };

@@ -137,21 +137,13 @@
     ];
 
   networking.useDHCP = lib.mkDefault true;
-  # networking.networkmanager.enable = true;
-  networking.wireless.iwd = {
-    enable = true;
-    settings = {
-      Network = {
-        EnableIPv6 = false;
-      };
-    };
-  };
   networking = {
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 22 443 25565 ];
       extraCommands = ''
-        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o wlp2s0 -j MASQUERADE
+        iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o wlan0 -j MASQUERADE
       '';
     };
   };
