@@ -5,7 +5,7 @@
     ./nextcloud.nix
     ./hass.nix
     ./kopia.nix
-    ./monitoring.nix
+    # ./monitoring.nix
     # ./kavita.nix
   ];
 
@@ -177,22 +177,22 @@
             proxyPass = "http://192.168.100.12:1880";
           };
         };
-        "metrics.sanfio.eu" = {
-          onlySSL = true;
-          sslCertificate = "/var/fullchain.pem";
-          sslCertificateKey = "/var/privkey.pem";
-          extraConfig = ''
-            client_max_body_size 1G;
-          '';
-          locations."/" = {
-            proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
-          };
-          locations."/prometheus" = {
-            proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:${toString config.services.prometheus.port}";
-          };
-        };
+        # "metrics.sanfio.eu" = {
+        #   onlySSL = true;
+        #   sslCertificate = "/var/fullchain.pem";
+        #   sslCertificateKey = "/var/privkey.pem";
+        #   extraConfig = ''
+        #     client_max_body_size 1G;
+        #   '';
+        #   locations."/" = {
+        #     proxyWebsockets = true;
+        #     proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
+        #   };
+        #   locations."/prometheus" = {
+        #     proxyWebsockets = true;
+        #     proxyPass = "http://127.0.0.1:${toString config.services.prometheus.port}";
+        #   };
+        # };
         "nextcloud.sanfio.eu" = {
           onlySSL = true;
           sslCertificate = "/var/fullchain.pem";
