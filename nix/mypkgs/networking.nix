@@ -23,14 +23,19 @@
 
       systemd.timers."disable_powersave" = {
         wantedBy = [ "timers.target" ];
-          timerConfig = {
-            OnBootSec = "1m";
-            Unit = "disable_powersave.service";
-          };
+        timerConfig = {
+          OnBootSec = "1m";
+          Unit = "disable_powersave.service";
+        };
       };
-      systemd.services."disable_powersave".script = ''
-        ${pkgs.wirelesstools}/bin/iwconfig wlp1s0 power off
-      '';
+      systemd.services."disable_powersave" = {
+        wantedBy = [ "suspend.target" ];
+        after = [ "suspend.target" ];
+        script = ''
+          ${pkgs.coreutils}/bin/sleep 5
+          ${pkgs.wirelesstools}/bin/iwconfig wlp1s0 power off
+        '';
+      };
 
       environment.systemPackages = [ pkgs.wpa_supplicant_gui ];
 
