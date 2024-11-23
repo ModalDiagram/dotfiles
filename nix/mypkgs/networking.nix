@@ -40,8 +40,14 @@
       environment.systemPackages = [ pkgs.wpa_supplicant_gui ];
 
       networking.wireless.networks.Vodafone-C00510203.pskRaw = "c0e26f412b3077cc6e3179fac7ebecd31902c2cf541a73af168b47e504b13b5a";
-      networking.wireless.networks.Vodafone5GHz-C00510203.pskRaw = "6bedac18ff2abf97d3f9a1629662e71525bf65645aee198139d04f657d10a204";
-      networking.wireless.networks."POCO F5".pskRaw = "4345acaf2e98e22e5ca125a3606a1069a647754c16d3a31a84551b7d0cc36412";
+      networking.wireless.networks.Vodafone5GHz-C00510203 = {
+        pskRaw = "6bedac18ff2abf97d3f9a1629662e71525bf65645aee198139d04f657d10a204";
+        priority = 1;
+      };
+      networking.wireless.networks."POCO F5" = {
+        pskRaw = "4345acaf2e98e22e5ca125a3606a1069a647754c16d3a31a84551b7d0cc36412";
+        priority = 2;
+      };
     })
     (lib.mkIf (config.mypkgs.networking.interface == "iwd") {
       # networking.networkmanager.enable = true;
