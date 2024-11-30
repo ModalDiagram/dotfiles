@@ -170,6 +170,7 @@ return require('packer').startup(function(use)
   ------------------------------- COLORS --------------------------------------
   use({ 'rose-pine/neovim', as = 'rose-pine' })
   use { "Tsuzat/NeoSolarized.nvim"}
+  use "EdenEast/nightfox.nvim"
   -- Highlight colors in CSS files
   use { 'brenoprata10/nvim-highlight-colors' }
 

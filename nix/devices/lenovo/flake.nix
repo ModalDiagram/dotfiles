@@ -44,6 +44,10 @@
               enable = true;
               interface = "wpa_supplicant";
             };
+            mypkgs.theme = {
+              enable = true;
+              name = "xmas";
+            };
             mypkgs.rlang.enable = true;
             mypkgs.sql.enable = true;
             mypkgs.tex.enable = true;

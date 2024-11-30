@@ -1,0 +1,109 @@
+{
+  "layer": "top",
+  "margin-top": 0,
+  "margin-right": 7,
+  "margin-left": 7,
+  "margin-bottom": 7,
+  "modules-left": [
+    "idle_inhibitor",
+    "custom/my_lock",
+    "hyprland/workspaces",
+    "tray",
+  ],
+  "modules-center": [
+    "hyprland/submap",
+    "clock",
+  ],
+  "modules-right": [
+    "wireplumber",
+    "cpu",
+    "network",
+    "battery",
+    "custom/powermenu",
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+   },
+   "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": ""
+    },
+    "tooltip": false
+  },
+  "wireplumber": {
+    "scroll-step": 1,
+    "format": "{icon} {volume}%",
+    "format-muted": " Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "states": {
+      "warning": 85
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-click-middle": "cycle_sink.sh",
+    "tooltip": false
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "almost_full": 100,
+      "normal": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{icon} {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"],
+    "format-almost_full": " Full",
+    "format-charging-almost_full": " Full",
+    "format-charging": " {capacity}%",
+    "on-scroll-up": "setlight.sh + 1",
+    "on-scroll-down": "setlight.sh - 1",
+    "tooltip": false
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%H:%M, %d %B}",
+    "tooltip": true,
+	  "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "on-click": "gsimplecal"
+  },
+  "cpu": {
+    "interval": 10,
+    "format": " {usage}%"
+  },
+  "network": {
+    "interval": 1,
+    "format-wifi": "󰤨",
+    "format-ethernet": "󰈀",
+    "format-linked": "󰤟",
+    "format-disconnected": "",
+    "tooltip-format": "{essid}",
+    "on-click": "iwgtk",
+    "max-length": 6,
+    "tooltip": true
+  },
+  "custom/powermenu": {
+    "format": "",
+    "on-click": "sleep 0.1 && power-menu",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 5
+  },
+  "custom/my_lock": {
+    "exec": "~/.local/share/my_lock/module_lock.sh",
+    "format": "{}",
+    "on-click": "~/.local/share/my_lock/module_lock.sh toggle",
+    "signal": 11,
+    "interval": "once",
+  },
+}

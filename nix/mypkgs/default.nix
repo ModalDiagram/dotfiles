@@ -9,5 +9,6 @@
     ./sql.nix
     ./tex.nix
     ./misc.nix
+    ./appearance.nix
   ];
 }
