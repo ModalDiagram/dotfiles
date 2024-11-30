@@ -1,11 +1,11 @@
 [
   {
     "name": "firefox",
-    "up": "leftcontrol leftshift tab",
-    "left": "leftalt left",
-    "right": "leftalt right",
-    "down": "leftcontrol tab",
-    "rightdown": "leftcontrol delete",
+    "3up": "leftcontrol leftshift tab",
+    "3left": "leftalt left",
+    "3right": "leftalt right",
+    "3down": "leftcontrol tab",
+    "3rightdown": "leftcontrol delete",
     "key_d": "leftcontrol delete",
     "key_k": "leftcontrol leftshift tab",
     "key_j": "leftcontrol tab",
@@ -17,69 +17,69 @@
     "key_S": "leftalt up"
   },{
     "name": "obsidian",
-    "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab",
-    "left": "leftalt leftcontrol left",
-    "right": "leftalt leftcontrol right",
-    "rightdown": "leftcontrol w",
+    "3up": "leftcontrol leftshift tab",
+    "3down": "leftcontrol tab",
+    "3left": "leftalt leftcontrol left",
+    "3right": "leftalt leftcontrol right",
+    "3rightdown": "leftcontrol w",
     "tab_topright": "p",
     "tab_botright": "h"
   },{
     "name": "com.github.xournalpp.xournalpp",
-    "up": "pageup",
-    "down": "pagedown",
+    "3up": "pageup",
+    "3down": "pagedown",
     "tab_topright": "pageup",
     "tab_botright": "pagedown"
   },{
     "name": "ferdium",
-    "up": "leftcontrol leftalt left",
-    "down": "leftcontrol leftalt right",
-    "left": "leftalt left",
-    "right": "leftalt right"
+    "3up": "leftcontrol leftalt left",
+    "3down": "leftcontrol leftalt right",
+    "3left": "leftalt left",
+    "3right": "leftalt right"
   },{
     "name": "impress",
-    "up": "pageup",
-    "down": "pagedown"
+    "3up": "pageup",
+    "3down": "pagedown"
   },{
     "name": "org.kde.okular",
-    "up": "pageup",
-    "down": "pagedown",
+    "3up": "pageup",
+    "3down": "pagedown",
     "tab_topright": "left",
     "tab_botright": "right",
     "search": "f7"
   },{
     "name": ".java",
-    "left": "leftalt left",
-    "right": "leftalt right",
-    "rightdown": "leftcontrol f4"
+    "3left": "leftalt left",
+    "3right": "leftalt right",
+    "3rightdown": "leftcontrol f4"
   },{
     "name": "org.kde.dolphin",
-    "left": "leftalt left",
-    "right": "leftalt right",
-    "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab"
+    "3left": "leftalt left",
+    "3right": "leftalt right",
+    "3up": "leftcontrol leftshift tab",
+    "3down": "leftcontrol tab"
   },{
     "name": "chromium-browser",
-    "left": "leftalt left",
-    "right": "leftalt right",
-    "up": "leftcontrol leftshift tab",
-    "down": "leftcontrol tab"
+    "3left": "leftalt left",
+    "3right": "leftalt right",
+    "3up": "leftcontrol leftshift tab",
+    "3down": "leftcontrol tab"
   },{
     "name": "spotify",
-    "left": "leftalt left",
-    "right": "leftalt right",
+    "3left": "leftalt left",
+    "3right": "leftalt right",
     "search": "leftcontrol l",
-    "down": "exec:playerctl -p spotify next",
-    "up": "exec:playerctl -p spotify previous"
+    "3down": "exec:playerctl -p spotify next",
+    "3up": "exec:playerctl -p spotify previous"
   },{
     "name": "default",
-    "up": "leftmeta leftshift tab",
-    "down": "leftmeta tab",
-    "left": "leftmeta h",
-    "right": "leftmeta l",
-    "leftup": "leftmeta n",
-    "rightup": "leftmeta tab",
-    "leftdown": "leftmeta shift tab",
+    "3up": "leftmeta leftshift tab",
+    "3down": "leftmeta tab",
+    "3left": "leftmeta h",
+    "3right": "leftmeta l",
+    "3leftup": "leftmeta n",
+    "3rightup": "leftmeta tab",
+    "3leftdown": "leftmeta shift tab",
     "3hold": "leftcontrol mouse:left",
     "4hold": "leftshift mouse:left"
   }
