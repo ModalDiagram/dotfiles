@@ -46,6 +46,7 @@
       smplayer
 
       # Utility apps
+      arduino-ide
       ferdium
       gh
       gimp

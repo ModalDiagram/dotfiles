@@ -112,7 +112,7 @@
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" "dialout" ];
   };
 
   # services.printing.enable = true;
