@@ -26,7 +26,7 @@ tooltip label {
 
 #workspaces button:hover {
   border-radius: 0px;
-  border: none;
+  /* border: none; */
   box-shadow: none;
   text-shadow: none;
   border-bottom: 2px solid #643f61;
@@ -46,7 +46,7 @@ tooltip label {
   border-bottom: 2px solid @alarm;
 }
 
-#battery.charging, #battery.plugged:hover, #battery.almost_full {
+#battery.charging, #battery.plugged:hover {
   border-bottom: 2px solid #ac5402;
 }
 

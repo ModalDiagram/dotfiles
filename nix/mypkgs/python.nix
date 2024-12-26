@@ -9,6 +9,7 @@ my_python_packages = ps: with ps; [
   notebook
   numpy
   matplotlib
+  opencv4
   pandas
   plotly
   pynvim
