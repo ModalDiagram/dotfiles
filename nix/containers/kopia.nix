@@ -10,14 +10,38 @@
 
       environment.systemPackages = [ pkgs.kopia pkgs.rclone ];
 
+      services.resolved.enable = true;
+
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 51515 ];
       };
+      networking.useHostResolvConf = lib.mkForce false;
+
       users.users.kopia = {
         uid = 1555;
         isNormalUser = true;
         hashedPassword = "$y$j9T$Q.HD.crPHZVbigguUI.GV1$PTyklFYrHy/oQn/Bl.uEvyuXFqAVzy7qxq.mY7SH3B9";
+      };
+
+      systemd.timers."backup_ext" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-* 4:00:00";
+            Unit = "backup_ext.service";
+          };
+      };
+
+      systemd.services."backup_ext" = {
+        path = [ pkgs.rclone ];
+        script = ''
+          ${pkgs.kopia}/bin/kopia repo sync-to rclone --remote-path=onedrive:repo1
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "kopia";
+        };
       };
 
       systemd.services.kopia-server = {
