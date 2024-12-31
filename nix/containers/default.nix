@@ -97,7 +97,26 @@
 
     services.nginx = {
       enable = true;
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
       recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+
+      appendHttpConfig = ''
+        # Add HSTS header with preloading to HTTPS requests.
+        # Adding this header to HTTP requests is discouraged
+        map $scheme $hsts_header {
+            https   "max-age=31536000; includeSubdomains; preload";
+        }
+        add_header Strict-Transport-Security $hsts_header;
+
+        # Enable CSP for your services.
+        #add_header Content-Security-Policy "script-src 'self'; object-src 'none'; base-uri 'none';" always;
+
+        # Minimize information leaked to other domains
+        add_header 'Referrer-Policy' 'origin-when-cross-origin';
+      '';
+
       virtualHosts = {
         "_" = {
           listen = [ { addr = "0.0.0.0"; port = 80; } ];
