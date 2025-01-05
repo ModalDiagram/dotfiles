@@ -53,7 +53,7 @@ return require('packer').startup(function(use)
   use { "folke/trouble.nvim", requires = "nvim-tree/nvim-web-devicons" }
 
   -- Folding scopes
-  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = [[require('config.ufo')]] }
+  -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async', config = [[require('config.ufo')]] }
   -- Extra LSP servers
   use { "mfussenegger/nvim-jdtls", after = "nvim-lspconfig", config = [[require('config.jdtls')]] }
   use { 'jalvesaq/Nvim-R' }
@@ -111,7 +111,7 @@ return require('packer').startup(function(use)
 
   ---------------------------- UTILITIES --------------------------------------
   -- Git plugins
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]], tag = "v0.0.1" }
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim', config = [[require('config.neogit')]] }
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim', config = [[require('config.diffview')]] }
 
   -- show and trim trailing whitespaces
