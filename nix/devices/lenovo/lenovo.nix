@@ -176,6 +176,7 @@
       ".config/kbapp/".source                 = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/kbapp";
       ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";
       ".config/xournalpp/toolbar.ini".source  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/xournalpp/toolbar.ini";
+      ".mozilla/firefox/wsjk7r2r.default/chrome/userChrome.css".source  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/mozilla/userChrome.css";
     };
 
     # The state version is required and should stay at the version you
