@@ -1,4 +1,4 @@
-import = ["/home/sandro0198/.config/alacritty/theme.toml"]
+general.import = ["/home/sandro0198/.config/alacritty/theme.toml"]
 
 [[keyboard.bindings]]
 action = "SpawnNewInstance"

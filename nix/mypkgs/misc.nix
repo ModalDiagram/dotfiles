@@ -50,7 +50,7 @@
       ferdium
       gh
       gimp
-      gnome.gnome-boxes
+      gnome-boxes
       gparted
       kopia
       ncdu

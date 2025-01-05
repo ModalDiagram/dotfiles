@@ -81,17 +81,15 @@
     systemd.user.services.opentabletdriver.wantedBy = [ "default.target" ];
 
 
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       ## radv: an open-source Vulkan driver from freedesktop
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
 
       ## amdvlk is an alternative driver
       ## libGL is needed for many electron apps; mesa and libva for steam
-      extraPackages = with pkgs; [ amdvlk libGL mesa libva ];
+      extraPackages = with pkgs; [ amdvlk libGL mesa libva rocmPackages.clr.icd ];
       extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
-      setLdLibraryPath = true;
     };
 
     home-manager.users.${config.main-user} = {
@@ -103,8 +101,8 @@
         gh
         glib # gsettings
         # dracula-theme # gtk theme
-        gnome3.adwaita-icon-theme  # default gnome cursors
-        gnome.zenity
+        adwaita-icon-theme  # default gnome cursors
+        zenity
         gojq
         grim # screenshot functionality
         gsimplecal
