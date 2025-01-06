@@ -30,28 +30,8 @@
     uid = 1000;
   };
 
-  systemd.timers."check-connectivity" = {
-    wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "10m";
-        OnUnitActiveSec = "10m";
-        Unit = "check-connectivity.service";
-      };
-  };
-
-  systemd.services."check-connectivity" = {
-    script = ''
-      if ! ping -q -c 1 -W 1 8.8.8.8 > /dev/null 2>&1; then
-        ${pkgs.iwd}/bin/iwctl station wlan0 connect Vodafone-C00510203;
-      fi
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "${config.main-user}";
-    };
-  };
-
   systemd.timers."subitoTracker" = {
+    enable = false;
     wantedBy = [ "timers.target" ];
       timerConfig = {
         OnBootSec = "30m";
