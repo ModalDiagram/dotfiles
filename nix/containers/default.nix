@@ -29,10 +29,10 @@
         peers = [
           {
             publicKey = "xEm6HUXJVJmhL5qQGycHewTLfmuyWQzIlI79XAV4vC4=";
-           allowedIPs = [ "16.0.0.2/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "16.0.0.2/32" ]; # The IP address for the client on the VPN
           }
           {
-            publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
+            publicKey = "Vags59KzjejAXHPfmHRTDBm6/9+7HGSqOUK3mjuuzgE=";
             allowedIPs = [ "16.0.0.3/32" ]; # The IP address for the client on the VPN
           }
           {
@@ -61,7 +61,8 @@
     in {
       enable = true;
       ssl = true;
-      use = "web, web='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
+      usev4 = "webv4, webv4='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
+      usev6 = "";
       protocol = "cloudflare";
       zone = "sanfio.eu";
       domains = [ "sanfio.eu" "www.sanfio.eu" ];
@@ -238,21 +239,15 @@
 
     services.samba = {
       enable = true;
-      enableNmbd = false;
-      enableWinbindd = false;
+      nmbd.enable = false;
+      winbindd.enable = false;
       openFirewall = true;
-      extraConfig = ''
-        guest account = myuser
-        map to guest = Bad User
 
-        load printers = no
-        printcap name = /dev/null
-
-        log file = /var/log/samba/client.%I
-        log level = 2
-      '';
-
-      shares = {
+      settings = {
+        global = {
+          "guest account" = "myuser";
+          "map to guest" = "Bad User";
+        };
         nas = {
           "path" = "/mnt/nas";
           "guest ok" = "yes";
