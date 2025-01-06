@@ -86,7 +86,17 @@
       };
     };
 
-    users.users.nginx.extraGroups = [ "acme" ];
+    security.acme = {
+      acceptTerms = true;
+      defaults = {
+        email = "acme@sanfio.eu";
+        extraLegoFlags = [ "--dns.propagation-wait" "10s" ];
+        dnsProvider = "cloudflare";
+        credentialFiles = {
+         "CLOUDFLARE_DNS_API_TOKEN_FILE" = "/run/secrets/cloudflare_token";
+        };
+      };
+    };
 
     services.nginx = {
       enable = true;
@@ -119,8 +129,8 @@
         };
         "paper.sanfio.eu" = {
           onlySSL = true;
-          sslCertificate = "/var/fullchain.pem";
-          sslCertificateKey = "/var/privkey.pem";
+          enableACME = true;
+          acmeRoot = null;
           extraConfig = ''
             client_max_body_size 10G;
           '';
@@ -142,8 +152,8 @@
         };
         "kopia.sanfio.eu" = {
           onlySSL = true;
-          sslCertificate = "/var/fullchain.pem";
-          sslCertificateKey = "/var/privkey.pem";
+          enableACME = true;
+          acmeRoot = null;
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
@@ -175,8 +185,8 @@
         # };
         "hass.sanfio.eu" = {
           onlySSL = true;
-          sslCertificate = "/var/fullchain.pem";
-          sslCertificateKey = "/var/privkey.pem";
+          enableACME = true;
+          acmeRoot = null;
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -207,8 +217,8 @@
         # };
         "nextcloud.sanfio.eu" = {
           onlySSL = true;
-          sslCertificate = "/var/fullchain.pem";
-          sslCertificateKey = "/var/privkey.pem";
+          enableACME = true;
+          acmeRoot = null;
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
