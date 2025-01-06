@@ -42,7 +42,7 @@
             mypkgs.python.enable = true;
             mypkgs.networking = {
               enable = true;
-              interface = "wpa_supplicant";
+              interface = "networkmanager";
             };
             mypkgs.theme = {
               enable = true;

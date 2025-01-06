@@ -50,18 +50,19 @@
       };
     })
     (lib.mkIf (config.mypkgs.networking.interface == "iwd") {
-      # networking.networkmanager.enable = true;
       networking.wireless.iwd = {
         enable = true;
       };
 
       environment.systemPackages = [ pkgs.iwgtk ];
+      # networking.networkmanager.enable = true;
       # networking.networkmanager.wifi.backend = "iwd";
     })
-    {
+    (lib.mkIf (config.mypkgs.networking.interface == "networkmanager") {
+      networking.networkmanager.enable = true;
       # to connect to WLUCTSTUD
       # nmcli connection add type wifi con-name "WLUCTSTUD1" ifname wlp1s0 ssid "WLUCTSTUD" wifi-sec.key-mgmt wpa-eap 802-1x.identity "frtsdr01p21f209u@studium.unict.it" 802-1x.password <PASSWORD> 802-1x.system-ca-certs no 802-1x.eap "peap" 802-1x.phase2-auth mschapv2
-      networking.networkmanager.ensureProfiles.environmentFiles = [ 
+      networking.networkmanager.ensureProfiles.environmentFiles = [
         "/run/secrets/network.env"
       ];
       networking.networkmanager.ensureProfiles.profiles = {
@@ -132,6 +133,8 @@
           };
         };
       };
+    })
+    {
       networking.firewall.enable = true;
     }
     (lib.mkIf (config.mypkgs.networking.bluetooth.enable) {

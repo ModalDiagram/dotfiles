@@ -37,6 +37,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.tlp.enable = true;
 
+  boot.extraModprobeConfig = ''
+    options rtw89_core disable_ps_mode=y
+  '';
+
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
