@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;
@@ -19,7 +19,8 @@
       }
     ];
 
-    config = { config, pkgs, lib, ... }: {
+    config = { config, lib, ... }: {
+      nixpkgs.pkgs = pkgs;
       environment.etc."nextcloud_password" = {
         source = "/run/secrets/nextcloud_password";
         mode = "0400";
@@ -68,7 +69,7 @@
 
       services.nextcloud = {
         enable = true;
-        package = pkgs.nextcloud29;
+        package = pkgs.nextcloud30;
         hostName = "nextcloud.sanfio.eu";
 
         # Database options

@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   containers.paperless = {
     autoStart = true;
     privateNetwork = true;
@@ -18,7 +18,8 @@
       }
     ];
 
-    config = { config, pkgs, lib, ... }: {
+    config = { config, lib, ... }: {
+      nixpkgs.pkgs = pkgs;
       environment.systemPackages = [ pkgs.kopia ];
 
       environment.etc."paperless_password" = {

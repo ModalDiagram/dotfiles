@@ -1,4 +1,4 @@
-{ node-red-home-assistant, node-red-contrib-sunevents, ... }: {
+{ node-red-home-assistant, node-red-contrib-sunevents, pkgs, ... }: {
   systemd.services."container@hass".serviceConfig = {
     DeviceAllow = "char-usb_device rwm";
   };
@@ -24,14 +24,15 @@
       };
     };
 
-    config = { config, pkgs, lib, ... }: {
+    config = { config, lib, ... }: {
+      nixpkgs.pkgs = pkgs;
       environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
 
-      systemd.tmpfiles.rules = [
-        "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
-        "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
-        "L ${config.services.node-red.userDir}/node_modules/node-red-home-assistant 0755 node-red node-red - ${node-red-home-assistant}/lib/node_modules/node-red-home-assistant"
-      ];
+      # systemd.tmpfiles.rules = [
+        # "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
+        # "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
+        # "L ${config.services.node-red.userDir}/node_modules/node-red-home-assistant 0755 node-red node-red - ${node-red-home-assistant}/lib/node_modules/node-red-home-assistant"
+      # ];
 
       services.node-red = {
         enable = true;

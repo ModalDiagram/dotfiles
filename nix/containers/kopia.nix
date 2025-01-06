@@ -1,11 +1,12 @@
-{ ... }: {
+{ pkgs, ... }: {
   containers.kopia = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.14";
 
-    config = { config, pkgs, lib, ... }: {
+    config = { config, lib, ... }: {
+      nixpkgs.pkgs = pkgs;
       system.stateVersion = "24.05";
 
       environment.systemPackages = [ pkgs.kopia pkgs.rclone ];
