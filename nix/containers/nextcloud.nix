@@ -72,6 +72,10 @@
         package = pkgs.nextcloud30;
         hostName = "nextcloud.sanfio.eu";
 
+        # for cache
+        configureRedis = true;
+        phpOptions."opcache.interned_strings_buffer" = "16";
+
         # Database options
         config = {
           dbtype = "pgsql";
@@ -88,9 +92,9 @@
             overwriteprotocol = prot;
             overwritehost = host;
             overwrite.cli.url = "${prot}://${host}";
-            trusted_proxies = [ "192.168.100.10" "16.0.0.2" ];
+            trusted_proxies = [ "192.168.100.10" ];
             maintenance_window_start = 1;
-            opcache.interned_strings_buffer = 64;
+            default_phone_region = "IT";
           };
         config.adminpassFile = "/etc/nextcloud_password";
 
