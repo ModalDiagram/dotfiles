@@ -1,13 +1,24 @@
 { pkgs, ... }: {
+  sops.secrets.kopia_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+
   containers.kopia = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.14";
 
+    bindMounts = {
+      "/run/secrets/kopia_password" = { hostPath = "/run/secrets/kopia_password"; };
+    };
     config = { config, lib, ... }: {
       nixpkgs.pkgs = pkgs;
       system.stateVersion = "24.05";
+
+      environment.etc."kopia_password" = {
+        source = "/run/secrets/kopia_password";
+        mode = "0400";
+        user = "kopia";
+      };
 
       environment.systemPackages = [ pkgs.kopia pkgs.rclone ];
 
@@ -49,9 +60,11 @@
         description = "Kopia Repository Server";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
+        script = ''
+          ${pkgs.kopia}/bin/kopia server start --address=192.168.100.14:51515 --tls-cert-file /home/kopia/newcert.cert --tls-key-file /home/kopia/newkey.key --server-control-username=kopia --server-control-password=$(cat /etc/kopia_password)
+        '';
 
         serviceConfig = {
-          ExecStart = "${pkgs.kopia}/bin/kopia server start --address=192.168.100.14:51515 --tls-cert-file /home/kopia/newcert.cert --tls-key-file /home/kopia/newkey.key --server-control-username=kopia --server-control-password=kopia";
           ExecStop = "${pkgs.kopia}/bin/kopia server shutdown --address=192.168.100.14:51515";
           Restart = "always";
           User = "kopia";

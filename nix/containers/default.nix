@@ -17,6 +17,7 @@
   };
 
   config = {
+    sops.secrets.homelab_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
 
     # Wireguard setup
     environment.systemPackages = [ pkgs.wireguard-tools ];
@@ -43,10 +44,8 @@
       };
     };
 
+    sops.secrets.cloudflare_token = { sopsFile = ../secrets/containers.json; format = "json"; };
 
-    users.users.ddclient.isSystemUser = true;
-    users.users.ddclient.group = "users";
-    systemd.services.ddclient.serviceConfig.User = "ddclient";
     systemd.timers."ddclient" = {
       timerConfig = {
         Persistent = true;

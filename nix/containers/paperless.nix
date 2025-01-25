@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+
   containers.paperless = {
     autoStart = true;
     privateNetwork = true;

@@ -1,4 +1,6 @@
 { pkgs, ... }: {
+  sops.secrets.nextcloud_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+
   containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;

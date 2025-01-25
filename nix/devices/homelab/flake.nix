@@ -47,6 +47,7 @@
           ../../mypkgs {
             mypkgs.neovim.enable = true;
             mypkgs.python.enable = true;
+            mypkgs.tex.enable = true;
             mypkgs.networking = {
               enable = true;
               interface = "wpa_supplicant";
