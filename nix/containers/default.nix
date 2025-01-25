@@ -82,6 +82,7 @@
       };
       firewall = {
         # Open Wireguard port
+        allowedTCPPorts = [ 8888 ];
         allowedUDPPorts = [ 51820 ];
       };
     };
@@ -254,6 +255,14 @@
           "path" = "/mnt/nas";
           "guest ok" = "yes";
           "read only" = "no";
+        };
+        homelab = {
+          "path" = "/mnt/homelab";
+          "read only" = "no";
+          "valid users" = "homelab";
+          "public" = "no";
+          "writable" = "yes";
+          "browsable" = "yes";
         };
       };
     };
