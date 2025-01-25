@@ -30,6 +30,41 @@
     uid = 1000;
   };
 
+  systemd.timers."kopia_backup" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        Persistent = true;
+        OnCalendar = "*-*-* 2:00:00";
+        Unit = "kopia_backup.service";
+      };
+  };
+
+  systemd.services."kopia_backup" = {
+    wants = [ "bw_backup.service" ];
+    path = [ pkgs.kopia ];
+    script = ''
+      kopia snapshot create /mnt/homelab/backup/
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  sops.secrets.bw_session = { sopsFile = ../../secrets/containers.json; format = "json"; };
+  sops.secrets.backup_password = { sopsFile = ../../secrets/containers.json; format = "json"; };
+
+  systemd.services."bw_backup" = {
+    path = [ pkgs.bitwarden-cli pkgs.openssl ];
+    script = ''
+      export BW_SESSION=$(cat /run/secrets/bw_session)
+      export BACKUP_PASSWORD=$(cat /run/secrets/backup_password)
+      export BITWARDENCLI_APPDATA_DIR=/root/.config/bitwarden
+      bw export --raw --session $BW_SESSION --format json | openssl enc -aes-256-cbc -pbkdf2 -iter 600000 -k $BACKUP_PASSWORD -out /mnt/homelab/backup/bw_export.enc
+      chown homelab /mnt/homelab/backup/bw_export.enc
+    '';
+  };
+
   systemd.timers."subitoTracker" = {
     enable = false;
     wantedBy = [ "timers.target" ];
