@@ -5,6 +5,7 @@
     ./nextcloud.nix
     ./hass.nix
     ./kopia.nix
+    ./docker.nix
     # ./monitoring.nix
     # ./kavita.nix
   ];
@@ -197,6 +198,18 @@
           locations."/red" = {
             proxyWebsockets = true;
             proxyPass = "http://192.168.100.12:1880";
+          };
+        };
+        "stocks.sanfio.eu" = {
+          onlySSL = true;
+          enableACME = true;
+          acmeRoot = null;
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:3333";
           };
         };
         # "metrics.sanfio.eu" = {
