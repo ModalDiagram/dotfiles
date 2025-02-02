@@ -16,10 +16,18 @@
       };
   };
 
+  sops.secrets.bearer_ghostfolio = { sopsFile = ../secrets/containers.json; format = "json"; owner = "homelab"; };
+
   systemd.services."backup_ghostfolio" = {
     path = [ pkgs.curl ];
     script = ''
-      curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4ZmZmMjQxLWUwYTEtNGQ2My1iMWI5LTBlOGQyMjUyMzRmYiIsImlhdCI6MTczODM2MTMyMCwiZXhwIjoxNzUzOTEzMzIwfQ.tB2HjC5KTj9g4XXoGcYWc544NvVYvj_Az6jZwDBEMmE" https://stocks.sanfio.eu/api/v1/export > /mnt/homelab/backup/ghostfolio/backup.json
+      bearer_token=$(cat /run/secrets/bearer_ghostfolio)
+      res=$(curl -H "Authorization: Bearer $bearer_token" https://stocks.sanfio.eu/api/v1/export)
+      if [[ -n "$res" ]]; then
+        if [[ "''${res:0:1}" == "{" ]]; then
+          echo "$res" > /mnt/homelab/backup/ghostfolio/backup.json;
+        fi
+      fi
     '';
     serviceConfig = {
       Type = "oneshot";
