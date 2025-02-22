@@ -1,7 +1,8 @@
 { config, lib, pkgs, modulesPath, inputs, ... }: {
   system.stateVersion = "23.11";
   networking.hostName = "lenovo";
-  networking.nameservers = [ "1.1.1.1" ];
+  # networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  # system.nssDatabases.hosts = [ "files" "mymachines" "dns" "myhostname" ];
 
   environment.systemPackages = [ pkgs.wireguard-tools ];
   networking.wireguard.interfaces = {
@@ -11,7 +12,7 @@
       peers = [
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
-          allowedIPs = [ "16.0.0.0/24" "10.10.0.10/32" ]; # The IP range for the VPN
+          allowedIPs = [ "16.0.0.0/24" "10.10.0.125/32" ]; # The IP range for the VPN
           endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }

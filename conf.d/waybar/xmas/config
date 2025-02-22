@@ -87,7 +87,7 @@
     "format-linked": "󰤟",
     "format-disconnected": "",
     "tooltip-format": "{essid}",
-    "on-click": "iwgtk",
+    "on-click": "alacritty --title network_selector -e nmtui",
     "max-length": 6,
     "tooltip": true
   },
@@ -104,6 +104,7 @@
     "exec": "~/.local/share/my_lock/module_lock.sh",
     "format": "{}",
     "on-click": "~/.local/share/my_lock/module_lock.sh toggle",
+    "on-click-right": "swaylock",
     "signal": 11,
     "interval": "once",
   },
