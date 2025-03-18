@@ -161,7 +161,7 @@
 
         xwayland.enable = true;
 
-        extraConfig = "source = /data/dotfiles/conf.d/hypr/hyprland.conf";
+        extraConfig = "source = $HOME/.config/hypr/other/hyprland.conf";
       };
     };
   };

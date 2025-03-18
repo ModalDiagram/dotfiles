@@ -177,6 +177,7 @@
       ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/libinput-gestures/libinput-gestures.conf";
       ".config/alacritty/alacritty.toml".source             = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/alacritty/alacritty.toml";
       ".config/hypr/hyprpaper.conf".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/hypr/hyprpaper.conf";
+      ".config/hypr/other/".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/hypr/";
       ".config/nvim/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/nvim";
       ".config/kbapp/".source                 = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/kbapp";
       ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";

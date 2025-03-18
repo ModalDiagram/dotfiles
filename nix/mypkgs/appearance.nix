@@ -11,24 +11,15 @@
       default = "";
     };
   };
-  # options.mypkgs.appearance = {
-  #   enable = lib.mkOption {
-  #     description = "Enable theme management";
-  #     type = lib.type.bool;
-  #   };
-  #   name = lib.mkOption {
-  #     description = "Name of the theme to enable";
-  #     type = lib.type.string;
-  #   };
-  # };
 
   config = lib.mkIf (config.mypkgs.theme.enable) {
     home-manager.users.${config.main-user} = let name = config.mypkgs.theme.name; in { config, ... }: {
       home.file = let config_path = "/data/dotfiles"; in {
-        ".config/alacritty/theme.toml".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/alacritty/${name}/theme.toml";
-        ".config/mako/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/mako/${name}";
-        ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/waybar/${name}";
-        ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wofi/${name}";
+        ".config/alacritty/theme.toml".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/alacritty/theme.toml";
+        ".config/mako/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/mako/";
+        ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/waybar/";
+        ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/wofi/";
+        ".config/hypr/theme.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/hypr/theme.conf";
       };
     };
   };
