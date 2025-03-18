@@ -26,6 +26,7 @@
         rust-analyzer
         shellcheck
         texlab
+        typescript-language-server
         tree-sitter
       ];
     };
