@@ -16,6 +16,22 @@
     "key_J": "leftalt leftshift down",
     "key_S": "leftalt up"
   },{
+    "name": "zen",
+    "3up": "leftcontrol leftshift tab",
+    "3left": "leftalt left",
+    "3right": "leftalt right",
+    "3down": "leftcontrol tab",
+    "3rightdown": "leftcontrol w",
+    "key_d": "leftcontrol delete",
+    "key_k": "leftcontrol leftshift tab",
+    "key_j": "leftcontrol tab",
+    "key_l": "down",
+    "key_h": "up",
+    "search": "leftalt d",
+    "delete": "ctrl delete",
+    "key_J": "leftalt leftshift down",
+    "key_S": "leftalt up"
+  },{
     "name": "obsidian",
     "3up": "leftcontrol leftshift tab",
     "3down": "leftcontrol tab",

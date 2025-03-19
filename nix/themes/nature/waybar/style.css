@@ -1,0 +1,72 @@
+@define-color alarm #a5222f;
+@define-color regular_text #cfcdcc;
+@define-color hl_text #cfcdcc;
+
+* {
+  font-family: 'IosevkaTerm Nerd Font Mono';
+	font-size: 8pt;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  background: transparent;
+}
+
+window#waybar {
+      background: rgba(17, 17, 27, 0.8); /* Semi-transparent */
+}
+
+tooltip {
+  background: #e4dcd4;
+}
+
+tooltip label {
+  color: @hl_text;
+}
+
+#tray, #submap, #clock, #memory, #cpu, #wireplumber, #network, #battery, #custom-powermenu, #idle_inhibitor, #custom-my_lock {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: @regular_text;
+}
+
+#workspaces {
+  /* background-color: #3c3836; */
+  color: @regular_text;
+}
+
+#workspaces button {
+  color: @regular_text;
+}
+
+#workspaces button:hover {
+  border-radius: 0px;
+  /* border: none; */
+  box-shadow: none;
+  text-shadow: none;
+  border-bottom: 2px solid #643f61;
+}
+
+#workspaces button.active {
+  border-radius: 0px;
+  border-bottom: 2px solid @hl_text;
+}
+
+#workspaces button.urgent {
+  border-radius: 0px;
+  border-bottom: 2px solid @alarm;
+}
+
+#network.disconnected {
+  border-bottom: 2px solid @alarm;
+}
+
+#battery.charging, #battery.plugged:hover {
+  border-bottom: 2px solid #ac5402;
+}
+
+#battery.critical:not(.charging) {
+  border-bottom: 2px solid @alarm;
+}
+
+#custom-powermenu, #idle_inhibitor, #custom-my_lock, #submap {
+  border-bottom:2px solid @hl_text;
+}

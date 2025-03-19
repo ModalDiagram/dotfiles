@@ -20,6 +20,7 @@
         ".config/waybar/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/waybar/";
         ".config/wofi/".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/wofi/";
         ".config/hypr/theme.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/hypr/theme.conf";
+        ".config/hypr/hyprpaper.conf".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/nix/themes/${name}/hypr/hyprpaper.conf";
       };
     };
   };

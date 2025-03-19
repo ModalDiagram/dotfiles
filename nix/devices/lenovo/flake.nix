@@ -46,7 +46,7 @@
             };
             mypkgs.theme = {
               enable = true;
-              name = "xmas";
+              name = "nature";
             };
             mypkgs.rlang.enable = true;
             mypkgs.sql.enable = true;
