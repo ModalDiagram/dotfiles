@@ -8,6 +8,10 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.blacklistedKernelModules = [ "acer_wmi" ];
+  boot.extraModprobeConfig = ''
+    options ath9k nohwcrypt=1
+  '';
 
   services.logind.lidSwitch = "ignore";
   # Settings needed for flakes
@@ -15,7 +19,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
-    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk
+    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl
   ];
   # Rules for brightnessctl
   services.udev.extraRules = ''

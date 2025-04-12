@@ -54,12 +54,14 @@
         enable = true;
       };
 
-      environment.systemPackages = [ pkgs.iwgtk ];
+      environment.systemPackages = [ pkgs.iwgtk pkgs.wirelesstools ];
       # networking.networkmanager.enable = true;
       # networking.networkmanager.wifi.backend = "iwd";
     })
     (lib.mkIf (config.mypkgs.networking.interface == "networkmanager") {
       networking.networkmanager.enable = true;
+      networking.networkmanager.wifi.scanRandMacAddress = false;
+      networking.networkmanager.wifi.powersave = false;
       # to connect to WLUCTSTUD
       # nmcli connection add type wifi con-name "WLUCTSTUD1" ifname wlp1s0 ssid "WLUCTSTUD" wifi-sec.key-mgmt wpa-eap 802-1x.identity "frtsdr01p21f209u@studium.unict.it" 802-1x.password <PASSWORD> 802-1x.system-ca-certs no 802-1x.eap "peap" 802-1x.phase2-auth mschapv2
       networking.networkmanager.ensureProfiles.environmentFiles = [
@@ -115,21 +117,6 @@
             auth-alg = "open";
             key-mgmt = "wpa-psk";
             psk = "$MILITELLO_WIFI_PASSWORD";
-          };
-        };
-        piana_wifi = {
-          connection = {
-            id = "$PIANA_WIFI_ID";
-            type = "wifi";
-          };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "$PIANA_WIFI_ID";
-          };
-          wifi-security = {
-            auth-alg = "open";
-            key-mgmt = "wpa-psk";
-            psk = "$PIANA_WIFI_PASSWORD";
           };
         };
       };

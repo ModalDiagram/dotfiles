@@ -6,6 +6,7 @@
     ./hass.nix
     ./kopia.nix
     ./docker.nix
+    ./immich.nix
     # ./monitoring.nix
     # ./kavita.nix
   ];
@@ -164,26 +165,6 @@
             proxyPass = "https://192.168.100.14:51515/";
           };
         };
-        # "kavita.sanfio.eu" = {
-        #   onlySSL = true;
-        #   sslCertificate = "/var/fullchain.pem";
-        #   sslCertificateKey = "/var/privkey.pem";
-        #   extraConfig = ''
-        #     client_max_body_size 1G;
-        #   '';
-        #   locations."/" = {
-        #     extraConfig = ''
-        #       proxy_set_header X-Real-IP $remote_addr;
-        #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        #       proxy_set_header X-NginX-Proxy true;
-        #       proxy_set_header X-Forwarded-Proto http;
-        #       proxy_pass http://192.168.100.15:5000/; # tailing / is important!
-        #       proxy_set_header Host $host;
-        #       proxy_cache_bypass $http_upgrade;
-        #       proxy_redirect off;
-        #     '';
-        #   };
-        # };
         "hass.sanfio.eu" = {
           onlySSL = true;
           enableACME = true;
@@ -209,7 +190,19 @@
           '';
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://127.0.0.1:3333";
+            proxyPass = "http://127.0.0.1:3333/";
+          };
+        };
+        "photos.sanfio.eu" = {
+          onlySSL = true;
+          enableACME = true;
+          acmeRoot = null;
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://192.168.100.16:2283";
           };
         };
         # "metrics.sanfio.eu" = {
