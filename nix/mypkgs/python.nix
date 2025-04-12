@@ -3,21 +3,27 @@ my_python_packages = ps: with ps; [
   beautifulsoup4
   boto3
   debugpy
+  imbalanced-learn
   lxml
   jedi-language-server
   jupyterlab-lsp
+  keras
   notebook
   numpy
   matplotlib
   opencv4
   pandas
   plotly
+  pydot
   pynvim
   python-lsp-ruff
   python-lsp-server
   requests
+  seaborn
+  scikit-learn
   scipy
   selenium
+  tensorflow
   python-telegram-bot
 ];
 in {

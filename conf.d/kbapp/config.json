@@ -22,6 +22,7 @@
     "3right": "leftalt right",
     "3down": "leftcontrol tab",
     "3rightdown": "leftcontrol w",
+    "3leftup": "control alt s",
     "key_d": "leftcontrol delete",
     "key_k": "leftcontrol leftshift tab",
     "key_j": "leftcontrol tab",
