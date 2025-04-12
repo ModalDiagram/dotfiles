@@ -83,8 +83,8 @@
       };
       firewall = {
         # Open Wireguard port
-        allowedTCPPorts = [ 8888 ];
-        allowedUDPPorts = [ 51820 ];
+        allowedTCPPorts = [ 8888 3000 ];
+        allowedUDPPorts = [ 51820 53 ];
       };
     };
 
@@ -283,6 +283,33 @@
       # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
       enable = true;
       openFirewall = true;
+    };
+
+    services.adguardhome = {
+      enable = true;
+      settings = {
+        dns = {
+          upstream_dns = [
+            "8.8.8.8"
+          ];
+        };
+        filtering = {
+          protection_enabled = true;
+          filtering_enabled = true;
+
+          parental_enabled = false;  # Parental control-based DNS requests filtering.
+          safe_search = {
+            enabled = false;  # Enforcing "Safe search" option for search engines, when possible.
+          };
+        };
+        # The following notation uses map
+        # to not have to manually create {enabled = true; url = "";} for every filter
+        # This is, however, fully optional
+        filters = map(url: { enabled = true; url = url; }) [
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"  # malicious url blocklist
+        ];
+      };
     };
   };
 }
