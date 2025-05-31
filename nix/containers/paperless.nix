@@ -64,7 +64,7 @@
           PAPERLESS_USE_X_FORWARD_PORT = true;
           PAPERLESS_DBHOST = "/run/postgresql";
           PAPERLESS_OCR_USER_ARGS = ''
-            { "invalidate_digital_signatures": true }
+            { "invalidate_digital_signatures": true, "continue_on_soft_render_error": true }
           '';
         };
       };

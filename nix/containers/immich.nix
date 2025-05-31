@@ -18,6 +18,28 @@
         isNormalUser = true;
       };
 
+      systemd.timers."backup_immich" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-* 2:00:00";
+            Unit = "backup_immich.service";
+          };
+      };
+
+      systemd.services."backup_immich" = {
+        path = [ pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            kopia snapshot create /var/lib/immich
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "kopia";
+        };
+      };
+
       services.immich = {
         enable = true;
         port = 2283;

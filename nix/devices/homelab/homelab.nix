@@ -17,6 +17,7 @@
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "deployuser" ];
 
   environment.systemPackages = with pkgs; [
     git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl

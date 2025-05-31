@@ -42,6 +42,10 @@
             publicKey = "ox9BtZ2FOxKlyugkjIne6J6WxOUqFgBADMjH3plJQWw=";
             allowedIPs = [ "16.0.0.4/32" ]; # The IP address for the client on the VPN
           }
+          {
+            publicKey = "HXDUs/65a/IVlK3LDGr8uLzhRfLPxS38GhHPBx7PMVE=";
+            allowedIPs = [ "16.0.0.100/32" ]; # The IP address for the client on the VPN
+          }
         ];
       };
     };
@@ -191,6 +195,9 @@
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:3333/";
+            extraConfig = ''
+              proxy_set_header Connection keep-alive;
+            '';
           };
         };
         "photos.sanfio.eu" = {
