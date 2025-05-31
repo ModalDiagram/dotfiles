@@ -83,6 +83,8 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+  programs.ssh.startAgent = true;
+
   # Set your time zone.
   time.timeZone = "Europe/Rome";
 
@@ -168,6 +170,26 @@
   };
 
   home-manager.users.${config.main-user} = { config, ... }: {
+    programs.ssh = {
+      enable = true;
+      addKeysToAgent = "yes";
+
+      matchBlocks = {
+        "homelab" = {
+          hostname = "nextcloud.sanfio.eu";
+          user = "homelab";
+          identityFile = "~/.ssh/homelab";
+        };
+
+        "homelab_deploy" = {
+          hostname = "nextcloud.sanfio.eu";
+          user = "deployuser";
+          identityFile = "~/.ssh/homelab_deploy";
+          forwardAgent = true;
+        };
+      };
+    };
+
     home.file = let config_path = "/data/dotfiles"; in {
       ".bashrc".source                        = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/bashrc";
       ".profile".source                       = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/profile";
