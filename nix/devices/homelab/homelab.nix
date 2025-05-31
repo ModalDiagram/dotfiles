@@ -18,6 +18,9 @@
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "deployuser" ];
+  security.pam.sshAgentAuth.enable = true;
+  security.pam.sshAgentAuth.authorizedKeysFiles = [ "/etc/ssh/authorized_keys/%u" ];
+  security.pam.services.sudo.sshAgentAuth = true;
 
   environment.systemPackages = with pkgs; [
     git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl
@@ -35,12 +38,12 @@
     uid = 1000;
   };
 
-  users.extraUsers.deployuser = {
-    createHome = true;
+  users.groups.deployuser = {};
+  users.users.deployuser = {
     extraGroups = [ "wheel" ];
-    home = "/home/deployuser";
     isNormalUser = true;
-    uid = 1001;
+    group = "deployuser";
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO6a5zjo0tk8G879SEmCKHKrF2NJEMdzbM9C++V+GK79 sandro0198@lenovo" ];
   };
 
   systemd.timers."kopia_backup" = {
