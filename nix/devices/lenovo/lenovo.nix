@@ -21,6 +21,7 @@
   };
 
   # Ensure the WireGuard module is enabled
+  networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
   # Settings needed for flakes
@@ -36,7 +37,7 @@
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  services.tlp.enable = true;
+  # services.tlp.enable = true;
 
   boot.extraModprobeConfig = ''
     options rtw89_core disable_ps_mode=y

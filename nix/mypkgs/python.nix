@@ -36,7 +36,7 @@ in {
   };
   config = lib.mkIf (config.mypkgs.python.enable) {
     environment.systemPackages = with pkgs; [
-      (python311.withPackages my_python_packages)
+      (python312.withPackages my_python_packages)
     ];
   };
 }

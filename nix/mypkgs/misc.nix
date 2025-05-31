@@ -7,7 +7,11 @@
     };
   };
   config = lib.mkIf (config.mypkgs.misc.enable) {
+    services.xserver.enable = true;
+    services.desktopManager.plasma6.enable = true;
+
     environment.systemPackages = with pkgs; [
+      xorg.xhost
       # Command line-related packages
       bash
       bat
@@ -31,14 +35,14 @@
       # System packages
       jmtpfs
       lm_sensors
-      polkit-kde-agent
+      kdePackages.polkit-kde-agent-1
       pkg-config
       root
       rustup
       udev
 
       # Desktop environment packages
-      dolphin
+      kdePackages.dolphin
       xfce.thunar
       gedit
       imv
@@ -69,6 +73,7 @@
     ];
 
     services.openssh.enable = true;
+    services.openssh.settings.X11Forwarding = true;
     services.gvfs.enable = true;
     # services.elasticsearch.enable = true;
     # virtualisation.virtualbox.host.enable = true;
@@ -125,7 +130,8 @@
 
     fonts = {
       packages = with pkgs; [
-        (nerdfonts.override { fonts = [ "FiraCode" "IosevkaTerm" ]; })
+        nerd-fonts.fira-mono
+        nerd-fonts.iosevka-term
         fira
       ];
       fontconfig = {

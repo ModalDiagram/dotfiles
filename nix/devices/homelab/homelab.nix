@@ -27,12 +27,20 @@
         KERNEL=="event[0-9]*", SUBSYSTEM=="backlight", GROUP="video"
   '';
   users.extraUsers.homelab = {
-  createHome = true;
-  extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" ];
+    createHome = true;
+    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" ];
     group = "users";
     home = "/home/homelab";
     isNormalUser = true;
     uid = 1000;
+  };
+
+  users.extraUsers.deployuser = {
+    createHome = true;
+    extraGroups = [ "wheel" ];
+    home = "/home/deployuser";
+    isNormalUser = true;
+    uid = 1001;
   };
 
   systemd.timers."kopia_backup" = {

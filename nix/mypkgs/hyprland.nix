@@ -16,7 +16,7 @@
       libsForQt5.qt5ct
     ];
 
-    services.tlp.enable = true;
+    # services.tlp.enable = true;
     services.flatpak.enable = true;
 
     services.udisks2.enable = true;
@@ -107,7 +107,7 @@
         libreoffice
         mako # notification system developed by swaywm maintainer
         nwg-look
-        okular
+        kdePackages.okular
         pavucontrol
         playerctl
         greetd.tuigreet
