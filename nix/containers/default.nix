@@ -167,6 +167,9 @@
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "https://192.168.100.14:51515/";
+            extraConfig = ''
+              grpc_pass grpcs://192.168.100.14:51515;
+            '';
           };
         };
         "hass.sanfio.eu" = {
