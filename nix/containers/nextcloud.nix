@@ -77,6 +77,8 @@
         # for cache
         configureRedis = true;
         phpOptions."opcache.interned_strings_buffer" = "16";
+        maxUploadSize = "100G";
+        fastcgiTimeout = 3600;
 
         # Database options
         config = {
@@ -97,6 +99,8 @@
             trusted_proxies = [ "192.168.100.10" ];
             maintenance_window_start = 1;
             default_phone_region = "IT";
+            max_input_time = "3600";
+            max_execution_time = "3600";
           };
         config.adminpassFile = "/etc/nextcloud_password";
 
