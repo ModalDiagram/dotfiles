@@ -50,7 +50,6 @@
       smplayer
 
       # Utility apps
-      arduino-ide
       ferdium
       gh
       gimp
@@ -61,15 +60,12 @@
       obsidian
       pdftk
       rclone
+      signal-desktop
       spotify
       stow
       unzip
       wev
       zip
-
-      # Games
-      melonDS
-      atlauncher
     ];
 
     services.openssh.enable = true;

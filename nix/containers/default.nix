@@ -323,6 +323,8 @@
         filters = map(url: { enabled = true; url = url; }) [
           "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
           "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"  # malicious url blocklist
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_51.txt"
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_27.txt"
         ];
       };
     };
