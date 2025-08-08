@@ -19,10 +19,10 @@
       ];
     };
   };
+  systemd.services."wireguard-wg0".wantedBy = lib.mkForce [ ];
 
   # Ensure the WireGuard module is enabled
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [ 51820 ];
+  networking.firewall.allowedTCPPorts = [ 22 25565 ];
 
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
@@ -31,17 +31,13 @@
   # Bootloader.
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "amdgpu" "kvm-amd" "i2c-dev" ];
+  boot.kernelModules = [ "amdgpu" "i2c-dev" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # services.tlp.enable = true;
-
-  boot.extraModprobeConfig = ''
-    options rtw89_core disable_ps_mode=y
-  '';
 
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
@@ -82,6 +78,14 @@
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
 
   programs.ssh.startAgent = true;
 

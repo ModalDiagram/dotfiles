@@ -2,5 +2,5 @@
 
 flag=$(cat "/tmp/my_lock.lock")
 if [[ $flag -eq 1 ]]; then
-  swaylock
+  pidof hyprlock || hyprlock
 fi

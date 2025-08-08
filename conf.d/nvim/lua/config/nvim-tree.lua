@@ -1,7 +1,5 @@
 local nvim_tree = require("nvim-tree")
 
-require('telescope').load_extension('projects')
-
 local function on_attach(bufnr)
   local map = vim.keymap
   local api = require('nvim-tree.api')

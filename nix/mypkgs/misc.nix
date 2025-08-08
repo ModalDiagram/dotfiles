@@ -56,6 +56,7 @@
       gnome-boxes
       gparted
       kopia
+      kopia-ui
       ncdu
       obsidian
       pdftk
@@ -66,6 +67,9 @@
       unzip
       wev
       zip
+
+      # Games
+      atlauncher
     ];
 
     services.openssh.enable = true;

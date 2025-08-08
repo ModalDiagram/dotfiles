@@ -59,7 +59,7 @@ return require('packer').startup(function(use)
   use { 'jalvesaq/Nvim-R' }
 
   -- Linter manager
-  use { "jose-elias-alvarez/null-ls.nvim", config = [[require('config.null')]] }
+  use { "nvimtools/none-ls.nvim", config = [[require('config.null')]] }
 
   -- DAP manager
   use { 'mfussenegger/nvim-dap', config = [[require('config.dap')]] }
@@ -97,11 +97,6 @@ return require('packer').startup(function(use)
     "kyazdani42/nvim-tree.lua",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = [[require('config.nvim-tree')]],
-  }
-
-  -- Projects manager
-  use {
-    "ahmedkhalf/project.nvim", config = [[require('config.project')]]
   }
 
   -- Moving by typing the first 2 letters
@@ -168,7 +163,6 @@ return require('packer').startup(function(use)
   use { 'lambdalisue/suda.vim' }
 
   ------------------------------- COLORS --------------------------------------
-  use({ 'rose-pine/neovim', as = 'rose-pine' })
   use { "Tsuzat/NeoSolarized.nvim"}
   use "EdenEast/nightfox.nvim"
   -- Highlight colors in CSS files

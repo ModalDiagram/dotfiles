@@ -24,6 +24,8 @@ my_python_packages = ps: with ps; [
   scipy
   selenium
   tensorflow
+  torch
+  torchvision
   python-telegram-bot
 ];
 in {

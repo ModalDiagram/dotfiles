@@ -13,7 +13,7 @@
         gcc
         go
         gopls
-        jdk17
+        jdk
         clang-tools_17
         lldb
         lua-language-server
