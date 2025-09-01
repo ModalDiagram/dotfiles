@@ -60,6 +60,7 @@
       ncdu
       obsidian
       pdftk
+      protonvpn-gui
       rclone
       signal-desktop
       spotify

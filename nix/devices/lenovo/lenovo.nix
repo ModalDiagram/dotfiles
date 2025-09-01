@@ -4,7 +4,10 @@
   # networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   # system.nssDatabases.hosts = [ "files" "mymachines" "dns" "myhostname" ];
 
-  environment.systemPackages = [ pkgs.wireguard-tools ];
+  environment.systemPackages = [
+    pkgs.wireguard-tools
+    inputs.zen-browser.packages."x86_64-linux".default # beta
+  ];
   networking.wireguard.interfaces = {
     wg0 = {
       ips = [ "16.0.0.2/24" ]; # The IP address for the server on the VPN
