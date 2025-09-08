@@ -198,9 +198,6 @@
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:3333/";
-            extraConfig = ''
-              proxy_set_header Connection keep-alive;
-            '';
           };
         };
         "photos.sanfio.eu" = {
@@ -208,29 +205,43 @@
           enableACME = true;
           acmeRoot = null;
           extraConfig = ''
-            client_max_body_size 1G;
+            client_max_body_size 0;
           '';
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://192.168.100.16:2283";
           };
         };
-        # "metrics.sanfio.eu" = {
-        #   onlySSL = true;
-        #   sslCertificate = "/var/fullchain.pem";
-        #   sslCertificateKey = "/var/privkey.pem";
-        #   extraConfig = ''
-        #     client_max_body_size 1G;
-        #   '';
-        #   locations."/" = {
-        #     proxyWebsockets = true;
-        #     proxyPass = "http://127.0.0.1:${toString config.services.grafana.settings.server.http_port}";
-        #   };
-        #   locations."/prometheus" = {
-        #     proxyWebsockets = true;
-        #     proxyPass = "http://127.0.0.1:${toString config.services.prometheus.port}";
-        #   };
-        # };
+        "seafile.sanfio.eu" = {
+          onlySSL = true;
+          enableACME = true;
+          acmeRoot = null;
+          locations = {
+            "/" = {
+              proxyPass = "http://192.168.100.11:8083";
+              extraConfig = ''
+                #proxy_set_header   Host $host;
+                proxy_set_header   X-Real-IP $remote_addr;
+                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header   X-Forwarded-Host $server_name;
+                proxy_read_timeout  1200s;
+                client_max_body_size 0;
+              '';
+            };
+            "/seafhttp" = {
+              proxyPass = "http://192.168.100.11:8082";
+              extraConfig = ''
+                rewrite ^/seafhttp(.*)$ $1 break;
+                client_max_body_size 0;
+                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_connect_timeout  36000s;
+                proxy_read_timeout  36000s;
+                proxy_send_timeout  36000s;
+                send_timeout  36000s;
+              '';
+            };
+          };
+        };
         "nextcloud.sanfio.eu" = {
           onlySSL = true;
           enableACME = true;

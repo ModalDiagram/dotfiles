@@ -1,13 +1,19 @@
 { pkgs, ... }: {
   sops.secrets.nextcloud_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
-  containers.nextcloud = {
+  containers.nextcloud = let
+    kopia-seafile =
+      (pkgs.writeShellScriptBin "kopia-seafile" ''
+        export XDG_CONFIG_HOME=/var/lib/seafile/.config
+        export XDG_CACHE_HOME=/var/lib/seafile/.cache
+        exec ${pkgs.kopia}/bin/kopia "$@"
+      '');
+  in {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
     bindMounts = {
-      "/backup_repo" = { hostPath = "/home/kopia/backups"; isReadOnly = false; };
       "/run/secrets/nextcloud_password" = { hostPath = "/run/secrets/nextcloud_password"; };
       # fuse is needed to mount inside the containers (eg kopia backups)
       fuse = {
@@ -35,6 +41,7 @@
         nodejs
         exiftool
         config.services.nextcloud.occ
+        kopia-seafile
       ];
 
       services.cron.enable = true;
@@ -63,6 +70,33 @@
           User = "nextcloud";
         };
       };
+
+      systemd.timers."backup_seafile" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-* 2:00:00";
+            Unit = "backup_seafile.service";
+          };
+      };
+
+      systemd.services."backup_seafile" = {
+        path = [ pkgs.util-linux kopia-seafile pkgs.mariadb ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            mariadb-dump --opt ccnet_db > /var/lib/seafile/ccnet_db.sql
+            mariadb-dump --opt seafile_db > /var/lib/seafile/seafile_db.sql
+            mariadb-dump --opt seahub_db > /var/lib/seafile/seahub_db.sql
+            kopia-seafile snapshot create /var/lib/seafile
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "seafile";
+        };
+      };
+
+
 
       systemd.services."nextcloud-setup" = {
         requires = ["postgresql.service"];
@@ -123,13 +157,33 @@
         ];
       };
 
+      services.seafile = {
+        enable = true;
+
+        adminEmail = "seafile@sanfio.eu";
+        initialAdminPassword = "prova";
+        seafileSettings = {
+          fileserver = {
+            host = "ipv4:0.0.0.0";
+            port = 8082;
+          };
+        };
+
+        seahubAddress = "0.0.0.0:8083";
+        seahubExtraConf = ''
+          ALLOWED_HOSTS = ["seafile.sanfio.eu", "localhost"]
+        '';
+
+        ccnetSettings.General.SERVICE_URL = "https://seafile.sanfio.eu";
+      };
+
 
       system.stateVersion = "24.05";
 
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 80 ];
+          allowedTCPPorts = [ 80 8082 8083 ];
         };
         # Use systemd-resolved inside the container
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
