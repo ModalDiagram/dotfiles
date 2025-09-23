@@ -77,6 +77,46 @@
       '';
     };
 
+    systemd.timers."backup_seafile" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+            Unit = "backup_seafile.service";
+          };
+      };
+
+      systemd.services."dump_seafile_db" = {
+        path = [ pkgs.docker ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt ccnet_db > /opt/seafile-data/backup/ccnet_db.sql
+            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seafile_db > /opt/seafile-data/backup/seafile_db.sql
+            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seahub_db > /opt/seafile-data/backup/seahub_db.sql
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+        };
+      };
+
+      systemd.services."backup_seafile" = {
+        path = [ pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            kopia snapshot create /opt/seafile-data/
+          '
+        '';
+        requires = [ "dump_seafile_db.service" ];
+        after = [ "dump_seafile_db.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = "kopia";
+        };
+      };
+
+
+
     networking = {
       nat = {
         enable = true;
