@@ -1,28 +1,29 @@
 { node-red-home-assistant, node-red-contrib-sunevents, pkgs, ... }: {
-  systemd.services."container@hass".serviceConfig = {
-    DeviceAllow = "char-usb_device rwm";
-  };
-
   containers.hass = {
     autoStart = false;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.12";
     # Hass crashes if the device is not present
-    # allowedDevices = [
-    #   {
-    #     modifier = "rwm";
-    #     node = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-    #   }
-    # ];
+    allowedDevices = [
+      {
+        modifier = "rwm";
+        node = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+      }
+    ];
 
-    # bindMounts = {
-    #   sonoff = {
-    #     hostPath = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-    #     mountPoint = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
-    #     isReadOnly = false;
-    #   };
-    # };
+    bindMounts = {
+      sonoff = {
+        hostPath = "/dev/serial/by-id";
+        mountPoint = "/dev/serial/by-id";
+        isReadOnly = false;
+      };
+      tty = {
+        hostPath = "/dev/ttyACM0";
+        mountPoint = "/dev/ttyACM0";
+        isReadOnly = false;
+      };
+    };
 
     config = { config, lib, ... }: {
       nixpkgs.pkgs = pkgs;
