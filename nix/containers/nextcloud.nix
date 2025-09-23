@@ -50,7 +50,7 @@
         wantedBy = [ "timers.target" ];
           timerConfig = {
             Persistent = true;
-            OnCalendar = "*-*-* 2:00:00";
+            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
             Unit = "backup_nextcloud.service";
           };
       };
@@ -70,33 +70,6 @@
           User = "nextcloud";
         };
       };
-
-      systemd.timers."backup_seafile" = {
-        wantedBy = [ "timers.target" ];
-          timerConfig = {
-            Persistent = true;
-            OnCalendar = "*-*-* 2:00:00";
-            Unit = "backup_seafile.service";
-          };
-      };
-
-      systemd.services."backup_seafile" = {
-        path = [ pkgs.util-linux kopia-seafile pkgs.mariadb ];
-        script = ''
-          ${pkgs.bash}/bin/bash -c '
-            mariadb-dump --opt ccnet_db > /var/lib/seafile/ccnet_db.sql
-            mariadb-dump --opt seafile_db > /var/lib/seafile/seafile_db.sql
-            mariadb-dump --opt seahub_db > /var/lib/seafile/seahub_db.sql
-            kopia-seafile snapshot create /var/lib/seafile
-          '
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          User = "seafile";
-        };
-      };
-
-
 
       systemd.services."nextcloud-setup" = {
         requires = ["postgresql.service"];
@@ -162,7 +135,7 @@
       };
 
       services.seafile = {
-        enable = true;
+        enable = false;
 
         adminEmail = "seafile@sanfio.eu";
         initialAdminPassword = "prova";

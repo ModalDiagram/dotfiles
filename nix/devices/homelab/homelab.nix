@@ -38,6 +38,11 @@
     uid = 1000;
   };
 
+  users.extraUsers.kopia = {
+    createHome = true;
+    home = "/home/kopia";
+    isNormalUser = true;
+  };
   users.groups.deployuser = {};
   users.users.deployuser = {
     extraGroups = [ "wheel" ];
@@ -50,7 +55,7 @@
     wantedBy = [ "timers.target" ];
       timerConfig = {
         Persistent = true;
-        OnCalendar = "*-*-* 2:00:00";
+        OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
         Unit = "kopia_backup.service";
       };
   };

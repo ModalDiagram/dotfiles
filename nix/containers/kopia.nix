@@ -40,7 +40,7 @@
         wantedBy = [ "timers.target" ];
           timerConfig = {
             Persistent = true;
-            OnCalendar = "*-*-* 4:00:00";
+            OnCalendar = "*-*-03,06,09,12,15,18,21,24,27,30 4:00:00";
             Unit = "backup_ext.service";
           };
       };
