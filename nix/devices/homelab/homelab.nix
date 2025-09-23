@@ -81,26 +81,26 @@
     '';
   };
 
-  systemd.timers."subitoTracker" = {
-    enable = false;
-    wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "30m";
-        OnUnitActiveSec = "30m";
-        Unit = "subitoTracker.service";
-      };
-  };
+  # systemd.timers."subitoTracker" = {
+    # enable = false;
+    # wantedBy = [ "timers.target" ];
+    #   timerConfig = {
+    #     OnBootSec = "30m";
+    #     OnUnitActiveSec = "30m";
+    #     Unit = "subitoTracker.service";
+    #   };
+  # };
 
-  systemd.services."subitoTracker" = let python = pkgs.python311.withPackages (ps: with ps; [ requests python-telegram-bot beautifulsoup4 ]);
-  in {
-    script = ''
-      ${python}/bin/python /home/homelab/projects/subitoTracker/src/main.py > /tmp/log1.txt
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "${config.main-user}";
-    };
-  };
+  # systemd.services."subitoTracker" = let python = pkgs.python311.withPackages (ps: with ps; [ requests python-telegram-bot beautifulsoup4 ]);
+  # in {
+    # script = ''
+    #   ${python}/bin/python /home/homelab/projects/subitoTracker/src/main.py > /tmp/log1.txt
+    # '';
+    # serviceConfig = {
+    #   Type = "oneshot";
+    #   User = "${config.main-user}";
+    # };
+  # };
 
 
   system.stateVersion = "24.05";
