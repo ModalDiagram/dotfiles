@@ -149,9 +149,13 @@
         enable = true;
 
         # Ensure the database, user, and permissions always exist
-        ensureDatabases = [ "nextcloud" ];
+        ensureDatabases = [ "nextcloud" "gitea" ];
         ensureUsers = [
           { name = "nextcloud";
+            ensureDBOwnership = true;
+          }
+          {
+            name = "gitea";
             ensureDBOwnership = true;
           }
         ];
@@ -177,13 +181,27 @@
         ccnetSettings.General.SERVICE_URL = "https://seafile.sanfio.eu";
       };
 
+      services.gitea = {
+        enable = true;
+        appName = "Gitea_Homelab";
+        database = {
+          type = "postgres";
+          password = "gitea";
+        };
+        settings.server = {
+          DOMAIN = "git.sanfio.eu";
+          ROOT_URL = "https://git.sanfio.eu/";
+          HTTP_ADDR = "0.0.0.0";
+          HTTP_PORT = 3001;
+        };
+      };
 
       system.stateVersion = "24.05";
 
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 80 8082 8083 ];
+          allowedTCPPorts = [ 80 3001 ];
         };
         # Use systemd-resolved inside the container
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686

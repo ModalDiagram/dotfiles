@@ -216,30 +216,44 @@
           onlySSL = true;
           enableACME = true;
           acmeRoot = null;
+          extraConfig = ''
+            proxy_set_header   X-Real-IP $remote_addr;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Host $server_name;
+            proxy_read_timeout  1200s;
+            client_max_body_size 0;
+          '';
           locations = {
             "/" = {
-              proxyPass = "http://192.168.100.11:8083";
-              extraConfig = ''
-                #proxy_set_header   Host $host;
-                proxy_set_header   X-Real-IP $remote_addr;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header   X-Forwarded-Host $server_name;
-                proxy_read_timeout  1200s;
-                client_max_body_size 0;
-              '';
+              proxyPass = "http://127.0.0.1:8000";
             };
             "/seafhttp" = {
-              proxyPass = "http://192.168.100.11:8082";
+              proxyPass = "http://127.0.0.1:8082";
               extraConfig = ''
                 rewrite ^/seafhttp(.*)$ $1 break;
-                client_max_body_size 0;
-                proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_connect_timeout  36000s;
                 proxy_read_timeout  36000s;
                 proxy_send_timeout  36000s;
                 send_timeout  36000s;
               '';
             };
+            "/seafdav/" = {
+              proxyPass = "http://127.0.0.1:8080/seafdav/";
+            };
+            "/:dir_browser" = {
+              proxyPass = "http://127.0.0.1:8080/:dir_browser";
+            };
+          };
+        };
+        "git.sanfio.eu" = {
+          onlySSL = true;
+          enableACME = true;
+          acmeRoot = null;
+          extraConfig = ''
+            client_max_body_size 0;
+          '';
+          locations."/" = {
+            proxyPass = "http://192.168.100.11:3001";
           };
         };
         "nextcloud.sanfio.eu" = {
