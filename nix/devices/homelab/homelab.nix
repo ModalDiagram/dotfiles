@@ -147,13 +147,16 @@
   services.openssh.enable = true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.initrd.kernelModules = [ "dm-snapshot"  "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/sda2";
       preLVM = true;
+      allowDiscards = true;
+      keyFileSize = 4096;
+      keyFile = "/dev/sdb";
     };
   };
 
