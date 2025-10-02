@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   sops.secrets.nextcloud_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+  sops.secrets.gitea_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
   containers.nextcloud = {
     autoStart = true;
@@ -8,6 +9,7 @@
     localAddress = "192.168.100.11";
     bindMounts = {
       "/run/secrets/nextcloud_password" = { hostPath = "/run/secrets/nextcloud_password"; };
+      "/run/secrets/gitea_password" = { hostPath = "/run/secrets/gitea_password"; };
       # fuse is needed to mount inside the containers (eg kopia backups)
       fuse = {
         hostPath = "/dev/fuse"; mountPoint = "/dev/fuse"; isReadOnly = false;
@@ -26,6 +28,11 @@
         source = "/run/secrets/nextcloud_password";
         mode = "0400";
         user = "nextcloud";
+      };
+      environment.etc."gitea_password" = {
+        source = "/run/secrets/gitea_password";
+        mode = "0400";
+        user = "gitea";
       };
 
       environment.systemPackages = with pkgs; [
@@ -131,7 +138,7 @@
         appName = "Gitea_Homelab";
         database = {
           type = "postgres";
-          password = "gitea";
+          passwordFile = "/etc/gitea_password";
         };
         settings.server = {
           DOMAIN = "git.sanfio.eu";
