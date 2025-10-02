@@ -28,16 +28,16 @@ diagnostic.config {
   border = "rounded",
 })
 
-require("lspconfig").rust_analyzer.setup{}
--- require("lspconfig").shellcheck.setup{}
-require("lspconfig").bashls.setup{}
-require("lspconfig").pylsp.setup{}
-require("lspconfig").lua_ls.setup{}
-require("lspconfig").r_language_server.setup{}
-require("lspconfig").nil_ls.setup{}
-require("lspconfig").texlab.setup{}
-require("lspconfig").gopls.setup{}
-require("lspconfig").clangd.setup{}
-require("lspconfig").jsonls.setup{}
-require("lspconfig").ts_ls.setup{}
+vim.lsp.enable('rust_analyzer')
+-- vim.lsp.enable(shellcheck'
+vim.lsp.enable('bashls')
+vim.lsp.enable('pylsp')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('r_language_server')
+vim.lsp.enable('nil_ls')
+vim.lsp.enable('texlab')
+vim.lsp.enable('gopls')
+vim.lsp.enable('clangd')
+vim.lsp.enable('jsonls')
+vim.lsp.enable('ts_ls')
 

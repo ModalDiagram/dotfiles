@@ -1,8 +1,3 @@
-augroup cdpwd
-    autocmd!
-    autocmd VimEnter * cd $PWD
-augroup END
-
 augroup ft_insert
   autocmd!
   autocmd BufNewFile *.{h,hpp} call Insert_gates()
@@ -32,9 +27,3 @@ function! s:custom_highlight() abort
   " highlight @attribute guifg=#ffe14d
 
 endfunction
-
-augroup change_hidden
-  autocmd!
-  autocmd BufNewFile,BufRead *.hidden set filetype=c
-augroup END
-

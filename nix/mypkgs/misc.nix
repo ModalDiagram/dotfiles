@@ -33,6 +33,7 @@
       wget
 
       # System packages
+      easyeffects
       jmtpfs
       lm_sensors
       kdePackages.polkit-kde-agent-1
@@ -48,6 +49,7 @@
       imv
       mpv
       smplayer
+      pkgs.unstable.quickshell
 
       # Utility apps
       ferdium
@@ -62,6 +64,8 @@
       pdftk
       protonvpn-gui
       rclone
+      portfolio
+      seafile-client
       signal-desktop
       spotify
       stow

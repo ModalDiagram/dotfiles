@@ -5,8 +5,14 @@
     # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-25.05";
     stable.url = "nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     sops-nix.url = "github:Mic92/sops-nix";
-    # fixed.url = "github:nixos/nixpkgs/97b17f32362e475016f942bbdfda4a4a72a8a652";
     fixed.url = "nixpkgs/nixos-24.11";
 
     hyprland = {
@@ -26,14 +32,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, fixed, sops-nix, hyprland, ... }@inputs:
-  let system = "x86_64-linux"; in {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, fixed, sops-nix, caelestia-shell, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      overlay-unstable = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      };
+    in {
     nixosConfigurations = {
       "lenovo" = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
 
-        specialArgs = { inherit self system inputs nixpkgs fixed; };
+        specialArgs = { inherit self system inputs nixpkgs nixpkgs-unstable fixed caelestia-shell; };
         modules = [
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           {
             options.main-user = nixpkgs.lib.mkOption {
               type = nixpkgs.lib.types.str;
@@ -53,7 +65,7 @@
             };
             mypkgs.theme = {
               enable = true;
-              name = "nature";
+              name = "xmas";
             };
             mypkgs.rlang.enable = true;
             mypkgs.sql.enable = true;

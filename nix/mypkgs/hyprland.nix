@@ -1,6 +1,4 @@
-{ config, pkgs, lib, inputs, ... }: {
-  imports = [ inputs.hyprland.nixosModules.default ];
-
+{ caelestia-shell, config, pkgs, lib, ... }: {
   options.mypkgs.hyprland = {
     enable = lib.mkOption {
       description = "Enable hyprland";
@@ -92,6 +90,7 @@
         alacritty
         blueberry
         brightnessctl
+        caelestia-shell.packages.x86_64-linux.default
         chromium
         gh
         glib # gsettings
@@ -158,8 +157,8 @@
       };
 
       programs.waybar = {
-        enable = true;
-        systemd.enable = true;
+        enable = false;
+        systemd.enable = false;
       };
 
       # hint Electron apps to use Wayland:

@@ -1,6 +1,6 @@
 [Default Applications]
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
+x-scheme-handler/http=zen-beta.desktop
+x-scheme-handler/https=zen-beta.desktop
 application/pdf=org.kde.okular.desktop
 application/json=org.gnome.gedit.desktop
 inode/x-empty=org.gnome.gedit.desktop
