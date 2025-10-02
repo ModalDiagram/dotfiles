@@ -1,14 +1,7 @@
 { pkgs, ... }: {
   sops.secrets.nextcloud_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
-  containers.nextcloud = let
-    kopia-seafile =
-      (pkgs.writeShellScriptBin "kopia-seafile" ''
-        export XDG_CONFIG_HOME=/var/lib/seafile/.config
-        export XDG_CACHE_HOME=/var/lib/seafile/.cache
-        exec ${pkgs.kopia}/bin/kopia "$@"
-      '');
-  in {
+  containers.nextcloud = {
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
@@ -41,7 +34,6 @@
         nodejs
         exiftool
         config.services.nextcloud.occ
-        kopia-seafile
       ];
 
       services.cron.enable = true;
@@ -132,26 +124,6 @@
             ensureDBOwnership = true;
           }
         ];
-      };
-
-      services.seafile = {
-        enable = false;
-
-        adminEmail = "seafile@sanfio.eu";
-        initialAdminPassword = "prova";
-        seafileSettings = {
-          fileserver = {
-            host = "ipv4:0.0.0.0";
-            port = 8082;
-          };
-        };
-
-        seahubAddress = "0.0.0.0:8083";
-        seahubExtraConf = ''
-          ALLOWED_HOSTS = ["seafile.sanfio.eu", "localhost"]
-        '';
-
-        ccnetSettings.General.SERVICE_URL = "https://seafile.sanfio.eu";
       };
 
       services.gitea = {
