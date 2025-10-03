@@ -137,14 +137,14 @@
   #   openFirewall = true;
   # };
 
-  systemd.timers."low-battery" = {
-    wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "1m";
-        OnUnitActiveSec = "1m";
-        Unit = "low-battery.service";
-      };
-  };
+  # systemd.timers."low-battery" = {
+  #   wantedBy = [ "timers.target" ];
+  #     timerConfig = {
+  #       OnBootSec = "1m";
+  #       OnUnitActiveSec = "1m";
+  #       Unit = "low-battery.service";
+  #     };
+  # };
 
   systemd.services."low-battery" = let
     battery-threshold = "15";
@@ -207,6 +207,7 @@
       ".config/libinput-gestures.conf".source = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/libinput-gestures/libinput-gestures.conf";
       ".config/alacritty/alacritty.toml".source             = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/alacritty/alacritty.toml";
       ".config/hypr/other/".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/hypr/";
+      ".config/caelestia/shell.json".source    = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/caelestia/shell.json";
       ".config/nvim/".source                  = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/nvim";
       ".config/kbapp/".source                 = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/kbapp";
       ".config/wireplumber/".source           = config.lib.file.mkOutOfStoreSymlink "${config_path}/conf.d/wireplumber";
