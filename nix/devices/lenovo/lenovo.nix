@@ -10,12 +10,12 @@
   ];
   networking.wireguard.interfaces = {
     wg0 = {
-      ips = [ "16.0.0.2/24" ]; # The IP address for the server on the VPN
+      ips = [ "10.11.0.2/24" ]; # The IP address for the server on the VPN
       privateKeyFile = "/run/secrets/lenovo_private_wireguard";
       peers = [
         {
           publicKey = "LQ2I1riwAsVnhfYdoUCJmuA+151Xf8BmoD360B8KGG0=";
-          allowedIPs = [ "16.0.0.0/24" "10.10.0.125/32" ]; # The IP range for the VPN
+          allowedIPs = [ "10.10.0.125/32" ]; # The IP range for the VPN
           endpoint = "www.sanfio.eu:51820"; # The server's public IP address and port
           persistentKeepalive = 25;
         }
@@ -127,7 +127,7 @@
   users.users.sandro0198 = {
     isNormalUser = true;
     description = "Sandro";
-    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" "dialout" "input" ];
   };
 
   # services.printing.enable = true;

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
   options.mypkgs.misc = {
     enable = lib.mkOption {
       description = "Enable various common packages";
@@ -6,9 +6,14 @@
       default = false;
     };
   };
+  # imports = [
+  #   ./cosmic.nix
+  # ];
   config = lib.mkIf (config.mypkgs.misc.enable) {
     services.xserver.enable = true;
-    services.desktopManager.plasma6.enable = true;
+    services.desktopManager.plasma6.enable = false;
+
+    # services.desktopManager.cosmic_unstable.enable = false;
 
     environment.systemPackages = with pkgs; [
       xorg.xhost
@@ -46,6 +51,7 @@
       kdePackages.dolphin
       xfce.thunar
       gedit
+      gnome-disk-utility
       imv
       mpv
       smplayer
@@ -55,8 +61,6 @@
       ferdium
       gh
       gimp
-      gnome-boxes
-      gparted
       kopia
       kopia-ui
       ncdu
@@ -132,6 +136,7 @@
 
     hardware.opentabletdriver.enable = true;
     security.polkit.enable = true;
+    services.gnome.gnome-keyring.enable = true;
 
     fonts = {
       packages = with pkgs; [

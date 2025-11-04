@@ -28,17 +28,19 @@
     };
     services.dbus.enable = true;
 
-    xdg.portal = {
-      enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-      ];
+    programs.hyprland.enable = true;
+    programs.hyprland.withUWSM = true;
+    # xdg.portal = {
+    #   enable = true;
+    #   extraPortals = [
+    #     pkgs.xdg-desktop-portal-gtk
+    #   ];
 
-      config.common.default = [
-        "hyprland"
-        "gtk"
-      ];
-    };
+    #   config.common.default = [
+    #     "hyprland"
+    #     "gtk"
+    #   ];
+    # };
     security.pam.services.hyprlock = {};
 
 
@@ -140,12 +142,7 @@
             }
             {
               timeout = 290;
-              on-timeout = "notify-send -p --urgency=critical \"Turning off in 10 seconds\" > /tmp/suspend_notification_id.txt";
-              on-resume = "makoctl dismiss -n $(cat /tmp/suspend_notification_id.txt)";
-            }
-            {
-              timeout = 299;
-              on-timeout = "makoctl dismiss -n $(cat /tmp/suspend_notification_id.txt); /home/sandro0198/.local/share/my_lock/my_lock.sh";
+              on-timeout = "notify-send -t 9000 -p --urgency=critical \"Turning off in 10 seconds\" > /tmp/suspend_notification_id.txt";
             }
             {
               timeout = 300;
@@ -168,6 +165,8 @@
         # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
         xwayland.enable = true;
+        package = null;
+        portalPackage = null;
 
         extraConfig = "source = $HOME/.config/hypr/other/hyprland.conf";
       };
