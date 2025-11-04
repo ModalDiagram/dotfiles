@@ -25,28 +25,48 @@
     environment.systemPackages = [ pkgs.wireguard-tools ];
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "16.0.0.1/24" ]; # The IP address for the server on the VPN
+        ips = [ "10.11.0.1/24" ]; # The IP address for the server on the VPN
         listenPort = 51820;
 
         privateKeyFile = "/run/secrets/homelab_private_wireguard";
         peers = [
           {
             publicKey = "xEm6HUXJVJmhL5qQGycHewTLfmuyWQzIlI79XAV4vC4=";
-            allowedIPs = [ "16.0.0.2/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "10.11.0.2/32" ]; # The IP address personal PC
           }
           {
             publicKey = "Vags59KzjejAXHPfmHRTDBm6/9+7HGSqOUK3mjuuzgE=";
-            allowedIPs = [ "16.0.0.3/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "10.11.0.3/32" ]; # The IP address of mobile
           }
           {
             publicKey = "ox9BtZ2FOxKlyugkjIne6J6WxOUqFgBADMjH3plJQWw=";
-            allowedIPs = [ "16.0.0.4/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "10.11.0.4/32" ]; # The IP address of AS PC
           }
           {
             publicKey = "HXDUs/65a/IVlK3LDGr8uLzhRfLPxS38GhHPBx7PMVE=";
-            allowedIPs = [ "16.0.0.100/32" ]; # The IP address for the client on the VPN
+            allowedIPs = [ "10.12.0.2/32" ]; # The IP address of Rosaria
+          }
+          {
+            publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
+            allowedIPs = [ "10.12.0.2/32" ]; # The IP address test
           }
         ];
+        postSetup = ''
+          # Allow only traffic from friend (10.0.0.5) to NPM (192.168.1.10) on port 443
+          ${pkgs.iptables}/bin/iptables -I INPUT 1 -s 10.12.0.0/24 -p tcp --dport 443 -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -I INPUT 2 -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -I FORWARD 2 -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -I FORWARD 3 -s 10.12.0.0/24 -j DROP
+        '';
+
+        # This runs before the wg0 interface is DOWN
+        postShutdown = ''
+          # Clean up the rules
+          ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -p tcp --dport 443 -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -j DROP
+        '';
       };
     };
 
@@ -164,6 +184,8 @@
 
         # Minimize information leaked to other domains
         add_header 'Referrer-Policy' 'origin-when-cross-origin';
+
+        deny 10.12.0.0/24;
       '';
 
       virtualHosts = {
@@ -252,6 +274,19 @@
             proxyPass = "http://192.168.100.16:2283";
           };
         };
+        "overleaf.sanfio.eu" = {
+          onlySSL = true;
+          enableACME = true;
+          acmeRoot = null;
+          extraConfig = ''
+            client_max_body_size 0;
+            allow 10.12.0.0/24;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:3993";
+          };
+        };
         "seafile.sanfio.eu" = {
           onlySSL = true;
           enableACME = true;
@@ -308,6 +343,7 @@
             proxy_send_timeout 3600s;
             fastcgi_read_timeout 3600s;
             fastcgi_buffers 64 4K;
+            allow 10.12.0.0/24;
           '';
           locations."/" = {
             extraConfig = ''
