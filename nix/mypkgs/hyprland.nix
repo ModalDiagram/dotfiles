@@ -14,7 +14,13 @@
       libsForQt5.qt5ct
     ];
 
-    # services.tlp.enable = true;
+    services.upower.enable = true;
+    services.tlp = {
+      enable = true;
+      settings = {
+        "STOP_CHARGE_THRESH_BAT0" = 1;
+      };
+    };
     services.flatpak.enable = true;
 
     services.udisks2.enable = true;
