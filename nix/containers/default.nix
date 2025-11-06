@@ -107,12 +107,13 @@
       };
 
       systemd.services."dump_seafile_db" = {
-        path = [ pkgs.docker ];
+        path = [ pkgs.docker pkgs.acl ];
         script = ''
           ${pkgs.bash}/bin/bash -c '
             docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt ccnet_db > /opt/seafile-data/backup/ccnet_db.sql
             docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seafile_db > /opt/seafile-data/backup/seafile_db.sql
             docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seahub_db > /opt/seafile-data/backup/seahub_db.sql
+            setfacl -R -m m:rx /opt/seafile-data
           '
         '';
         serviceConfig = {
@@ -248,6 +249,18 @@
           locations."/red" = {
             proxyWebsockets = true;
             proxyPass = "http://192.168.100.12:1880";
+          };
+          locations."/radicale/" = {
+            proxyPass = "http://192.168.100.12:5232";
+            extraConfig = ''
+              proxy_set_header  X-Script-Name /radicale;
+              proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header  X-Forwarded-Host $host;
+              proxy_set_header  X-Forwarded-Port $server_port;
+              proxy_set_header  X-Forwarded-Proto $scheme;
+              proxy_set_header  Host $host;
+              proxy_pass_header Authorization;
+            '';
           };
         };
         "stocks.sanfio.eu" = {
