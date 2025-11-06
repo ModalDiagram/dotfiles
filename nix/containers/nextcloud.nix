@@ -48,7 +48,7 @@
       systemd.timers."backup_nextcloud" = {
         wantedBy = [ "timers.target" ];
           timerConfig = {
-            Persistent = true;
+            Persistent = false;
             OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
             Unit = "backup_nextcloud.service";
           };
@@ -76,7 +76,7 @@
       };
 
       services.nextcloud = {
-        enable = true;
+        enable = false;
         package = pkgs.nextcloud31;
         hostName = "nextcloud.sanfio.eu";
 
