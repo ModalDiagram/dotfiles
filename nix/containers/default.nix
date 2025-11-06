@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ./paperless.nix
     ./nextcloud.nix
     ./hass.nix
     ./kopia.nix
@@ -205,7 +204,7 @@
           '';
           locations."/" = {
             extraConfig = ''
-              proxy_pass http://192.168.100.13:28981;
+              proxy_pass http://192.168.100.12:28981;
               proxy_http_version 1.1;
               proxy_set_header Upgrade $http_upgrade;
               proxy_set_header Connection "upgrade";

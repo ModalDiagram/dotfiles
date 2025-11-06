@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   sops.secrets.radicale_psswd = { sopsFile = ../secrets/containers.json; format = "json"; };
+  sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
   containers.hass = {
     autoStart = true;
@@ -26,22 +27,79 @@
         isReadOnly = false;
       };
       "/run/secrets/radicale_psswd" = { hostPath = "/run/secrets/radicale_psswd"; };
+      "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
     };
 
     config = { config, lib, ... }: {
       nixpkgs.pkgs = pkgs;
-      environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg ];
+      environment.systemPackages = [ pkgs.mediamtx pkgs.ffmpeg pkgs.kopia ];
 
       environment.etc."radicale_psswd" = {
         source = "/run/secrets/radicale_psswd";
         mode = "0400";
         user = "radicale";
       };
+      environment.etc."paperless_password" = {
+        source = "/run/secrets/paperless_password";
+        mode = "0400";
+        user = "paperless";
+      };
       # systemd.tmpfiles.rules = [
         # "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
         # "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
         # "L ${config.services.node-red.userDir}/node_modules/node-red-home-assistant 0755 node-red node-red - ${node-red-home-assistant}/lib/node_modules/node-red-home-assistant"
       # ];
+
+      systemd.timers."backup_paperless" = {
+        wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Persistent = true;
+            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+            Unit = "backup_paperless.service";
+          };
+      };
+
+      systemd.services."backup_paperless" = {
+        path = [ config.services.postgresql.package pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            pg_dump paperless -f /var/lib/paperless/postgresqlbkp.bak
+            kopia snapshot create /var/lib/paperless
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "paperless";
+        };
+      };
+
+      services.paperless = {
+        enable = true;
+        passwordFile = "/etc/paperless_password";
+        address = "0.0.0.0";
+        settings = {
+          PAPERLESS_URL = "https://paper.sanfio.eu";
+          PAPERLESS_USE_X_FORWARD_HOST = true;
+          PAPERLESS_USE_X_FORWARD_PORT = true;
+          PAPERLESS_DBHOST = "/run/postgresql";
+          PAPERLESS_OCR_USER_ARGS = ''
+            { "invalidate_digital_signatures": true, "continue_on_soft_render_error": true }
+          '';
+        };
+      };
+
+      services.postgresql = {
+        enable = true;
+
+        # Ensure the database, user, and permissions always exist
+        ensureDatabases = [ "paperless" ];
+        ensureUsers = [
+          { name = "paperless";
+            ensureDBOwnership = true;
+          }
+        ];
+      };
+
 
       services.radicale = {
         enable = true;
@@ -93,7 +151,7 @@
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 1880 5232 8123 ];
+          allowedTCPPorts = [ 1880 5232 8123 28981 ];
         };
         # Use systemd-resolved inside the container
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
