@@ -182,7 +182,6 @@
       allowedTCPPorts = [ 80 22 443 25565 ];
       extraCommands = ''
         iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-        iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o wlan0 -j MASQUERADE
       '';
     };
   };

@@ -51,11 +51,12 @@
           }
         ];
         postSetup = ''
-          # Allow only traffic from friend (10.0.0.5) to NPM (192.168.1.10) on port 443
+          # Allow only traffic from friend (10.0.0.5) on port 443
           ${pkgs.iptables}/bin/iptables -I INPUT 1 -s 10.12.0.0/24 -p tcp --dport 443 -j ACCEPT
           ${pkgs.iptables}/bin/iptables -I INPUT 2 -s 10.12.0.0/24 -j DROP
           ${pkgs.iptables}/bin/iptables -I FORWARD 2 -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
           ${pkgs.iptables}/bin/iptables -I FORWARD 3 -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.11.0.0/24,10.12.0.0/24 -o eth0 -j MASQUERADE
         '';
 
         # This runs before the wg0 interface is DOWN
@@ -65,6 +66,7 @@
           ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -j DROP
           ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
           ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.11.0.0/24,10.12.0.0/24 -o eth0 -j MASQUERADE
         '';
       };
     };
@@ -309,6 +311,7 @@
             proxy_set_header   X-Forwarded-Host $server_name;
             proxy_read_timeout  1200s;
             client_max_body_size 0;
+            allow 10.12.0.0/24;
           '';
           locations = {
             "/" = {
