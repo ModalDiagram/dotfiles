@@ -164,6 +164,11 @@
          "CLOUDFLARE_DNS_API_TOKEN_FILE" = "/run/secrets/cloudflare_token";
         };
       };
+      certs."sanfio.eu" = {
+        domain = "sanfio.eu";
+        extraDomainNames = [ "*.sanfio.eu" ];
+        group = "nginx";
+      };
     };
 
     services.nginx = {
@@ -199,8 +204,7 @@
         };
         "paper.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 10G;
           '';
@@ -222,8 +226,7 @@
         };
         "kopia.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
@@ -238,8 +241,7 @@
         };
         "hass.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -266,8 +268,7 @@
         };
         "stocks.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -278,8 +279,7 @@
         };
         "photos.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 0;
           '';
@@ -290,8 +290,7 @@
         };
         "overleaf.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 0;
             allow 10.12.0.0/24;
@@ -303,8 +302,7 @@
         };
         "seafile.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             proxy_set_header   X-Real-IP $remote_addr;
             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -337,8 +335,7 @@
         };
         "git.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 0;
           '';
@@ -348,8 +345,7 @@
         };
         "nextcloud.sanfio.eu" = {
           onlySSL = true;
-          enableACME = true;
-          acmeRoot = null;
+          useACMEHost = "sanfio.eu";
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
