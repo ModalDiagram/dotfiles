@@ -13,10 +13,7 @@
         exiftool
       ];
 
-      users.users.kopia = {
-        group = "immich";
-        isNormalUser = true;
-      };
+      users.users.immich.home = "/var/lib/immich";
 
       systemd.timers."backup_immich" = {
         wantedBy = [ "timers.target" ];
@@ -36,7 +33,7 @@
         '';
         serviceConfig = {
           Type = "oneshot";
-          User = "kopia";
+          User = "immich";
         };
       };
 

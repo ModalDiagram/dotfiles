@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   sops.secrets.radicale_psswd = { sopsFile = ../secrets/containers.json; format = "json"; };
   sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
+  sops.secrets.gitea_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
   containers.hass = {
     autoStart = true;
@@ -28,6 +29,7 @@
       };
       "/run/secrets/radicale_psswd" = { hostPath = "/run/secrets/radicale_psswd"; };
       "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
+      "/run/secrets/gitea_password" = { hostPath = "/run/secrets/gitea_password"; };
     };
 
     config = { config, lib, ... }: {
@@ -44,19 +46,39 @@
         mode = "0400";
         user = "paperless";
       };
-      # systemd.tmpfiles.rules = [
-        # "d ${config.services.node-red.userDir}/node_modules 0755 node-red node-red"
-        # "L ${config.services.node-red.userDir}/node_modules/node-red-contrib-sunevents 0755 node-red node-red - ${node-red-contrib-sunevents}/lib/node_modules/node-red-contrib-sunevents"
-        # "L ${config.services.node-red.userDir}/node_modules/node-red-home-assistant 0755 node-red node-red - ${node-red-home-assistant}/lib/node_modules/node-red-home-assistant"
-      # ];
+      environment.etc."gitea_password" = {
+        source = "/run/secrets/gitea_password";
+        mode = "0400";
+        user = "gitea";
+      };
+
+      users.users.radicale.home = "/var/lib/radicale";
 
       systemd.timers."backup_paperless" = {
         wantedBy = [ "timers.target" ];
-          timerConfig = {
-            Persistent = true;
-            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-            Unit = "backup_paperless.service";
-          };
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          Unit = "backup_paperless.service";
+        };
+      };
+
+      systemd.timers."backup_gitea" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          Unit = "backup_gitea.service";
+        };
+      };
+
+      systemd.timers."backup_radicale" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          Unit = "backup_radicale.service";
+        };
       };
 
       systemd.services."backup_paperless" = {
@@ -70,6 +92,33 @@
         serviceConfig = {
           Type = "oneshot";
           User = "paperless";
+        };
+      };
+
+      systemd.services."backup_gitea" = {
+        path = [ config.services.postgresql.package pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            pg_dump gitea -f /var/lib/gitea/postgresqlbkp.bak
+            kopia snapshot create /var/lib/gitea
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "gitea";
+        };
+      };
+
+      systemd.services."backup_radicale" = {
+        path = [ pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            kopia snapshot create /var/lib/radicale
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "radicale";
         };
       };
 
@@ -92,14 +141,32 @@
         enable = true;
 
         # Ensure the database, user, and permissions always exist
-        ensureDatabases = [ "paperless" ];
+        ensureDatabases = [ "paperless" "gitea" ];
         ensureUsers = [
           { name = "paperless";
+            ensureDBOwnership = true;
+          }
+          {
+            name = "gitea";
             ensureDBOwnership = true;
           }
         ];
       };
 
+      services.gitea = {
+        enable = true;
+        appName = "Gitea_Homelab";
+        database = {
+          type = "postgres";
+          passwordFile = "/etc/gitea_password";
+        };
+        settings.server = {
+          DOMAIN = "git.sanfio.eu";
+          ROOT_URL = "https://git.sanfio.eu/";
+          HTTP_ADDR = "0.0.0.0";
+          HTTP_PORT = 3001;
+        };
+      };
 
       services.radicale = {
         enable = true;
@@ -151,7 +218,7 @@
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 1880 5232 8123 28981 ];
+          allowedTCPPorts = [ 1880 5232 8123 28981 3001 ];
         };
         # Use systemd-resolved inside the container
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686

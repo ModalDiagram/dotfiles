@@ -23,7 +23,7 @@
   security.pam.services.sudo.sshAgentAuth = true;
 
   environment.systemPackages = with pkgs; [
-    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl
+    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl lm_sensors
   ];
   # Rules for brightnessctl
   services.udev.extraRules = ''

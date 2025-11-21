@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
-    ./nextcloud.nix
+    #./nextcloud.nix
     ./hass.nix
     ./kopia.nix
     ./docker.nix
@@ -343,7 +343,7 @@
             client_max_body_size 0;
           '';
           locations."/" = {
-            proxyPass = "http://192.168.100.11:3001";
+            proxyPass = "http://192.168.100.12:3001";
           };
         };
         "nextcloud.sanfio.eu" = {
