@@ -282,6 +282,7 @@
           useACMEHost = "sanfio.eu";
           extraConfig = ''
             client_max_body_size 0;
+            allow 10.12.0.0/24;
           '';
           locations."/" = {
             proxyWebsockets = true;
