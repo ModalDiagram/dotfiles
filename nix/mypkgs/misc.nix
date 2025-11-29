@@ -1,4 +1,6 @@
-{ config, pkgs, lib, inputs, ... }: {
+{ config, pkgs, lib, nixpkgs-unstable, ... }:
+let unstable = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}; in
+{
   options.mypkgs.misc = {
     enable = lib.mkOption {
       description = "Enable various common packages";
@@ -55,7 +57,7 @@
       imv
       mpv
       smplayer
-      pkgs.unstable.quickshell
+      unstable.quickshell
 
       # Utility apps
       ferdium
@@ -84,6 +86,8 @@
     services.openssh.enable = true;
     services.openssh.settings.X11Forwarding = true;
     services.gvfs.enable = true;
+    virtualisation.waydroid.enable = false;
+    virtualisation.waydroid.package = unstable.waydroid-nftables;
     # services.elasticsearch.enable = true;
     # virtualisation.virtualbox.host.enable = true;
     # users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];

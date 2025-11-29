@@ -1,5 +1,5 @@
 { config, fixed, pkgs, lib, ...}:
-let fixed_pkgs = fixed.legacyPackages.${pkgs.system}; in
+let fixed_pkgs = fixed.legacyPackages.${pkgs.stdenv.hostPlatform.system}; in
 {
   options.mypkgs.tex = {
     enable = lib.mkOption {

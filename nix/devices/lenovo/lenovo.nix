@@ -6,7 +6,7 @@
 
   environment.systemPackages = [
     pkgs.wireguard-tools
-    inputs.zen-browser.packages."x86_64-linux".default # beta
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # beta
   ];
   networking.wireguard.interfaces = {
     wg0 = {

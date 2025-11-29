@@ -16,7 +16,7 @@ let
   cfg = config.services.desktopManager.cosmic_unstable;
   notExcluded = pkg: utils.disablePackageByName pkg config.environment.cosmic.excludePackages;
   excludedCorePkgs = lib.lists.intersectLists corePkgs config.environment.cosmic.excludePackages;
-  unstable_pkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  unstable_pkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   # **ONLY ADD PACKAGES WITHOUT WHICH COSMIC CRASHES, NOTHING ELSE**
   corePkgs =
     with unstable_pkgs;

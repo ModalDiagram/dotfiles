@@ -1,4 +1,4 @@
-{ caelestia-shell, config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: {
   options.mypkgs.hyprland = {
     enable = lib.mkOption {
       description = "Enable hyprland";
@@ -50,6 +50,7 @@
     security.pam.services.hyprlock = {};
 
 
+    security.pam.services.greetd.enableGnomeKeyring = true;
     services.greetd = {
       enable = true;
       settings = {
@@ -98,7 +99,6 @@
         alacritty
         blueberry
         brightnessctl
-        caelestia-shell.packages.x86_64-linux.default
         chromium
         gh
         glib # gsettings
@@ -146,12 +146,12 @@
               on-timeout = "brightnessctl -s set 10";
               on-resume = "brightnessctl -r";
             }
+            # {
+            #   timeout = 290;
+            #   on-timeout = "notify-send -t 9000 -p --urgency=critical \"Turning off in 10 seconds\" > /tmp/suspend_notification_id.txt";
+            # }
             {
-              timeout = 290;
-              on-timeout = "notify-send -t 9000 -p --urgency=critical \"Turning off in 10 seconds\" > /tmp/suspend_notification_id.txt";
-            }
-            {
-              timeout = 300;
+              timeout = 600;
               on-timeout = "hyprctl dispatch dpms off eDP-1";
               on-resume = "hyprctl dispatch dpms on eDP-1";
             }

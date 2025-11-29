@@ -7,11 +7,6 @@
     stable.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     sops-nix.url = "github:Mic92/sops-nix";
     fixed.url = "nixpkgs/nixos-24.11";
 
@@ -32,20 +27,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, fixed, sops-nix, caelestia-shell, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      overlay-unstable = final: prev: {
-        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
-      };
-    in {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, fixed, sops-nix, ... }@inputs: {
     nixosConfigurations = {
-      "lenovo" = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-
-        specialArgs = { inherit self system inputs nixpkgs nixpkgs-unstable fixed caelestia-shell; };
+      "lenovo" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit self inputs nixpkgs nixpkgs-unstable fixed; };
         modules = [
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
           {
             options.main-user = nixpkgs.lib.mkOption {
               type = nixpkgs.lib.types.str;

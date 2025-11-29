@@ -12,7 +12,6 @@
     hyprland = {
           url = "github:hyprwm/Hyprland?ref=v0.45.0";
     };
-    dream2nix.url = "github:nix-community/dream2nix";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -20,16 +19,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, fixed, dream2nix, sops-nix, ... }@inputs:
-  let system = "x86_64-linux"; in {
+  outputs = { self, nixpkgs, home-manager, hyprland, fixed, sops-nix, ... }@inputs: {
     nixosConfigurations = {
-      "homelab" = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-
+      "homelab" = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit self system inputs nixpkgs fixed dream2nix;
-          node-red-contrib-sunevents = self.packages.x86_64-linux.node-red-contrib-sunevents;
-          node-red-home-assistant = self.packages.x86_64-linux.node-red-home-assistant;
+          inherit self inputs nixpkgs fixed;
         };
         modules = [
           {
@@ -56,14 +50,6 @@
           }
         ];
       };
-    };
-
-    packages.${system} = dream2nix.lib.importPackages {
-      projectRoot = ../../.;
-      # can be changed to ".git" or "flake.nix" to get rid of .project-root
-      projectRootFile = "flake.nix";
-      packagesDir = ../../mypkgs/dream_packages;
-      packageSets.nixpkgs = nixpkgs.legacyPackages.${system};
     };
   };
 }
