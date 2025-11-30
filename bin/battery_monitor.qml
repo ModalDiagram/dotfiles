@@ -46,7 +46,7 @@ Scope {
         height: 100
         onPaint: {
           var ctx = getContext("2d")
-          var ratio = batteryPerc / warnLevel * 100
+          var ratio = batteryPerc / warnLevel / 5 * 100
 
           ctx.clearRect(0, 0, width, height)
 
