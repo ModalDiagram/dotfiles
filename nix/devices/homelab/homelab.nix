@@ -13,7 +13,7 @@
     options ath9k nohwcrypt=1
   '';
 
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
