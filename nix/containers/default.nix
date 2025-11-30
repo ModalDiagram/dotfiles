@@ -46,8 +46,8 @@
             allowedIPs = [ "10.12.0.2/32" ]; # The IP address of Rosaria
           }
           {
-            publicKey = "seCh6h/tgjowWqfpHzJrqdC1yyzshssuIBjkUkbr4kY=";
-            allowedIPs = [ "10.12.0.2/32" ]; # The IP address test
+            publicKey = "4/BJ1VLcJVjbIKH7M3qgBmMMhB0doL2hYqsA2qzmlm8=";
+            allowedIPs = [ "10.12.0.3/32" ]; # The IP address test
           }
         ];
         postSetup = ''
