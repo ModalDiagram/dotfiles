@@ -55,7 +55,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet -r --remember-session";
+          command = "${pkgs.tuigreet}/bin/tuigreet -r --remember-session";
           user = "greeter";
         };
       };
@@ -88,10 +88,8 @@
       ## radv: an open-source Vulkan driver from freedesktop
       enable32Bit = true;
 
-      ## amdvlk is an alternative driver
       ## libGL is needed for many electron apps; mesa and libva for steam
-      extraPackages = with pkgs; [ amdvlk libGL mesa libva rocmPackages.clr.icd ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+      extraPackages = with pkgs; [ libGL mesa libva rocmPackages.clr.icd ];
     };
 
     home-manager.users.${config.main-user} = {
@@ -117,7 +115,7 @@
         kdePackages.okular
         pavucontrol
         playerctl
-        greetd.tuigreet
+        tuigreet
         slurp # screenshot functionality
         sway-contrib.grimshot
         udiskie

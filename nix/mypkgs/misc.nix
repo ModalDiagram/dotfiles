@@ -108,10 +108,7 @@ let unstable = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system
     #   };
     # };
 
-    services.logind.extraConfig = ''
-      # don’t shutdown when power button is short-pressed
-      HandlePowerKey=suspend
-    '';
+    services.logind.settings.Login.HandlePowerKey = "suspend";
     swapDevices = [ {
       device = "/var/lib/swapfile";
       size = 4*1024;
@@ -173,8 +170,10 @@ let unstable = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system
 
       programs.git = {
         enable = true;
-        userName  = "ModalDiagram";
-        userEmail = "git@sanfio.eu";
+        settings = {
+          user.name = "ModalDiagram";
+          user.email = "git@sanfio.eu";
+        };
       };
 
       programs.vim = {

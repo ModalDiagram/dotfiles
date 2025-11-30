@@ -16,8 +16,8 @@ my_python_packages = ps: with ps; [
   plotly
   pydot
   pynvim
-  python-lsp-ruff
-  python-lsp-server
+  # python-lsp-ruff
+  # python-lsp-server
   requests
   seaborn
   scikit-learn

@@ -14,7 +14,6 @@
         go
         gopls
         jdk
-        clang-tools_17
         lldb
         lua-language-server
         luarocks

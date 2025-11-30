@@ -90,7 +90,7 @@
   };
 
 
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Rome";
@@ -179,13 +179,14 @@
   home-manager.users.${config.main-user} = { config, ... }: {
     programs.ssh = {
       enable = true;
-      addKeysToAgent = "yes";
+      enableDefaultConfig = false;
 
       matchBlocks = {
         "homelab" = {
           hostname = "nextcloud.sanfio.eu";
           user = "homelab";
           identityFile = "~/.ssh/homelab";
+          addKeysToAgent = "yes";
         };
 
         "homelab_deploy" = {
@@ -193,6 +194,7 @@
           user = "deployuser";
           identityFile = "~/.ssh/homelab_deploy";
           forwardAgent = true;
+          addKeysToAgent = "yes";
         };
       };
     };
