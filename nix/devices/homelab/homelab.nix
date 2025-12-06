@@ -36,6 +36,7 @@
     home = "/home/homelab";
     isNormalUser = true;
     uid = 1000;
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID5nVXfdEW4bLOb6682BhyVBHBH+7tyqNzlpUCioJEmi windows-pc" ];
   };
 
   users.extraUsers.kopia = {
@@ -170,6 +171,12 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 30;
+  };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/d17146b6-7661-4338-8733-6f6bb342ccf2"; }
