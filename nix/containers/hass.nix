@@ -30,6 +30,10 @@
       "/run/secrets/radicale_psswd" = { hostPath = "/run/secrets/radicale_psswd"; };
       "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
       "/run/secrets/gitea_password" = { hostPath = "/run/secrets/gitea_password"; };
+      "/var/lib/kavita_library/suwayomi/" = {
+        hostPath = "/opt/suwayomi/downloads";
+        isReadOnly = false;
+      };
     };
 
     config = { config, lib, ... }: {
@@ -119,6 +123,14 @@
         serviceConfig = {
           Type = "oneshot";
           User = "radicale";
+        };
+      };
+
+      services.kavita = {
+        enable = true;
+        tokenKeyFile = "/var/lib/kavita/tokenkey.txt";
+        settings = {
+          IpAddresses = "0.0.0.0";
         };
       };
 
@@ -218,7 +230,7 @@
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 1880 5232 8123 28981 3001 ];
+          allowedTCPPorts = [ 1880 5232 8123 28981 3001 5000 ];
         };
         # Use systemd-resolved inside the container
         # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686

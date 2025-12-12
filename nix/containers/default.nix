@@ -192,7 +192,9 @@
         # Minimize information leaked to other domains
         add_header 'Referrer-Policy' 'origin-when-cross-origin';
 
-        deny 10.12.0.0/24;
+        allow 10.10.0.0/24;
+        allow 10.11.0.0/24;
+        deny 0.0.0.0/0;
       '';
 
       virtualHosts = {
@@ -275,6 +277,50 @@
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:3333/";
+          };
+        };
+        "comics.sanfio.eu" = {
+          onlySSL = true;
+          useACMEHost = "sanfio.eu";
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:4568";
+          };
+        };
+        "kavita.sanfio.eu" = {
+          onlySSL = true;
+          useACMEHost = "sanfio.eu";
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://192.168.100.12:5000";
+          };
+        };
+        "stremio.sanfio.eu" = {
+          onlySSL = true;
+          useACMEHost = "sanfio.eu";
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:11470";
+          };
+        };
+        "mammamia.sanfio.eu" = {
+          onlySSL = true;
+          useACMEHost = "sanfio.eu";
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:8092";
           };
         };
         "photos.sanfio.eu" = {
