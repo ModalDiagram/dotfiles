@@ -139,7 +139,7 @@
         passwordFile = "/etc/paperless_password";
         address = "0.0.0.0";
         settings = {
-          PAPERLESS_URL = "https://paper.sanfio.eu";
+          PAPERLESS_URL = "https://paper.sfioretto.it";
           PAPERLESS_USE_X_FORWARD_HOST = true;
           PAPERLESS_USE_X_FORWARD_PORT = true;
           PAPERLESS_DBHOST = "/run/postgresql";
@@ -173,8 +173,8 @@
           passwordFile = "/etc/gitea_password";
         };
         settings.server = {
-          DOMAIN = "git.sanfio.eu";
-          ROOT_URL = "https://git.sanfio.eu/";
+          DOMAIN = "git.sfioretto.it";
+          ROOT_URL = "https://git.sfioretto.it/";
           HTTP_ADDR = "0.0.0.0";
           HTTP_PORT = 3001;
         };
@@ -203,7 +203,7 @@
       };
 
       services.home-assistant = {
-        enable = true;
+        enable = false;
         extraComponents = [
           # Components required to complete the onboarding
           "esphome"
@@ -216,7 +216,7 @@
         ];
         config = {
           homeassistant = {
-            external_url = "https://hass.sanfio.eu";
+            external_url = "https://hass.sfioretto.it";
           };
           mobile_app = {};
           camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];

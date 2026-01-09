@@ -90,8 +90,8 @@
       usev4 = "webv4, webv4='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
       usev6 = "";
       protocol = "cloudflare";
-      zone = "sanfio.eu";
-      domains = [ "sanfio.eu" "www.sanfio.eu" ];
+      zone = "sfioretto.it";
+      domains = [ "sfioretto.it" "www.sfioretto.it" ];
       passwordFile = "/run/secrets/cloudflare_token";
       extraConfig = ''
         postscript=${notify-script}
@@ -157,16 +157,16 @@
     security.acme = {
       acceptTerms = true;
       defaults = {
-        email = "acme@sanfio.eu";
+        email = "acme@sfioretto.it";
         extraLegoFlags = [ "--dns.propagation-wait" "10s" ];
         dnsProvider = "cloudflare";
         credentialFiles = {
          "CLOUDFLARE_DNS_API_TOKEN_FILE" = "/run/secrets/cloudflare_token";
         };
       };
-      certs."sanfio.eu" = {
-        domain = "sanfio.eu";
-        extraDomainNames = [ "*.sanfio.eu" ];
+      certs."sfioretto.it" = {
+        domain = "sfioretto.it";
+        extraDomainNames = [ "*.sfioretto.it" ];
         group = "nginx";
       };
     };
@@ -204,9 +204,9 @@
             return = "301 https://$host$request_uri";
           };
         };
-        "paper.sanfio.eu" = {
+        "paper.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 10G;
           '';
@@ -226,9 +226,9 @@
             '';
           };
         };
-        "kopia.sanfio.eu" = {
+        "kopia.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
@@ -241,15 +241,15 @@
             '';
           };
         };
-        "hass.sanfio.eu" = {
+        "hass.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
           '';
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://192.168.100.12:8123";
+            proxyPass = "http://127.0.0.1:8123";
           };
           locations."/red" = {
             proxyWebsockets = true;
@@ -268,9 +268,9 @@
             '';
           };
         };
-        "stocks.sanfio.eu" = {
+        "stocks.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -279,9 +279,9 @@
             proxyPass = "http://127.0.0.1:3333/";
           };
         };
-        "comics.sanfio.eu" = {
+        "comics.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -290,9 +290,9 @@
             proxyPass = "http://127.0.0.1:4568";
           };
         };
-        "kavita.sanfio.eu" = {
+        "kavita.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -301,9 +301,9 @@
             proxyPass = "http://192.168.100.12:5000";
           };
         };
-        "stremio.sanfio.eu" = {
+        "stremio.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
           '';
@@ -312,20 +312,21 @@
             proxyPass = "http://127.0.0.1:11470";
           };
         };
-        "mammamia.sanfio.eu" = {
+        "mammamia.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 1G;
+            allow 10.12.0.0/24;
           '';
           locations."/" = {
             proxyWebsockets = true;
             proxyPass = "http://127.0.0.1:8092";
           };
         };
-        "photos.sanfio.eu" = {
+        "photos.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 0;
             allow 10.12.0.0/24;
@@ -335,9 +336,9 @@
             proxyPass = "http://192.168.100.16:2283";
           };
         };
-        "overleaf.sanfio.eu" = {
+        "overleaf.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 0;
             allow 10.12.0.0/24;
@@ -347,9 +348,9 @@
             proxyPass = "http://127.0.0.1:3993";
           };
         };
-        "seafile.sanfio.eu" = {
+        "seafile.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             proxy_set_header   X-Real-IP $remote_addr;
             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -380,9 +381,9 @@
             };
           };
         };
-        "git.sanfio.eu" = {
+        "git.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             client_max_body_size 0;
           '';
@@ -390,9 +391,9 @@
             proxyPass = "http://192.168.100.12:3001";
           };
         };
-        "nextcloud.sanfio.eu" = {
+        "nextcloud.sfioretto.it" = {
           onlySSL = true;
-          useACMEHost = "sanfio.eu";
+          useACMEHost = "sfioretto.it";
           extraConfig = ''
             proxy_buffering off;
             client_max_body_size 0;
