@@ -76,6 +76,15 @@
         };
       };
 
+      systemd.timers."backup_kavita" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          Unit = "backup_kavita.service";
+        };
+      };
+
       systemd.timers."backup_radicale" = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
@@ -113,6 +122,19 @@
         };
       };
 
+      systemd.services."backup_kavita" = {
+        path = [ pkgs.kopia ];
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            kopia snapshot create /var/lib/kavita
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "kavita";
+        };
+      };
+
       systemd.services."backup_radicale" = {
         path = [ pkgs.kopia ];
         script = ''
@@ -131,6 +153,7 @@
         tokenKeyFile = "/var/lib/kavita/tokenkey.txt";
         settings = {
           IpAddresses = "0.0.0.0";
+          Port = 5000;
         };
       };
 
