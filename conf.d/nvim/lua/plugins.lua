@@ -74,7 +74,7 @@ return require('packer').startup(function(use)
 
   -- Treesitter for formatting
   use { "nvim-treesitter/nvim-treesitter", config = [[require('config.treesitter')]] }
-  use { 'nvim-treesitter/playground' }
+  -- use { 'nvim-treesitter/playground' }
   use { "kiyoon/treesitter-indent-object.nvim"}
 
   use { "rcarriga/nvim-notify", config = [[require('config.notify')]] }
