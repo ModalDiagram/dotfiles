@@ -47,23 +47,23 @@
           }
           {
             publicKey = "4/BJ1VLcJVjbIKH7M3qgBmMMhB0doL2hYqsA2qzmlm8=";
-            allowedIPs = [ "10.12.0.3/32" ]; # The IP address test
+            allowedIPs = [ "10.12.0.3/32" ]; # The IP address of Fire Stick
           }
         ];
         postSetup = ''
           # Allow only traffic from friend (10.0.0.5) on port 443
-          ${pkgs.iptables}/bin/iptables -I INPUT 1 -s 10.12.0.0/24 -p tcp --dport 443 -j ACCEPT
-          ${pkgs.iptables}/bin/iptables -I INPUT 2 -s 10.12.0.0/24 -j DROP
-          ${pkgs.iptables}/bin/iptables -I FORWARD 2 -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
-          ${pkgs.iptables}/bin/iptables -I FORWARD 3 -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -I INPUT 1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -I INPUT 2 -s 10.12.0.0/24 -p tcp ! --dport 443 -j DROP
+          ${pkgs.iptables}/bin/iptables -I FORWARD 1 -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -I FORWARD 2 -s 10.12.0.0/24 -j DROP
           ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.11.0.0/24,10.12.0.0/24 -o eth0 -j MASQUERADE
         '';
 
         # This runs before the wg0 interface is DOWN
         postShutdown = ''
           # Clean up the rules
-          ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -p tcp --dport 443 -j ACCEPT
-          ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -j DROP
+          ${pkgs.iptables}/bin/iptables -D INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -D INPUT -s 10.12.0.0/24 -p tcp ! --dport 443 -j DROP
           ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -p tcp --dport 25565 -j ACCEPT
           ${pkgs.iptables}/bin/iptables -D FORWARD -s 10.12.0.0/24 -j DROP
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.11.0.0/24,10.12.0.0/24 -o eth0 -j MASQUERADE
@@ -150,7 +150,7 @@
       firewall = {
         # Open Wireguard port
         allowedTCPPorts = [ 8888 3000 ];
-        allowedUDPPorts = [ 51820 53 ];
+        allowedUDPPorts = [ 51820 53 8080 ];
       };
     };
 
@@ -290,6 +290,34 @@
             proxyPass = "http://127.0.0.1:4568";
           };
         };
+        "adv.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 1G;
+            proxy_busy_buffers_size   512k;
+            proxy_buffers   4 512k;
+            proxy_buffer_size   256k;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:8015";
+          };
+        };
+        "advback.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 1G;
+            proxy_busy_buffers_size   512k;
+            proxy_buffers   4 512k;
+            proxy_buffer_size   256k;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:8016";
+          };
+        };
         "kavita.sfioretto.it" = {
           onlySSL = true;
           useACMEHost = "sfioretto.it";
@@ -389,6 +417,25 @@
           '';
           locations."/" = {
             proxyPass = "http://192.168.100.12:3001";
+          };
+        };
+        "screego.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 0;
+            allow 10.12.0.0/24;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:5050";
           };
         };
         "nextcloud.sfioretto.it" = {

@@ -150,6 +150,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "dm-snapshot"  "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.extraModulePackages = [ ];
   boot.initrd.luks.devices = {
     root = {
@@ -187,9 +188,6 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 22 443 25565 ];
-      extraCommands = ''
-        iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-      '';
     };
   };
   networking.hostName = "homelab";
