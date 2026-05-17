@@ -47,7 +47,7 @@
           }
           {
             publicKey = "4/BJ1VLcJVjbIKH7M3qgBmMMhB0doL2hYqsA2qzmlm8=";
-            allowedIPs = [ "10.12.0.3/32" ]; # The IP address of Fire Stick
+            allowedIPs = [ "10.11.0.5/32" ]; # The IP address of Fire Stick
           }
         ];
         postSetup = ''
@@ -102,44 +102,45 @@
       '';
     };
 
-    systemd.timers."backup_seafile" = {
-        wantedBy = [ "timers.target" ];
-          timerConfig = {
-            Persistent = true;
-            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-            Unit = "backup_seafile.service";
-          };
-      };
-
-      systemd.services."dump_seafile_db" = {
-        path = [ pkgs.docker pkgs.acl ];
-        script = ''
-          ${pkgs.bash}/bin/bash -c '
-            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt ccnet_db > /opt/seafile-data/backup/ccnet_db.sql
-            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seafile_db > /opt/seafile-data/backup/seafile_db.sql
-            docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seahub_db > /opt/seafile-data/backup/seahub_db.sql
-            setfacl -R -m m:rx /opt/seafile-data
-          '
-        '';
-        serviceConfig = {
-          Type = "oneshot";
+    systemd.timers."backup_containers" = {
+      wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          Unit = "backup_containers.service";
         };
-      };
+    };
 
-      systemd.services."backup_seafile" = {
-        path = [ pkgs.kopia ];
-        script = ''
-          ${pkgs.bash}/bin/bash -c '
-            kopia snapshot create /opt/seafile-data/
-          '
-        '';
-        requires = [ "dump_seafile_db.service" ];
-        after = [ "dump_seafile_db.service" ];
-        serviceConfig = {
-          Type = "oneshot";
-          User = "kopia";
-        };
+    systemd.services."dump_seafile_db" = {
+      path = [ pkgs.docker pkgs.acl ];
+      script = ''
+        ${pkgs.bash}/bin/bash -c '
+          docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt ccnet_db > /opt/seafile-data/backup/ccnet_db.sql
+          docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seafile_db > /opt/seafile-data/backup/seafile_db.sql
+          docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seahub_db > /opt/seafile-data/backup/seahub_db.sql
+          setfacl -R -m m:rx /opt/seafile-data
+        '
+      '';
+      serviceConfig = {
+        Type = "oneshot";
       };
+    };
+
+    systemd.services."backup_containers" = {
+      path = [ pkgs.kopia ];
+      script = ''
+        ${pkgs.bash}/bin/bash -c '
+          kopia snapshot create /opt/seafile-data/
+          kopia snapshot create /home/homelab/docker/
+        '
+      '';
+      requires = [ "dump_seafile_db.service" ];
+      after = [ "dump_seafile_db.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = "kopia";
+      };
+    };
 
 
 
@@ -153,7 +154,6 @@
       };
       firewall = {
         # Open Wireguard port
-        allowedTCPPorts = [ 8888 3000 ];
         allowedUDPPorts = [ 51820 53 8080 ];
       };
     };
@@ -525,6 +525,7 @@
       # ^^ Not one hundred percent sure if this is needed- if it aint broke, don't fix it
       enable = true;
       openFirewall = true;
+      allowInterfaces = [ "enp1s0f1" "lo" ];
     };
 
     services.adguardhome = {
