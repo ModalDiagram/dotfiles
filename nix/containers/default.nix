@@ -78,6 +78,10 @@
         Persistent = true;
       };
     };
+    systemd.services."ddclient" = {
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+    };
     services.ddclient = let
       notify-script = pkgs.writeShellScript "notify-script.sh" ''
         BOT_TOKEN=$(cat /run/secrets/telegram_bot_api)
@@ -438,30 +442,46 @@
             proxyPass = "http://127.0.0.1:5050";
           };
         };
-        "nextcloud.sfioretto.it" = {
+        "eapi.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://192.168.100.16:8080";
+          };
+        };
+        "ephotos.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          locations."/" = {
+            root = pkgs.ente-web;
+            tryFiles = "$uri $uri.html /index.html";
+            extraConfig = ''
+              add_header Access-Control-Allow-Origin 'https://eapi.sfioretto.it';
+            '';
+          };
+        };
+        "eaccounts.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          locations."/" = {
+            root = pkgs.ente-web;
+            tryFiles = "$uri $uri.html /index.html";
+            extraConfig = ''
+              add_header Access-Control-Allow-Origin 'https://eapi.sfioretto.it';
+            '';
+          };
+        };
+        "es3.sfioretto.it" = {
           onlySSL = true;
           useACMEHost = "sfioretto.it";
           extraConfig = ''
-            proxy_buffering off;
             client_max_body_size 0;
-            proxy_connect_timeout 3600s;
-            proxy_read_timeout 3600s;
-            proxy_send_timeout 3600s;
-            fastcgi_read_timeout 3600s;
-            fastcgi_buffers 64 4K;
-            allow 10.12.0.0/24;
+            allow 192.168.100.0/24;
           '';
           locations."/" = {
-            extraConfig = ''
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-NginX-Proxy true;
-              proxy_set_header X-Forwarded-Proto http;
-              proxy_pass http://192.168.100.11:80/; # tailing / is important!
-              proxy_set_header Host $host;
-              proxy_cache_bypass $http_upgrade;
-              proxy_redirect off;
-            '';
+            proxyWebsockets = true;
+            proxyPass = "http://192.168.100.16:9000";
           };
         };
       };
