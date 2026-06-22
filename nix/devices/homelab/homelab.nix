@@ -156,11 +156,10 @@
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/sda2";
-      preLVM = true;
       allowDiscards = true;
       keyFileSize = 4096;
       keyFile = "/dev/sdb";
-      fallbackToPassword = true;
+      keyFileTimeout = 5;
     };
   };
 

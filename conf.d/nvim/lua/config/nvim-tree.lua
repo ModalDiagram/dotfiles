@@ -111,10 +111,6 @@ nvim_tree.setup {
     enable = true,
     auto_open = true,
   },
-  system_open = {
-    cmd = "",
-    args = {},
-  },
   diagnostics = {
     enable = false,
     show_on_dirs = false,

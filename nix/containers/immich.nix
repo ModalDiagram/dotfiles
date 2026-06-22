@@ -1,8 +1,8 @@
 { pkgs, config, ... }: {
-  sops.secrets."minio.env" = {
-    sopsFile = ../secrets/minio.env; format = "dotenv";
-    uid = config.containers.immich.config.users.users.minio.uid;
-  };
+  # sops.secrets."minio.env" = {
+  #   sopsFile = ../secrets/minio.env; format = "dotenv";
+  #   uid = config.containers.immich.config.users.users.minio.uid;
+  # };
   sops.secrets.MINIO_ROOT_USER = {
     sopsFile = ../secrets/ente.json; format = "json"; uid = 995;
   };
@@ -25,7 +25,7 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.16";
     bindMounts = {
-      "/run/secrets/minio.env" = { hostPath = "/run/secrets/minio.env"; };
+      # "/run/secrets/minio.env" = { hostPath = "/run/secrets/minio.env"; };
       "/run/secrets/MINIO_ROOT_USER" = { hostPath = "/run/secrets/MINIO_ROOT_USER"; };
       "/run/secrets/MINIO_ROOT_PASSWORD" = { hostPath = "/run/secrets/MINIO_ROOT_PASSWORD"; };
       "/run/secrets/ENTE_ENCRYPTION" = { hostPath = "/run/secrets/ENTE_ENCRYPTION"; };
@@ -85,17 +85,17 @@
 
       services.resolved.enable = true;
 
-      services.minio = {
-        enable = true;
-        region = "us-east-1";
-        rootCredentialsFile = "/run/secrets/minio.env";
-      };
+      # services.minio = {
+      #   enable = true;
+      #   region = "us-east-1";
+      #   rootCredentialsFile = "/run/secrets/minio.env";
+      # };
 
-      systemd.services.minio.environment.MINIO_SERVER_URL = "https://es3.sfioretto.it";
+      # systemd.services.minio.environment.MINIO_SERVER_URL = "https://es3.sfioretto.it";
 
       services.ente = {
         api = {
-          enable = true;
+          enable = false;
           enableLocalDB = true;
           domain = "eapi.sfioretto.it";
           settings = {

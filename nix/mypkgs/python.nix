@@ -7,11 +7,12 @@ my_python_packages = ps: with ps; [
   lxml
   jedi-language-server
   jupyterlab-lsp
-  keras
+  jupyter-collaboration
+  # keras
   notebook
   numpy
   matplotlib
-  opencv4
+  # opencv4
   pandas
   plotly
   pydot
@@ -23,9 +24,9 @@ my_python_packages = ps: with ps; [
   scikit-learn
   scipy
   selenium
-  tensorflow
-  torch
-  torchvision
+  # tensorflow
+  # torch
+  # torchvision
   python-telegram-bot
 ];
 in {
@@ -38,7 +39,7 @@ in {
   };
   config = lib.mkIf (config.mypkgs.python.enable) {
     environment.systemPackages = with pkgs; [
-      (python312.withPackages my_python_packages)
+      (python313.withPackages my_python_packages)
     ];
   };
 }

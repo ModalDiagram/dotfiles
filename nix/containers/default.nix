@@ -119,6 +119,7 @@
           docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seafile_db > /opt/seafile-data/backup/seafile_db.sql
           docker exec seafile-mysql mariadb-dump  -uroot -pseafile --opt seahub_db > /opt/seafile-data/backup/seahub_db.sql
           setfacl -R -m m:rx /opt/seafile-data
+          setfacl -R -m m:rx /home/homelab/docker/
         '
       '';
       serviceConfig = {
@@ -421,6 +422,29 @@
           '';
           locations."/" = {
             proxyPass = "http://192.168.100.12:3001";
+          };
+        };
+        "jupy.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 0;
+            allow 10.12.0.0/24;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:8888";
+          };
+        };
+        "yamtrack.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 0;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:8010";
           };
         };
         "screego.sfioretto.it" = {

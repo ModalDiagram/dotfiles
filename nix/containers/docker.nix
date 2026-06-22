@@ -8,6 +8,7 @@
   };
 
   systemd.timers."backup_ghostfolio" = {
+    enable = false;
     wantedBy = [ "timers.target" ];
       timerConfig = {
         Persistent = true;
@@ -19,6 +20,7 @@
   sops.secrets.bearer_ghostfolio = { sopsFile = ../secrets/containers.json; format = "json"; owner = "homelab"; };
 
   systemd.services."backup_ghostfolio" = {
+    enable = false;
     path = [ pkgs.curl ];
     script = ''
       bearer_token=$(cat /run/secrets/bearer_ghostfolio)

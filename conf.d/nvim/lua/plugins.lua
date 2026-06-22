@@ -100,7 +100,7 @@ return require('packer').startup(function(use)
   }
 
   -- Moving by typing the first 2 letters
-  use { 'ggandor/leap.nvim', config=[[require('config.leap')]]}
+  use { 'https://codeberg.org/andyg/leap.nvim', config=[[require('config.leap')]]}
   -- Moving by context (di( to delete inside the parantheses)
   use { "wellle/targets.vim" }
 

@@ -22,12 +22,6 @@ diagnostic.config {
   severity_sort = true,
 }
 
--- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-  -- Disable Diagnostcs globally
-  lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
-
 vim.lsp.enable('rust_analyzer')
 -- vim.lsp.enable(shellcheck'
 vim.lsp.enable('bashls')

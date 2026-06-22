@@ -7,9 +7,12 @@
     };
   };
   config = lib.mkIf (config.mypkgs.neovim.enable ) {
+      programs.neovim = {
+        enable = true;
+        withPython3 = true;
+      };
     home-manager.users.${config.main-user} = {
       home.packages = with pkgs; [
-        neovim
         gcc
         go
         gopls
@@ -19,7 +22,7 @@
         luarocks
         nil
         nodejs
-        nodePackages.bash-language-server
+        bash-language-server
         vscode-langservers-extracted
         php
         rust-analyzer

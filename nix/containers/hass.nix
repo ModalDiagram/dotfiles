@@ -215,40 +215,40 @@
         };
       };
 
-      services.node-red = {
-        enable = true;
-        configFile = "${pkgs.writeText "settings.js" ''
-          module.exports = {
-            uiHost: "0.0.0.0",
-            httpAdminRoot: ''\'/red''\'
-          }
-        ''}";
-      };
+      # services.node-red = {
+      #   enable = true;
+      #   configFile = "${pkgs.writeText "settings.js" ''
+      #     module.exports = {
+      #       uiHost: "0.0.0.0",
+      #       httpAdminRoot: ''\'/red''\'
+      #     }
+      #   ''}";
+      # };
 
-      services.home-assistant = {
-        enable = false;
-        extraComponents = [
-          # Components required to complete the onboarding
-          "esphome"
-          "met"
-          "radio_browser"
-          "zha"
-          "mobile_app"
-          "generic"
-          "ffmpeg"
-        ];
-        config = {
-          homeassistant = {
-            external_url = "https://hass.sfioretto.it";
-          };
-          mobile_app = {};
-          camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
-          http = {
-              trusted_proxies = [ "192.168.100.10" ];
-              use_x_forwarded_for = true;
-            };
-        };
-      };
+      # services.home-assistant = {
+      #   enable = false;
+      #   extraComponents = [
+      #     # Components required to complete the onboarding
+      #     "esphome"
+      #     "met"
+      #     "radio_browser"
+      #     "zha"
+      #     "mobile_app"
+      #     "generic"
+      #     "ffmpeg"
+      #   ];
+      #   config = {
+      #     homeassistant = {
+      #       external_url = "https://hass.sfioretto.it";
+      #     };
+      #     mobile_app = {};
+      #     camera = [ { platform = "ffmpeg"; name = "cam2"; input = "-rtsp_transport tcp -i rtsp://192.168.100.10:8554/stream"; } ];
+      #     http = {
+      #         trusted_proxies = [ "192.168.100.10" ];
+      #         use_x_forwarded_for = true;
+      #       };
+      #   };
+      # };
 
       networking = {
         firewall = {
