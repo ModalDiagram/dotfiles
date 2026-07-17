@@ -23,7 +23,7 @@
   security.pam.services.sudo.sshAgentAuth = true;
 
   environment.systemPackages = with pkgs; [
-    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl lm_sensors
+    git vim gh ripgrep fd brightnessctl kopia bat cargo jdk openssl lm_sensors xauth tldr
   ];
   # Rules for brightnessctl
   services.udev.extraRules = ''
@@ -146,6 +146,7 @@
   console.keyMap = "it";
 
   services.openssh.enable = true;
+  services.openssh.settings.X11Forwarding = true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "dm-snapshot"  "usb_storage" ];

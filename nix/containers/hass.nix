@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   sops.secrets.radicale_psswd = { sopsFile = ../secrets/containers.json; format = "json"; };
+  sops.secrets.radicale_psswd_clear = { sopsFile = ../secrets/containers.json; format = "json"; };
   sops.secrets.paperless_password = { sopsFile = ../secrets/containers.json; format = "json"; };
   sops.secrets.gitea_password = { sopsFile = ../secrets/containers.json; format = "json"; };
 
@@ -28,6 +29,7 @@
         isReadOnly = false;
       };
       "/run/secrets/radicale_psswd" = { hostPath = "/run/secrets/radicale_psswd"; };
+      "/run/secrets/radicale_psswd_clear" = { hostPath = "/run/secrets/radicale_psswd_clear"; };
       "/run/secrets/paperless_password" = { hostPath = "/run/secrets/paperless_password"; };
       "/run/secrets/gitea_password" = { hostPath = "/run/secrets/gitea_password"; };
       "/var/lib/kavita_library/suwayomi/" = {
@@ -42,6 +44,11 @@
 
       environment.etc."radicale_psswd" = {
         source = "/run/secrets/radicale_psswd";
+        mode = "0400";
+        user = "radicale";
+      };
+      environment.etc."radicale_psswd_clear" = {
+        source = "/run/secrets/radicale_psswd_clear";
         mode = "0400";
         user = "radicale";
       };
@@ -94,6 +101,15 @@
         };
       };
 
+      systemd.timers.update-caldav-task = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "20:00";
+          Unit = "update-caldav-task.service";
+        };
+      };
+
       systemd.services."backup_paperless" = {
         path = [ config.services.postgresql.package pkgs.kopia ];
         script = ''
@@ -140,6 +156,18 @@
         script = ''
           ${pkgs.bash}/bin/bash -c '
             kopia snapshot create /var/lib/radicale
+          '
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "radicale";
+        };
+      };
+
+      systemd.services.update-caldav-task = let python = pkgs.python313.withPackages (ps: with ps; [ caldav icalendar ]); in {
+        script = ''
+          ${pkgs.bash}/bin/bash -c '
+            ${pkgs.coreutils}/bin/cat /etc/radicale_psswd_clear | ${python}/bin/python ${../../apps/update_task.py}
           '
         '';
         serviceConfig = {
