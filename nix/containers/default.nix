@@ -154,8 +154,10 @@
         enableIPv6 = true;
       };
       firewall = {
+        # Allow incoming packets on wpan0 from iot devices
+        trustedInterfaces = [ "wpan0" ];
         # Open Wireguard port
-        allowedUDPPorts = [ 51820 53 8080 ];
+        allowedUDPPorts = [ 51820 53 8080 34197 ];
       };
     };
 
@@ -505,7 +507,7 @@
           '';
           locations."/" = {
             proxyWebsockets = true;
-            proxyPass = "http://192.168.100.16:9000";
+            proxyPass = "http://192.168.100.16:3900";
           };
         };
       };
@@ -538,6 +540,15 @@
           "https://adguardteam.github.io/HostlistsRegistry/assets/filter_27.txt"
         ];
       };
+    };
+
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "factorio-headless"
+    ];
+
+    services.factorio = {
+      enable = true;
+      lan = true;
     };
   };
 }
