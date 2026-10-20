@@ -130,12 +130,6 @@
     extraGroups = [ "networkmanager" "wheel" "uinput" "i2c" "vboxusers" "libvirtd" "dialout" ];
   };
 
-  # services.printing.enable = true;
-  # services.avahi = {
-  #   enable = true;
-  #   nssmdns4 = true;
-  #   openFirewall = true;
-  # };
 
   # systemd.timers."low-battery" = {
   #   wantedBy = [ "timers.target" ];

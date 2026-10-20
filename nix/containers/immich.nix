@@ -31,34 +31,36 @@
 
       users.users.immich.home = "/var/lib/immich";
 
-      systemd.timers."backup_immich" = {
+      systemd.timers."backup_homelab" = {
         wantedBy = [ "timers.target" ];
-          timerConfig = {
-            Persistent = true;
-            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-            Unit = "backup_immich.service";
-          };
+        timerConfig = {
+          Persistent = true;
+          OnCalendar = "*-*-01,07,13,19,25,30 2:00:00";
+          Unit = "backup_homelab.target";
+        };
       };
 
-      systemd.timers."backup_ente" = {
-        wantedBy = [ "timers.target" ];
-          timerConfig = {
-            Persistent = true;
-            OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-            Unit = "backup_ente.service";
-          };
+      systemd.targets."backup_homelab" = {
+        wants = [
+          "backup_immich.service"
+          "backup_ente.service"
+        ];
+        unitConfig = {
+          StopWhenUnneeded = true;
+        };
       };
 
       systemd.services."backup_immich" = {
-        path = [ pkgs.kopia ];
+        path = [ pkgs.kopia pkgs.util-linux ];
         script = ''
           ${pkgs.bash}/bin/bash -c '
-            kopia snapshot create /var/lib/immich
+            systemctl stop immich-server.service immich-machine-learning.service
+            runuser -u immich -- kopia snapshot create /var/lib/immich
+            systemctl start immich-server.service immich-machine-learning.service
           '
         '';
         serviceConfig = {
           Type = "oneshot";
-          User = "immich";
         };
       };
 

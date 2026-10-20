@@ -65,39 +65,23 @@
 
       users.users.radicale.home = "/var/lib/radicale";
 
-      systemd.timers."backup_paperless" = {
+      systemd.timers."backup_homelab" = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
           Persistent = true;
-          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-          Unit = "backup_paperless.service";
+          OnCalendar = "*-*-01,07,13,19,25,30 2:00:00";
+          Unit = "backup_homelab.target";
         };
       };
 
-      systemd.timers."backup_gitea" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          Persistent = true;
-          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-          Unit = "backup_gitea.service";
-        };
-      };
-
-      systemd.timers."backup_kavita" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          Persistent = true;
-          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-          Unit = "backup_kavita.service";
-        };
-      };
-
-      systemd.timers."backup_radicale" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          Persistent = true;
-          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
-          Unit = "backup_radicale.service";
+      systemd.targets."backup_homelab" = {
+        wants = [
+          "backup_paperless.service"
+          "backup_kavita.service"
+          "backup_radicale.service"
+        ];
+        unitConfig = {
+          StopWhenUnneeded = true;
         };
       };
 

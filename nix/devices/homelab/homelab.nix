@@ -13,6 +13,10 @@
     options ath9k nohwcrypt=1
   '';
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "immich-2.7.5"
+  ];
+
   services.logind.settings.Login.HandleLidSwitch = "ignore";
   # Settings needed for flakes
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
@@ -148,6 +152,18 @@
   services.openssh.enable = true;
   services.openssh.settings.X11Forwarding = true;
 
+  services.openthread-border-router = {
+    enable = true;
+    backboneInterfaces = [ "enp1s0f1" ];
+
+    radio.device = "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231008112217-if00";
+    radio.baudRate = 460800;
+    radio.flowControl = false;
+
+    rest.listenAddress = "0.0.0.0";
+    rest.listenPort = 9212;
+  };
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ "dm-snapshot"  "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -189,7 +205,7 @@
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 22 443 25565 ];
+      allowedTCPPorts = [ 80 22 443 3000 25565 8555 ];
     };
   };
   networking.hostName = "homelab";

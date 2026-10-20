@@ -21,7 +21,7 @@
     sops.secrets.homelab_private_wireguard = { sopsFile = ../secrets/containers.json; format = "json"; };
 
     # Wireguard setup
-    environment.systemPackages = [ pkgs.wireguard-tools ];
+    environment.systemPackages = [ pkgs.wireguard-tools pkgs.ffmpeg ];
     networking.wireguard.interfaces = {
       wg0 = {
         ips = [ "10.11.0.1/24" ]; # The IP address for the server on the VPN
@@ -38,12 +38,16 @@
             allowedIPs = [ "10.11.0.3/32" ]; # The IP address of mobile
           }
           {
-            publicKey = "ox9BtZ2FOxKlyugkjIne6J6WxOUqFgBADMjH3plJQWw=";
+            publicKey = "JPH3eefi/js56QtDbHjJiGgBV5oRA3VwTt9zo47C5is=";
             allowedIPs = [ "10.11.0.4/32" ]; # The IP address of AS PC
           }
           {
             publicKey = "HXDUs/65a/IVlK3LDGr8uLzhRfLPxS38GhHPBx7PMVE=";
             allowedIPs = [ "10.12.0.2/32" ]; # The IP address of Rosaria
+          }
+          {
+            publicKey = "INq4P7MvF0h4Dg5rnxspshCKH8fMuioeb8/lGH6eKhM=";
+            allowedIPs = [ "10.12.0.3/32" ]; # The IP address of Gabriele
           }
           {
             publicKey = "4/BJ1VLcJVjbIKH7M3qgBmMMhB0doL2hYqsA2qzmlm8=";
@@ -82,13 +86,7 @@
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
     };
-    services.ddclient = let
-      notify-script = pkgs.writeShellScript "notify-script.sh" ''
-        BOT_TOKEN=$(cat /run/secrets/telegram_bot_api)
-        CHAT_ID=$(cat /run/secrets/chat_id)
-        ${pkgs.curl}/bin/curl -s --data "text=Ip has changed. Restart your wireguard connections." --data "chat_id=$CHAT_ID" 'https://api.telegram.org/bot'$BOT_TOKEN'/sendMessage'
-      '';
-    in {
+    services.ddclient = {
       enable = true;
       ssl = true;
       usev4 = "webv4, webv4='https://cloudflare.com/cdn-cgi/trace', web-skip='ip='";
@@ -97,16 +95,21 @@
       zone = "sfioretto.it";
       domains = [ "sfioretto.it" "www.sfioretto.it" ];
       passwordFile = "/run/secrets/cloudflare_token";
-      extraConfig = ''
-        postscript=${notify-script}
-      '';
+    };
+
+    systemd.services.go2rtc.path = [ pkgs.ffmpeg ];
+    services.go2rtc = {
+      enable = true;
+      settings.streams = {
+        camera = "exec:ffmpeg -hide_banner -f v4l2 -input_format mjpeg -i /dev/v4l/by-id/usb-icSpring_WebCamera_20240603201703-video-index0 -c:v libx264 -preset ultrafast -tune zerolatency -f rtsp {output}";
+      };
     };
 
     systemd.timers."backup_containers" = {
       wantedBy = [ "timers.target" ];
         timerConfig = {
           Persistent = true;
-          OnCalendar = "*-*-02,04,06,08,10,12,14,16,18,20,22,24,26,28,30 2:00:00";
+          OnCalendar = "*-*-01,07,13,19,25,30 2:00:00";
           Unit = "backup_containers.service";
         };
     };
@@ -157,7 +160,7 @@
         # Allow incoming packets on wpan0 from iot devices
         trustedInterfaces = [ "wpan0" ];
         # Open Wireguard port
-        allowedUDPPorts = [ 51820 53 8080 34197 ];
+        allowedUDPPorts = [ 51820 53 8080 34197 8555 ];
       };
     };
 
@@ -426,6 +429,17 @@
             proxyPass = "http://192.168.100.12:3001";
           };
         };
+        "rtc.sfioretto.it" = {
+          onlySSL = true;
+          useACMEHost = "sfioretto.it";
+          extraConfig = ''
+            client_max_body_size 0;
+          '';
+          locations."/" = {
+            proxyWebsockets = true;
+            proxyPass = "http://127.0.0.1:1984";
+          };
+        };
         "jupy.sfioretto.it" = {
           onlySSL = true;
           useACMEHost = "sfioretto.it";
@@ -549,6 +563,15 @@
     services.factorio = {
       enable = true;
       lan = true;
+      package = pkgs.factorio-headless.overrideAttrs (old: rec {
+          version = "2.1.20"; # Inserisci qui la tua versione sperimentale
+
+          src = pkgs.fetchurl {
+                name = "factorio_headless_x64_${version}.tar.xz";
+                url = "https://factorio.com/get-download/${version}/headless/linux64";
+                                                                   hash = "sha256-QhpIPbz2m3bYVLf9uGqADJTaBOQUwggDyfzoL8GRu7U=";
+                                                            };
+                                                          });
     };
   };
 }
